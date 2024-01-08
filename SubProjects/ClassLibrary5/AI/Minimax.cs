@@ -8,10 +8,10 @@ namespace SharpMoku.AI
 	{
 
 		private Board _board;
-		public ILog _logger = null;
-		public Minimax(Board board, IEvaluate evaluater, ILog logger)
+		private ILog _logger;
+		public Minimax(Board board, IEvaluate evaluator, ILog logger)
 		{
-			_evaluater = evaluater ?? new EvaluateV3(); //Default evaluate function
+			_evaluator = evaluator ?? new EvaluateV3(); //Default evaluate function
 			_board = board;
 			_logger = logger;
 		}
@@ -52,7 +52,7 @@ namespace SharpMoku.AI
 
 			MoveScore botWinningPosition = new();
 
-			botWinningPosition = searchBotWinningPosition(_board, _evaluater);
+			botWinningPosition = searchBotWinningPosition(_board, _evaluator);
 
 			if (botWinningPosition.Row != -1)
 			{
@@ -60,13 +60,13 @@ namespace SharpMoku.AI
 				return botWinningPosition.GetPosition();
 			}
 
-			MoveScore OpponenetWinningPosition = new();
-			OpponenetWinningPosition = searchOpponentWinningPosition(_board, _evaluater);
+			MoveScore OpponentWinningPosition = new();
+			OpponentWinningPosition = searchOpponentWinningPosition(_board, _evaluator);
 
-			if (OpponenetWinningPosition.Row != -1)
+			if (OpponentWinningPosition.Row != -1)
 			{
 				evaluationCount = 0;
-				return OpponenetWinningPosition.GetPosition();
+				return OpponentWinningPosition.GetPosition();
 
 			}
 
@@ -138,7 +138,7 @@ namespace SharpMoku.AI
 			}
 		}
 
-		private IEvaluate _evaluater = null;
+		private IEvaluate _evaluator = null;
 		private List<int> NumberOfNodeInEachLevel = null;
 		private string GetTab(int moveDepth)
 		{
@@ -164,7 +164,7 @@ namespace SharpMoku.AI
 			if (depth == 0)
 			{
 
-				movescore = new MoveScore(_evaluater.evaluateBoard(board, !IsMax));
+				movescore = new MoveScore(_evaluator.EvaluateBoard(board, !IsMax));
 				Log($"{tabString}Evaluate happens here");
 				Log($"{tabString}Score::{movescore.Score}");
 
@@ -196,7 +196,7 @@ namespace SharpMoku.AI
 
 			if (IsNothingLeftToSearch)
 			{
-				movescore = new MoveScore(_evaluater.evaluateBoard(board, !IsMax));
+				movescore = new MoveScore(_evaluator.EvaluateBoard(board, !IsMax));
 				return movescore;
 			}
 
@@ -283,7 +283,7 @@ namespace SharpMoku.AI
 				Board tempBoard = new(board);
 
 				tempBoard.PutStone(move);
-				int Score = bot.getScore(tempBoard);
+				int Score = bot.GetScore(tempBoard);
 
 				if (Score > maxMoveScore.Score)
 				{
@@ -315,7 +315,7 @@ namespace SharpMoku.AI
 
 				tempBoard.SwitchTurn();
 				tempBoard.PutStone(move);
-				int Score = bot.getScore(tempBoard);
+				int Score = bot.GetScore(tempBoard);
 
 				if (Score > maxMoveScore.Score)
 				{

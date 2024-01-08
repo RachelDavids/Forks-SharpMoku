@@ -30,10 +30,10 @@ namespace SharpMoku
             Color c = Color.White;
             switch (pLabel.CellAttribute.CellValue)
             {
-                case Board.CellValue.Black:
+                case CellValue.Black:
                     c = pLabel.theme.XColor;
                     break;
-                case Board.CellValue.White:
+                case CellValue.White:
                     c = pLabel.theme.OColor;
                     break;
             }

@@ -85,3 +85,14 @@ M: System.Void Testing.SharpMoku.GameTesting::PlayerVsPlayerUndo()
 
 # end extra entries generated from defects
 
+# begin extra entries generated from defects
+# added on 08/01/2024 21:40:32 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Performance.AvoidEmptyMethodsRule
+M: System.Void Testing.SharpMoku.GameTesting::Ui_CellClicked(System.Object,SharpMoku.PositionEventArgs)
+
+R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
+M: System.Void Testing.SharpMoku.GameTesting::Ui_CellClicked(System.Object,SharpMoku.PositionEventArgs)
+
+# end extra entries generated from defects
+

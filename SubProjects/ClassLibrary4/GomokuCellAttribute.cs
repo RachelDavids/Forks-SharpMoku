@@ -30,7 +30,7 @@ namespace SharpMoku
         public int Row { get; set; }
         public int Col { get; set; }
         public Boolean IsIntersection = false;
-        public Board.CellValue CellValue { get; set; }
+        public CellValue CellValue { get; set; }
         public Boolean IsNeighborCell { get; set; } = false;
 
     }

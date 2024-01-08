@@ -4,19 +4,28 @@ using System.Text;
 
 namespace SharpMoku
 {
+	public interface ILogSettings
+	{
+		bool IsWriteLog { get; set; }
+	}
+
 	public interface ILog
 	{
-		void Log(string Message);
+		void Log(string message);
 		void ClearLog();
 		string GetLogMessage();
 	}
-	public class SimpleLog : ILog
+	public sealed class SimpleLog
+		: ILog
 	{
 		//Please change it to be the real _logger framework such as log4Net
 		private string fileName = "";
-		public SimpleLog(string fileName)
+		private readonly ILogSettings _logSettings;
+
+		public SimpleLog(string fileName, ILogSettings logSettings)
 		{
 			this.fileName = fileName;
+			_logSettings = logSettings;
 		}
 		public void ClearLog()
 		{
@@ -31,11 +40,11 @@ namespace SharpMoku
 
 			}
 		}
-		public void Log(string Message)
+		public void Log(string message)
 		{
 			// return;
 
-			if (!Global.CurrentSettings.IsWriteLog)
+			if (!_logSettings.IsWriteLog)
 			{
 				return;
 			}
@@ -45,8 +54,8 @@ namespace SharpMoku
 				// return;
 				using (StreamWriter SW = new(fileName, true))
 				{
-					Message = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ssss ") + Message;
-					SW.WriteLine(Message);
+					message = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ssss ") + message;
+					SW.WriteLine(message);
 				}
 			}
 			catch (Exception)
@@ -54,14 +63,9 @@ namespace SharpMoku
 
 			}
 		}
-		public static void WriteLog(string Message)
-		{
-
-		}
-
 		public string GetLogMessage()
 		{
-			throw new NotImplementedException();
+			throw new NotSupportedException($"{nameof(SimpleLog)}.{nameof(GetLogMessage)}");
 		}
 	}
 	public class StringBuilderLog : ILog

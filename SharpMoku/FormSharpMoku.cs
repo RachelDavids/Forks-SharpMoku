@@ -24,7 +24,7 @@ namespace SharpMoku
 		//AI.IEvaluate bot = new AI.EvaluateV2();
 		private AI.IEvaluate bot = new AI.EvaluateV3();
 
-		public event Board.CellClickHandler CellClicked;
+		public event EventHandler<PositionEventArgs> CellClicked;
 		public event EventHandler HasFinishedMoveCursor;
 
 		private void UpdateTheme(Theme theme)
@@ -61,7 +61,8 @@ namespace SharpMoku
 					   ? new Game(this, board, bot, botDepth, gameMode)
 					   : new Game(this, boardSize, bot, botDepth, gameMode);
 
-			game.log = new SimpleLog(Utility.FileUtility.LogFilePath);
+			game.log = new SimpleLog(Utility.FileUtility.LogFilePath,
+									 Global.CurrentSettings);
 
 		}
 		private void NewGame(Game.GameModeEnum gameMode,
@@ -170,7 +171,7 @@ namespace SharpMoku
 			return;
 
 		}
-		private void Game_GameFinishedV2(Board.WinStatus winStatus)
+		private void Game_GameFinishedV2(WinStatus winStatus)
 		{
 			// Deley a little bit before show the result.
 			System.Threading.Thread.Sleep(300);
@@ -192,15 +193,15 @@ namespace SharpMoku
 			}
 			string message;// = whiteTurn + " Won.";
 
-			if (winStatus == Board.WinStatus.NotDecidedYet)
+			if (winStatus == WinStatus.NotDecidedYet)
 			{
 				return;
 			}
 
 			message = winStatus switch {
-				Board.WinStatus.BlackWon => $"{blackTurn} Won.",
-				Board.WinStatus.WhiteWon => $"{whiteTurn} Won.",
-				Board.WinStatus.Draw => " Draw.",
+				WinStatus.BlackWon => $"{blackTurn} Won.",
+				WinStatus.WhiteWon => $"{whiteTurn} Won.",
+				WinStatus.Draw => " Draw.",
 				_ => throw new InvalidOperationException($"winStatus is not correct {winStatus}"),
 			};
 			message += "\n Click ok if you want a rematch.";

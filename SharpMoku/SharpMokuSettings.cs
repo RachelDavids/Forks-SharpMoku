@@ -6,6 +6,7 @@ namespace SharpMoku
 {
 	[Serializable]
 	public class SharpMokuSettings
+		: ILogSettings
 	{
 		public int BotDepth { get; set; } = 1;
 		public int BoardSize { get; set; } = 9;

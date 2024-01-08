@@ -3,8 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharpMoku;
 using SharpMoku.UI;
 
-using static SharpMoku.Board;
-
 namespace Testing.SharpMoku
 {
 	[TestClass]
@@ -16,9 +14,9 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void PlayerVsPlayerPutCell()
 		{
-			MOCKUI ui = new MOCKUI();
-			Board board = new Board(9);
-			Game game = new Game(ui, board, null, 1, Game.GameModeEnum.PlayerVsPlayer);
+			MOCKUI ui = new();
+			Board board = new(9);
+			Game game = new(ui, board, null, 1, Game.GameModeEnum.PlayerVsPlayer);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.NotBegin);
 
 			game.NewGame();
@@ -44,8 +42,8 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void PlayerVsPlayerWonStatus()
 		{
-			MOCKUI ui = new MOCKUI();
-			Board board = new Board(9);
+			MOCKUI ui = new();
+			Board board = new(9);
 
 			board.PutStone(0, 0, CellValue.Black);
 			board.PutStone(0, 1, CellValue.Black);
@@ -57,7 +55,7 @@ namespace Testing.SharpMoku
 			board.PutStone(1, 2, CellValue.White);
 			board.PutStone(1, 3, CellValue.White);
 
-			Game game = new Game(ui, board, null, 1, Game.GameModeEnum.PlayerVsPlayer);
+			Game game = new(ui, board, null, 1, Game.GameModeEnum.PlayerVsPlayer);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.NotBegin);
 
 			game.NewGame();
@@ -83,8 +81,8 @@ namespace Testing.SharpMoku
              * the game has end then it was undoed, what is the board's current turn ?
              * The undo method behaviour is depende on the game mode
              */
-			MOCKUI ui = new MOCKUI();
-			Board board = new Board(9);
+			MOCKUI ui = new();
+			Board board = new(9);
 
 			board.PutStone(0, 0, CellValue.Black);
 			board.PutStone(0, 1, CellValue.Black);
@@ -95,7 +93,7 @@ namespace Testing.SharpMoku
 			board.PutStone(1, 2, CellValue.White);
 			board.PutStone(1, 3, CellValue.White);
 
-			Game game = new Game(ui, board, null, 1, Game.GameModeEnum.PlayerVsPlayer);
+			Game game = new(ui, board, null, 1, Game.GameModeEnum.PlayerVsPlayer);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.NotBegin);
 
 			game.NewGame();
@@ -148,17 +146,17 @@ namespace Testing.SharpMoku
              * the game has end then it was undoed, what is the board's current turn ?
              * The undo method behaviour is depende on the game mode
              */
-			MOCKUI ui = new MOCKUI();
-			Board board = new Board(9);
+			MOCKUI ui = new();
+			Board board = new(9);
 
 			board.PutStone(0, 1, CellValue.Black);
 			board.PutStone(0, 2, CellValue.Black);
 			board.PutStone(0, 3, CellValue.Black);
 			board.PutStone(0, 4, CellValue.Black);
 
-			global::SharpMoku.AI.EvaluateV2 bot = new global::SharpMoku.AI.EvaluateV2();
+			global::SharpMoku.AI.EvaluateV2 bot = new();
 
-			Game game = new Game(ui, board, bot, 1, Game.GameModeEnum.PlayerVsBot);
+			Game game = new(ui, board, bot, 1, Game.GameModeEnum.PlayerVsBot);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.NotBegin);
 
 			game.NewGame();
@@ -182,7 +180,7 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(game.board.Matrix[0, 8] == emptyStoneCellvalue);
 
 		}
-		private void Ui_CellClicked(object sender, Board.PositionEventArgs positionClick)
+		private void Ui_CellClicked(object sender, PositionEventArgs positionClick)
 		{
 			//throw new NotImplementedException();
 		}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using SharpMoku;
+using SharpMoku.AI;
 
 namespace Testing.SharpMoku
 {
@@ -28,21 +29,21 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void GetCellValueInDirection()
 		{
-			global::SharpMoku.AI.EvaluateV3 evo = new global::SharpMoku.AI.EvaluateV3();
-			Board board = new Board(15);
-			board.PutStone(0, 0, Board.CellValue.White);
-			board.PutStone(0, 1, Board.CellValue.White);
-			board.PutStone(0, 2, Board.CellValue.White);
-			board.PutStone(0, 3, Board.CellValue.White);
-			board.PutStone(0, 4, Board.CellValue.White);
+			global::SharpMoku.AI.EvaluateV3 evo = new();
+			Board board = new(15);
+			board.PutStone(0, 0, CellValue.White);
+			board.PutStone(0, 1, CellValue.White);
+			board.PutStone(0, 2, CellValue.White);
+			board.PutStone(0, 3, CellValue.White);
+			board.PutStone(0, 4, CellValue.White);
 
-			Position currentPosition = new Position(0, 0);
-			Position positionDeltaNorthSouth = new Position(1, 0);
-			Position positionDeltaWestEast = new Position(0, 1);
-			Position positionDeltaNorthEast = new Position(1, 1);
-			Position positionDeltaSouthWest = new Position(1, -1);
+			Position currentPosition = new(0, 0);
+			Position positionDeltaNorthSouth = new(1, 0);
+			Position positionDeltaWestEast = new(0, 1);
+			Position positionDeltaNorthEast = new(1, 1);
+			Position positionDeltaSouthWest = new(1, -1);
 
-			Board.CellValue cellValue = Board.CellValue.White;
+			CellValue cellValue = CellValue.White;
 
 			List<int> listNorthSouth = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthSouth);
 			List<int> listWestEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaWestEast);
@@ -53,10 +54,10 @@ namespace Testing.SharpMoku
 			Assert.AreEqual(5, listNorthEast.Count);
 			Assert.AreEqual(1, listSouthWest.Count);
 
-			List<int> listNorthSouthExpectedValue = new List<int> { 1, 0, 0, 0, 0 };
-			List<int> listWestEastExpectedValue = new List<int> { 1, 1, 1, 1, 1 };
-			List<int> listNorthEastExpectedValue = new List<int> { 1, 0, 0, 0, 0 };
-			List<int> listSoutWestExpectedValue = new List<int> { 1 };
+			List<int> listNorthSouthExpectedValue = [1, 0, 0, 0, 0];
+			List<int> listWestEastExpectedValue = [1, 1, 1, 1, 1];
+			List<int> listNorthEastExpectedValue = [1, 0, 0, 0, 0];
+			List<int> listSoutWestExpectedValue = [1];
 			Assert.AreEqual(true, IsListValueEqual(listNorthSouth, listNorthSouthExpectedValue));
 			Assert.AreEqual(true, IsListValueEqual(listWestEast, listWestEastExpectedValue));
 			Assert.AreEqual(true, IsListValueEqual(listNorthEast, listNorthEastExpectedValue));
@@ -73,7 +74,7 @@ namespace Testing.SharpMoku
 			Assert.AreEqual(5, listNorthEast.Count);
 			Assert.AreEqual(1, listSouthWest.Count);
 
-			Position blankCellPosition = new Position(10, 10);
+			Position blankCellPosition = new(10, 10);
 			listNorthSouth = evo.GetCellValueInDirection(board.Matrix, cellValue, blankCellPosition, positionDeltaNorthSouth);
 			listWestEast = evo.GetCellValueInDirection(board.Matrix, cellValue, blankCellPosition, positionDeltaWestEast);
 			listNorthEast = evo.GetCellValueInDirection(board.Matrix, cellValue, blankCellPosition, positionDeltaNorthEast);
@@ -85,7 +86,7 @@ namespace Testing.SharpMoku
 
 			currentPosition = new Position(10, 10);
 
-			board.PutStone(currentPosition, Board.CellValue.White);
+			board.PutStone(currentPosition, CellValue.White);
 			listNorthSouth = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthSouth);
 			listWestEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaWestEast);
 			listNorthEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthEast);
@@ -95,17 +96,17 @@ namespace Testing.SharpMoku
 			Assert.AreEqual(9, listNorthEast.Count);
 			Assert.AreEqual(9, listSouthWest.Count);
 
-			listNorthSouthExpectedValue = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
-			listWestEastExpectedValue = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
-			listNorthEastExpectedValue = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
-			listSoutWestExpectedValue = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
+			listNorthSouthExpectedValue = [0, 0, 0, 0, 1, 0, 0, 0, 0];
+			listWestEastExpectedValue = [0, 0, 0, 0, 1, 0, 0, 0, 0];
+			listNorthEastExpectedValue = [0, 0, 0, 0, 1, 0, 0, 0, 0];
+			listSoutWestExpectedValue = [0, 0, 0, 0, 1, 0, 0, 0, 0];
 
 			Assert.AreEqual(true, IsListValueEqual(listNorthSouth, listNorthSouthExpectedValue));
 			Assert.AreEqual(true, IsListValueEqual(listWestEast, listWestEastExpectedValue));
 			Assert.AreEqual(true, IsListValueEqual(listNorthEast, listNorthEastExpectedValue));
 			Assert.AreEqual(true, IsListValueEqual(listSouthWest, listSoutWestExpectedValue));
 
-			board.PutStone(9, 10, Board.CellValue.Black);
+			board.PutStone(9, 10, CellValue.Black);
 			listNorthSouth = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthSouth);
 			listWestEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaWestEast);
 			listNorthEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthEast);
@@ -115,17 +116,17 @@ namespace Testing.SharpMoku
 			Assert.AreEqual(9, listNorthEast.Count);
 			Assert.AreEqual(9, listSouthWest.Count);
 
-			listNorthSouthExpectedValue = new List<int> { -1, 1, 0, 0, 0, 0 };
-			listWestEastExpectedValue = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
-			listNorthEastExpectedValue = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
-			listSoutWestExpectedValue = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
+			listNorthSouthExpectedValue = [-1, 1, 0, 0, 0, 0];
+			listWestEastExpectedValue = [0, 0, 0, 0, 1, 0, 0, 0, 0];
+			listNorthEastExpectedValue = [0, 0, 0, 0, 1, 0, 0, 0, 0];
+			listSoutWestExpectedValue = [0, 0, 0, 0, 1, 0, 0, 0, 0];
 
 			Assert.AreEqual(true, IsListValueEqual(listNorthSouth, listNorthSouthExpectedValue));
 			Assert.AreEqual(true, IsListValueEqual(listWestEast, listWestEastExpectedValue));
 			Assert.AreEqual(true, IsListValueEqual(listNorthEast, listNorthEastExpectedValue));
 			Assert.AreEqual(true, IsListValueEqual(listSouthWest, listSoutWestExpectedValue));
 
-			board.PutStone(9, 11, Board.CellValue.Black);
+			board.PutStone(9, 11, CellValue.Black);
 			listNorthSouth = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthSouth);
 			listWestEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaWestEast);
 			listNorthEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthEast);
@@ -135,7 +136,7 @@ namespace Testing.SharpMoku
 			Assert.AreEqual(9, listNorthEast.Count);
 			Assert.AreEqual(6, listSouthWest.Count);
 
-			board.PutStone(11, 11, Board.CellValue.Black);
+			board.PutStone(11, 11, CellValue.Black);
 			listNorthSouth = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthSouth);
 			listWestEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaWestEast);
 			listNorthEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthEast);
@@ -145,7 +146,7 @@ namespace Testing.SharpMoku
 			Assert.AreEqual(6, listNorthEast.Count);
 			Assert.AreEqual(6, listSouthWest.Count);
 
-			board.PutStone(11, 9, Board.CellValue.Black);
+			board.PutStone(11, 9, CellValue.Black);
 			listNorthSouth = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthSouth);
 			listWestEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaWestEast);
 			listNorthEast = evo.GetCellValueInDirection(board.Matrix, cellValue, currentPosition, positionDeltaNorthEast);
@@ -159,12 +160,12 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void GetListAllDirection()
 		{
-			global::SharpMoku.AI.EvaluateV3 evo = new global::SharpMoku.AI.EvaluateV3();
-			Board board = new Board(15);
-			Position currentPosition = new Position(10, 10);
+			global::SharpMoku.AI.EvaluateV3 evo = new();
+			Board board = new(15);
+			Position currentPosition = new(10, 10);
 
-			board.PutStone(currentPosition, Board.CellValue.White);
-			List<List<int>> listCheckArea = evo.GetListAllDirection(board, currentPosition, Board.CellValue.White);
+			board.PutStone(currentPosition, CellValue.White);
+			List<List<int>> listCheckArea = evo.GetListAllDirection(board, currentPosition, CellValue.White);
 
 			Assert.AreEqual(4, listCheckArea.Count);
 			Assert.AreEqual(9, listCheckArea[0].Count);
@@ -178,22 +179,22 @@ namespace Testing.SharpMoku
 		public void IsInArray()
 		{
 
-			List<List<int>> Stone4WithNoBlock = new List<List<int>> { new List<int>() { 0, 1, 1, 1, 1, 0 } };
-			List<List<int>> Stone3WithNoBlock = new List<List<int>>{
-						new List<int>(){ 0, 1, 1, 1, 0, 0 },
-						new List<int>(){ 0, 0, 1, 1, 1, 0 },
-						new List<int>(){ 0, 1, 0, 1, 1, 0 },
-						new List<int>(){ 0, 1, 1, 0, 1, 0 },
+			List<List<int>> Stone4WithNoBlock = [[0, 1, 1, 1, 1, 0]];
+			List<List<int>> Stone3WithNoBlock = [
+						[0, 1, 1, 1, 0, 0],
+						[0, 0, 1, 1, 1, 0],
+						[0, 1, 0, 1, 1, 0],
+						[0, 1, 1, 0, 1, 0],
 
-					};
+					];
 
-			global::SharpMoku.AI.EvaluateV3 evo = new global::SharpMoku.AI.EvaluateV3();
-			List<int> listvalue = new List<int> { 0, 1, 1, 1, 1, 0 };
-			bool isIn = evo.IsAnyInArrays(Stone4WithNoBlock, listvalue);
+			global::SharpMoku.AI.EvaluateV3 evo = new();
+			List<int> listvalue = [0, 1, 1, 1, 1, 0];
+			bool isIn = EvaluateV3.IsAnyInArrays(Stone4WithNoBlock, listvalue);
 
 			Assert.AreEqual(true, isIn);
-			listvalue = new List<int> { 0, 1, 0, 1, 1, 0 };
-			isIn = evo.IsAnyInArrays(Stone3WithNoBlock, listvalue);
+			listvalue = [0, 1, 0, 1, 1, 0];
+			isIn = EvaluateV3.IsAnyInArrays(Stone3WithNoBlock, listvalue);
 			Assert.AreEqual(true, isIn);
 
 		}
@@ -201,28 +202,28 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void ValuePosition()
 		{
-			global::SharpMoku.AI.EvaluateV3 evo = new global::SharpMoku.AI.EvaluateV3();
-			Board board = new Board(15);
+			global::SharpMoku.AI.EvaluateV3 evo = new();
+			Board board = new(15);
 
-			Position emptyCellPosition = new Position(10, 10);
-			List<List<int>> listCheckArea = evo.GetListAllDirection(board, emptyCellPosition, Board.CellValue.White);
-			global::SharpMoku.AI.EvaluateV3.NumberofScorePattern numberPatternScore = evo.valuePosition(listCheckArea, false);
+			Position emptyCellPosition = new(10, 10);
+			List<List<int>> listCheckArea = evo.GetListAllDirection(board, emptyCellPosition, CellValue.White);
+			global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern numberPatternScore = evo.ValuePosition(listCheckArea, false);
 
 			Assert.IsTrue(numberPatternScore.HasZeroValue);
 
-			board.PutStone(0, 0, Board.CellValue.White);
-			board.PutStone(0, 1, Board.CellValue.White);
-			board.PutStone(0, 2, Board.CellValue.White);
-			board.PutStone(0, 3, Board.CellValue.White);
-			board.PutStone(0, 4, Board.CellValue.White);
-			Position currentPosition = new Position(0, 0);
-			List<List<int>> listCheckAreaForBlack = evo.GetListAllDirection(board, currentPosition, Board.CellValue.Black);
+			board.PutStone(0, 0, CellValue.White);
+			board.PutStone(0, 1, CellValue.White);
+			board.PutStone(0, 2, CellValue.White);
+			board.PutStone(0, 3, CellValue.White);
+			board.PutStone(0, 4, CellValue.White);
+			Position currentPosition = new(0, 0);
+			List<List<int>> listCheckAreaForBlack = evo.GetListAllDirection(board, currentPosition, CellValue.Black);
 
-			numberPatternScore = evo.valuePosition(listCheckAreaForBlack, true);
+			numberPatternScore = evo.ValuePosition(listCheckAreaForBlack, true);
 			Assert.IsTrue(numberPatternScore.HasZeroValue);
 
-			listCheckArea = evo.GetListAllDirection(board, currentPosition, Board.CellValue.White);
-			numberPatternScore = evo.valuePosition(listCheckArea, false);
+			listCheckArea = evo.GetListAllDirection(board, currentPosition, CellValue.White);
+			numberPatternScore = evo.ValuePosition(listCheckArea, false);
 
 			Assert.AreEqual(1, numberPatternScore.Winning);
 			Assert.AreEqual(0, numberPatternScore.Stone4);
@@ -233,13 +234,13 @@ namespace Testing.SharpMoku
 
 			board = new Board(15);
 
-			board.PutStone(0, 0, Board.CellValue.White);
-			board.PutStone(0, 1, Board.CellValue.White);
-			board.PutStone(0, 2, Board.CellValue.White);
-			board.PutStone(0, 3, Board.CellValue.White);
+			board.PutStone(0, 0, CellValue.White);
+			board.PutStone(0, 1, CellValue.White);
+			board.PutStone(0, 2, CellValue.White);
+			board.PutStone(0, 3, CellValue.White);
 
-			listCheckArea = evo.GetListAllDirection(board, currentPosition, Board.CellValue.White);
-			numberPatternScore = evo.valuePosition(listCheckArea, false);
+			listCheckArea = evo.GetListAllDirection(board, currentPosition, CellValue.White);
+			numberPatternScore = evo.ValuePosition(listCheckArea, false);
 			Assert.AreEqual(0, numberPatternScore.Winning);
 			Assert.AreEqual(0, numberPatternScore.Stone4);
 			Assert.AreEqual(0, numberPatternScore.Stone3);
@@ -248,13 +249,13 @@ namespace Testing.SharpMoku
 			Assert.AreEqual(0, numberPatternScore.BlockStone3);
 
 			board = new Board(15);
-			board.PutStone(0, 1, Board.CellValue.White);
-			board.PutStone(0, 2, Board.CellValue.White);
-			board.PutStone(0, 3, Board.CellValue.White);
-			board.PutStone(0, 4, Board.CellValue.White);
+			board.PutStone(0, 1, CellValue.White);
+			board.PutStone(0, 2, CellValue.White);
+			board.PutStone(0, 3, CellValue.White);
+			board.PutStone(0, 4, CellValue.White);
 			currentPosition = new Position(0, 4);
-			listCheckArea = evo.GetListAllDirection(board, currentPosition, Board.CellValue.White);
-			numberPatternScore = evo.valuePosition(listCheckArea, false);
+			listCheckArea = evo.GetListAllDirection(board, currentPosition, CellValue.White);
+			numberPatternScore = evo.ValuePosition(listCheckArea, false);
 			Assert.AreEqual(0, numberPatternScore.Winning);
 			Assert.AreEqual(1, numberPatternScore.Stone4);
 			Assert.AreEqual(0, numberPatternScore.Stone3);
@@ -264,14 +265,14 @@ namespace Testing.SharpMoku
 
 			board = new Board(15);
 			//0, 1, 0, 1, 1, 0
-			board.PutStone(0, 1, Board.CellValue.White);
+			board.PutStone(0, 1, CellValue.White);
 
-			board.PutStone(0, 3, Board.CellValue.White);
-			board.PutStone(0, 4, Board.CellValue.White);
+			board.PutStone(0, 3, CellValue.White);
+			board.PutStone(0, 4, CellValue.White);
 			currentPosition = new Position(0, 4);
-			listCheckArea = evo.GetListAllDirection(board, currentPosition, Board.CellValue.White);
+			listCheckArea = evo.GetListAllDirection(board, currentPosition, CellValue.White);
 
-			numberPatternScore = evo.valuePosition(listCheckArea, false);
+			numberPatternScore = evo.ValuePosition(listCheckArea, false);
 			Assert.AreEqual(0, numberPatternScore.Winning);
 			Assert.AreEqual(0, numberPatternScore.Stone4);
 			Assert.AreEqual(1, numberPatternScore.Stone3);
@@ -281,13 +282,13 @@ namespace Testing.SharpMoku
 
 			board = new Board(15);
 			// 0, 1, 0, 1, 0, 0
-			board.PutStone(0, 1, Board.CellValue.White);
+			board.PutStone(0, 1, CellValue.White);
 
-			board.PutStone(0, 3, Board.CellValue.White);
+			board.PutStone(0, 3, CellValue.White);
 
 			currentPosition = new Position(0, 3);
-			listCheckArea = evo.GetListAllDirection(board, currentPosition, Board.CellValue.White);
-			numberPatternScore = evo.valuePosition(listCheckArea, false);
+			listCheckArea = evo.GetListAllDirection(board, currentPosition, CellValue.White);
+			numberPatternScore = evo.ValuePosition(listCheckArea, false);
 			Assert.AreEqual(0, numberPatternScore.Winning);
 			Assert.AreEqual(0, numberPatternScore.Stone4);
 			Assert.AreEqual(0, numberPatternScore.Stone3);
@@ -297,12 +298,12 @@ namespace Testing.SharpMoku
 
 			board = new Board(15);
 
-			board.PutStone(1, 3, Board.CellValue.Black);
-			board.PutStone(2, 3, Board.CellValue.Black);
-			board.PutStone(4, 3, Board.CellValue.Black);
+			board.PutStone(1, 3, CellValue.Black);
+			board.PutStone(2, 3, CellValue.Black);
+			board.PutStone(4, 3, CellValue.Black);
 			currentPosition = new Position(4, 3);
-			listCheckArea = evo.GetListAllDirection(board, currentPosition, Board.CellValue.Black);
-			numberPatternScore = evo.valuePosition(listCheckArea, true);
+			listCheckArea = evo.GetListAllDirection(board, currentPosition, CellValue.Black);
+			numberPatternScore = evo.ValuePosition(listCheckArea, true);
 			Assert.AreEqual(0, numberPatternScore.Winning);
 			Assert.AreEqual(0, numberPatternScore.Stone4);
 			Assert.AreEqual(1, numberPatternScore.Stone3);
@@ -316,8 +317,8 @@ namespace Testing.SharpMoku
 		public void ScoreByPattern()
 		{
 
-			global::SharpMoku.AI.EvaluateV3.NumberofScorePattern numPattern = new global::SharpMoku.AI.EvaluateV3.NumberofScorePattern(1, 0, 0, 0, 0, 0);
-			global::SharpMoku.AI.EvaluateV3 evo = new global::SharpMoku.AI.EvaluateV3();
+			global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern numPattern = new(1, 0, 0, 0, 0, 0);
+			global::SharpMoku.AI.EvaluateV3 evo = new();
 
 			int scoreByPattern = 0;
 			scoreByPattern = evo.getScoreByPattern(numPattern);
@@ -331,62 +332,62 @@ namespace Testing.SharpMoku
 			scoreByPattern = evo.getScoreByPattern(numPattern);
 			Assert.AreEqual(scoreByPattern, stone4Pattern);
 
-			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberofScorePattern {
+			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern {
 				Stone3 = 1,
 				BlockStone4 = 1
 			};
 			scoreByPattern = evo.getScoreByPattern(numPattern);
 			Assert.AreEqual(scoreByPattern, global::SharpMoku.AI.EvaluateV3.CONST_winGuarantee / 100);
 
-			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberofScorePattern {
+			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern {
 				Stone3 = 2
 			};
 			scoreByPattern = evo.getScoreByPattern(numPattern);
 			Assert.AreEqual(scoreByPattern, global::SharpMoku.AI.EvaluateV3.CONST_winGuarantee / 1000);
 
-			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberofScorePattern {
+			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern {
 				Stone3 = 1,
 				Stone2 = 3
 			};
 			scoreByPattern = evo.getScoreByPattern(numPattern);
 			Assert.AreEqual(scoreByPattern, 40000);
 
-			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberofScorePattern {
+			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern {
 				Stone3 = 1,
 				Stone2 = 2
 			};
 			scoreByPattern = evo.getScoreByPattern(numPattern);
 			Assert.AreEqual(scoreByPattern, 38000);
 
-			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberofScorePattern {
+			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern {
 				Stone3 = 1,
 				Stone2 = 1
 			};
 			scoreByPattern = evo.getScoreByPattern(numPattern);
 			Assert.AreEqual(scoreByPattern, 35000);
 
-			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberofScorePattern {
+			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern {
 				Stone3 = 1,
 				Stone2 = 0
 			};
 			scoreByPattern = evo.getScoreByPattern(numPattern);
 			Assert.AreEqual(scoreByPattern, 3450);
 
-			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberofScorePattern {
+			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern {
 				BlockStone4 = 1,
 				Stone2 = 3
 			};
 			scoreByPattern = evo.getScoreByPattern(numPattern);
 			Assert.AreEqual(scoreByPattern, 4500);
 
-			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberofScorePattern {
+			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern {
 				BlockStone4 = 1,
 				Stone2 = 2
 			};
 			scoreByPattern = evo.getScoreByPattern(numPattern);
 			Assert.AreEqual(scoreByPattern, 4200);
 
-			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberofScorePattern {
+			numPattern = new global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern {
 				BlockStone4 = 1,
 				Stone2 = 1
 			};
@@ -400,39 +401,39 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void GetScore()
 		{
-			global::SharpMoku.AI.EvaluateV3 evo = new global::SharpMoku.AI.EvaluateV3();
-			Board board = new Board(15);
+			global::SharpMoku.AI.EvaluateV3 evo = new();
+			Board board = new(15);
 			//  Position currentPosition = new Position(10, 10);
 
-			board.PutStone(0, 0, Board.CellValue.White);
-			board.PutStone(0, 1, Board.CellValue.White);
-			board.PutStone(0, 2, Board.CellValue.White);
-			board.PutStone(0, 3, Board.CellValue.White);
-			board.PutStone(0, 4, Board.CellValue.White);
+			board.PutStone(0, 0, CellValue.White);
+			board.PutStone(0, 1, CellValue.White);
+			board.PutStone(0, 2, CellValue.White);
+			board.PutStone(0, 3, CellValue.White);
+			board.PutStone(0, 4, CellValue.White);
 
 			Board cloneBoard = board.Clone();
 
-			double score = evo.getScore(board);// evo.getScore(board, IsThisforblack, IsThisBlackTurn);
+			double score = evo.GetScore(board);// evo.GetScore(board, IsThisforblack, IsThisBlackTurn);
 
-			//Make sure that evo.getScore will not update value in the board
-			BoardTesting boardTesting = new BoardTesting();
+			//Make sure that evo.GetScore will not update value in the board
+			BoardTesting boardTesting = new();
 			Assert.AreEqual(true, BoardTesting.IsBoardTheSame(board, cloneBoard));
 
 			board = new Board(15);
-			board.PutStone(0, 1, Board.CellValue.White);
-			board.PutStone(0, 2, Board.CellValue.White);
-			board.PutStone(0, 3, Board.CellValue.White);
-			board.PutStone(0, 4, Board.CellValue.White);
-			board.PutStone(0, 5, Board.CellValue.Black);
-			score = evo.getScore(board); // evo.getScore(board, IsThisforblack, IsThisBlackTurn);
+			board.PutStone(0, 1, CellValue.White);
+			board.PutStone(0, 2, CellValue.White);
+			board.PutStone(0, 3, CellValue.White);
+			board.PutStone(0, 4, CellValue.White);
+			board.PutStone(0, 5, CellValue.Black);
+			score = evo.GetScore(board); // evo.GetScore(board, IsThisforblack, IsThisBlackTurn);
 
 			board = new Board(9);
-			board.PutStone(1, 3, Board.CellValue.Black);
-			board.PutStone(1, 7, Board.CellValue.White);
-			board.PutStone(2, 3, Board.CellValue.Black);
-			board.PutStone(2, 7, Board.CellValue.White);
-			board.PutStone(4, 3, Board.CellValue.Black);
-			score = evo.getScore(board);
+			board.PutStone(1, 3, CellValue.Black);
+			board.PutStone(1, 7, CellValue.White);
+			board.PutStone(2, 3, CellValue.Black);
+			board.PutStone(2, 7, CellValue.White);
+			board.PutStone(4, 3, CellValue.Black);
+			score = evo.GetScore(board);
 
 		}
 	}

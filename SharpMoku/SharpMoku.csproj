@@ -4,21 +4,12 @@
 		<OutputType>WinExe</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<UseWindowsForms>true</UseWindowsForms>
-		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 	</PropertyGroup>
 	<PropertyGroup>
 		<ApplicationIcon>SharpMokuIcon.ico</ApplicationIcon>
 	</PropertyGroup>
-	<ItemGroup>
-		<Compile Update="UI\ExtendLabel.cs">
-			<SubType>Component</SubType>
-		</Compile>
-		<Compile Update="UI\PictureBoxGoMoKu.cs">
-			<SubType>Component</SubType>
-		</Compile>
-	</ItemGroup>
 	<ItemGroup Label="COM References">
-		<COMReference Include="MediaPlayer">
+		<!--<COMReference Include="MediaPlayer">
 			<Guid>{22D6F304-B0F6-11D0-94AB-0080C74C7E95}</Guid>
 			<VersionMajor>1</VersionMajor>
 			<VersionMinor>0</VersionMinor>
@@ -44,13 +35,16 @@
 			<WrapperTool>tlbimp</WrapperTool>
 			<Isolated>False</Isolated>
 			<EmbedInteropTypes>True</EmbedInteropTypes>
-		</COMReference>
+		</COMReference>-->
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="System.Data.DataSetExtensions" Version="*" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\SubProjects\ClassLibrary1\ClassLibrary1.csproj" />
-	  <ProjectReference Include="..\SubProjects\ClassLibrary2\ClassLibrary2.csproj" />
+	  <ProjectReference Include="..\SubProjects\ClassLibrary1\SharpMoku.Utility.csproj" />
+	  <ProjectReference Include="..\SubProjects\ClassLibrary2\SharpMoku.Board.csproj" />
+	  <ProjectReference Include="..\SubProjects\ClassLibrary3\SharpMoku.Logging.csproj" />
+	  <ProjectReference Include="..\SubProjects\ClassLibrary4\SharpMoku.UI.csproj" />
+	  <ProjectReference Include="..\SubProjects\ClassLibrary5\SharpMoku.AI.csproj" />
 	</ItemGroup>
 </Project>

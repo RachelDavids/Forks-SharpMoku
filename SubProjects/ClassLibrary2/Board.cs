@@ -7,24 +7,12 @@ namespace SharpMoku
 	[Serializable]
 	public class Board
 	{
-		public class PositionEventArgs : EventArgs
-		{
-			public Position Value { get; set; }
-			public PositionEventArgs(Position position)
-			{
-				Value = position;
-			}
-		}
-		public delegate void CellClickHandler(object sender, PositionEventArgs positionClick);
-
-		// 2d array to store cell value
 		public int[,] Matrix;
 
 		/*
          * dicWhiteStone stores WhiteStone position
          * dicBlackStone stores BlackStone position
          * dicNieghbor stores position of the stone next to both white and black stone
-         *
          * These 3 dictionaries are used by Minimax evaluate function.
          */
 		public Dictionary<string, Position> dicWhiteStone { get; private set; } = [];
@@ -33,27 +21,8 @@ namespace SharpMoku
 
 		public int BoardSize { get; private set; }
 
-		public enum WinStatus
-		{
-			BlackWon = -1,
-			NotDecidedYet = 0,
-			WhiteWon = 1,
-			Draw = 2
-		}
-
 		// Represent the value of the cell in the board
-		public enum CellValue
-		{
-			Black = -1,
-			Empty = 0,
-			White = 1,
-		}
 
-		public enum Turn
-		{
-			Black = -1,
-			White = 1
-		}
 		public Turn CurrentTurn { get; private set; } = Turn.Black;
 		public CellValue CurrentTurnCellValue => CurrentTurn == Turn.Black ? CellValue.Black : CellValue.White;
 		public Board(int boardSize)
@@ -250,7 +219,7 @@ namespace SharpMoku
 
 			if (!IsValidPosition(pRow, pCol))
 			{
-				throw new ArgumentException($"Postion is not valid {pRow},{pCol} ");
+				throw new ArgumentException($"Position is not valid {pRow},{pCol} ");
 			}
 			if (!IsValidValue(Value))
 			{
@@ -276,20 +245,14 @@ namespace SharpMoku
 		}
 		public void SwitchTurn()
 		{
-			if (CurrentTurn == Turn.Black)
-			{
-				CurrentTurn = Turn.White;
-				return;
-			}
-
-			CurrentTurn = Turn.Black;
+			CurrentTurn = CurrentTurn == Turn.Black ? Turn.White : Turn.Black;
 		}
-		public bool IsThere5inRow(Position pos)
+		public bool IsThere5InRow(Position pos)
 		{
 			int i;
 			int j;
-			int CellValue = Matrix[pos.Row, pos.Col];
-			if (CellValue == 0)
+			int cellValue = Matrix[pos.Row, pos.Col];
+			if (cellValue == 0)
 			{
 				return false;
 			}
@@ -303,27 +266,25 @@ namespace SharpMoku
 					{
 						continue;
 					}
-					int NoofRepeating = 0;
-
-					int SameCellValueInDirectionCount = 0;
-					for (NoofRepeating = 1; NoofRepeating <= 4; NoofRepeating++)
+					int sameCellValueInDirectionCount = 0;
+					for (int noOfRepeating = 1; noOfRepeating <= 4; noOfRepeating++)
 					{
-						Position CheckPosition = new(pos.Row + (i * NoofRepeating),
-							pos.Col + (j * NoofRepeating));
-						if (CheckPosition.Row < 0
-							|| CheckPosition.Row > BoardSize - 1
-							|| CheckPosition.Col < 0
-							|| CheckPosition.Col > BoardSize - 1)
+						Position checkPosition = new(pos.Row + (i * noOfRepeating),
+													 pos.Col + (j * noOfRepeating));
+						if (checkPosition.Row < 0
+							|| checkPosition.Row > BoardSize - 1
+							|| checkPosition.Col < 0
+							|| checkPosition.Col > BoardSize - 1)
 						{
 							break;
 						}
 
-						if (Matrix[CheckPosition.Row, CheckPosition.Col] != CellValue)
+						if (Matrix[checkPosition.Row, checkPosition.Col] != cellValue)
 						{
 							break;
 						}
-						SameCellValueInDirectionCount++;
-						if (SameCellValueInDirectionCount >= 4)
+						sameCellValueInDirectionCount++;
+						if (sameCellValueInDirectionCount >= 4)
 						{
 							return true;
 						}
@@ -342,14 +303,14 @@ namespace SharpMoku
 			foreach (Position pos in dicWhiteStone.Values)
 			{
 
-				if (IsThere5inRow(pos))
+				if (IsThere5InRow(pos))
 				{
 					return WinStatus.WhiteWon;
 				}
 			}
 			foreach (Position pos in dicBlackStone.Values)
 			{
-				if (IsThere5inRow(pos))
+				if (IsThere5InRow(pos))
 				{
 					return WinStatus.BlackWon;
 				}

@@ -19,7 +19,7 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void calculateConsecutiveStoneSequenceScore()
 		{
-			EvaluateV2 evo = new EvaluateV2();
+			EvaluateV2 evo = new();
 
 			//SharpMoku.AI.EvaluateLast evo = new SharpMoku.AI.EvaluateLast();
 			/*
@@ -74,19 +74,19 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void EvaluateHorizontal()
 		{
-			EvaluateV2 evo = new EvaluateV2();
-			Board board = new Board(15);
+			EvaluateV2 evo = new();
+			Board board = new(15);
 			bool isForBlack = true;
 			bool isPlayerTurn = true;
 			;
 			int blackScore = 0;
 			Func<int[,], bool, bool, int> evaFunc = evo.CalculateScoreForHorizontal;
 
-			board.PutStone(0, 1, Board.CellValue.Black);
-			board.PutStone(0, 2, Board.CellValue.Black);
-			board.PutStone(0, 3, Board.CellValue.Black);
-			board.PutStone(0, 4, Board.CellValue.Black);
-			board.PutStone(0, 5, Board.CellValue.Black);
+			board.PutStone(0, 1, CellValue.Black);
+			board.PutStone(0, 2, CellValue.Black);
+			board.PutStone(0, 3, CellValue.Black);
+			board.PutStone(0, 4, CellValue.Black);
+			board.PutStone(0, 5, CellValue.Black);
 
 			blackScore = evaFunc(board.Matrix, isForBlack, isPlayerTurn);
 			Assert.IsTrue(blackScore == EvaluateV2.wonScore);
@@ -100,13 +100,13 @@ namespace Testing.SharpMoku
 		public void GetStonePatternForVertical()
 		{
 
-			EvaluateV2 evo = new EvaluateV2();
-			Board board = new Board(15);
-			board.PutStone(0, 0, Board.CellValue.Black);
-			board.PutStone(1, 0, Board.CellValue.Black);
-			board.PutStone(2, 0, Board.CellValue.Black);
-			board.PutStone(3, 0, Board.CellValue.Black);
-			board.PutStone(4, 0, Board.CellValue.Black);
+			EvaluateV2 evo = new();
+			Board board = new(15);
+			board.PutStone(0, 0, CellValue.Black);
+			board.PutStone(1, 0, CellValue.Black);
+			board.PutStone(2, 0, CellValue.Black);
+			board.PutStone(3, 0, CellValue.Black);
+			board.PutStone(4, 0, CellValue.Black);
 
 			bool isForCalculateBlackStone = true;
 
@@ -118,26 +118,26 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 5);
 
 			board = new Board(15);
-			board.PutStone(0, 0, Board.CellValue.Empty);
-			board.PutStone(1, 0, Board.CellValue.Black);
-			board.PutStone(2, 0, Board.CellValue.Black);
-			board.PutStone(3, 0, Board.CellValue.Black);
-			board.PutStone(4, 0, Board.CellValue.Black);
-			board.PutStone(5, 0, Board.CellValue.Black);
+			board.PutStone(0, 0, CellValue.Empty);
+			board.PutStone(1, 0, CellValue.Black);
+			board.PutStone(2, 0, CellValue.Black);
+			board.PutStone(3, 0, CellValue.Black);
+			board.PutStone(4, 0, CellValue.Black);
+			board.PutStone(5, 0, CellValue.Black);
 			listPattern = evo.GetStonePatternForVertical(board.Matrix, isForCalculateBlackStone);
 			pattern = listPattern[0];
 			Assert.IsTrue(listPattern.Count == 1);
 			Assert.IsTrue(pattern.blockType == EvaluateV2.BlockType.ZeroBlock);
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 5);
 
-			board.PutStone(0, 0, Board.CellValue.White);
+			board.PutStone(0, 0, CellValue.White);
 			listPattern = evo.GetStonePatternForVertical(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 1);
 			pattern = listPattern[0];
 			Assert.IsTrue(pattern.blockType == EvaluateV2.BlockType.OneSideBlock);
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 5);
 
-			board.PutStone(6, 0, Board.CellValue.White);
+			board.PutStone(6, 0, CellValue.White);
 			listPattern = evo.GetStonePatternForVertical(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 1);
 			pattern = listPattern[0];
@@ -148,11 +148,11 @@ namespace Testing.SharpMoku
 			int i;
 			for (i = 0; i < 15; i++)
 			{
-				board.PutStone(1, i, Board.CellValue.Black);
-				board.PutStone(2, i, Board.CellValue.Black);
-				board.PutStone(3, i, Board.CellValue.Black);
-				board.PutStone(4, i, Board.CellValue.Black);
-				board.PutStone(5, i, Board.CellValue.Black);
+				board.PutStone(1, i, CellValue.Black);
+				board.PutStone(2, i, CellValue.Black);
+				board.PutStone(3, i, CellValue.Black);
+				board.PutStone(4, i, CellValue.Black);
+				board.PutStone(5, i, CellValue.Black);
 			}
 			listPattern = evo.GetStonePatternForVertical(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 15);
@@ -164,11 +164,11 @@ namespace Testing.SharpMoku
 			}
 
 			board = new Board(15);
-			board.PutStone(1, 0, Board.CellValue.Black);
-			board.PutStone(2, 0, Board.CellValue.Black);
-			board.PutStone(3, 0, Board.CellValue.Empty);
-			board.PutStone(4, 0, Board.CellValue.Black);
-			board.PutStone(5, 0, Board.CellValue.Black);
+			board.PutStone(1, 0, CellValue.Black);
+			board.PutStone(2, 0, CellValue.Black);
+			board.PutStone(3, 0, CellValue.Empty);
+			board.PutStone(4, 0, CellValue.Black);
+			board.PutStone(5, 0, CellValue.Black);
 			listPattern = evo.GetStonePatternForVertical(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 2);
 
@@ -180,7 +180,7 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(pattern.blockType == EvaluateV2.BlockType.ZeroBlock);
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 2);
 
-			board.PutStone(3, 0, Board.CellValue.White);
+			board.PutStone(3, 0, CellValue.White);
 			listPattern = evo.GetStonePatternForVertical(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 2);
 
@@ -198,13 +198,13 @@ namespace Testing.SharpMoku
 		public void GetStonePatternForDiagonal()
 		{
 
-			EvaluateV2 evo = new EvaluateV2();
-			Board board = new Board(15);
-			board.PutStone(0, 0, Board.CellValue.Black);
-			board.PutStone(1, 1, Board.CellValue.Black);
-			board.PutStone(2, 2, Board.CellValue.Black);
-			board.PutStone(3, 3, Board.CellValue.Black);
-			board.PutStone(4, 4, Board.CellValue.Black);
+			EvaluateV2 evo = new();
+			Board board = new(15);
+			board.PutStone(0, 0, CellValue.Black);
+			board.PutStone(1, 1, CellValue.Black);
+			board.PutStone(2, 2, CellValue.Black);
+			board.PutStone(3, 3, CellValue.Black);
+			board.PutStone(4, 4, CellValue.Black);
 
 			bool isForCalculateBlackStone = true;
 			//bool isBlackTurn = true;
@@ -220,26 +220,26 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 5);
 
 			board = new Board(15);
-			board.PutStone(0, 0, Board.CellValue.Empty);
-			board.PutStone(1, 1, Board.CellValue.Black);
-			board.PutStone(2, 2, Board.CellValue.Black);
-			board.PutStone(3, 3, Board.CellValue.Black);
-			board.PutStone(4, 4, Board.CellValue.Black);
-			board.PutStone(5, 5, Board.CellValue.Black);
+			board.PutStone(0, 0, CellValue.Empty);
+			board.PutStone(1, 1, CellValue.Black);
+			board.PutStone(2, 2, CellValue.Black);
+			board.PutStone(3, 3, CellValue.Black);
+			board.PutStone(4, 4, CellValue.Black);
+			board.PutStone(5, 5, CellValue.Black);
 			listPattern = evo.GetStonePatternForDiagonal(board.Matrix, isForCalculateBlackStone);
 			pattern = listPattern[0];
 			Assert.IsTrue(listPattern.Count == 1);
 			Assert.IsTrue(pattern.blockType == EvaluateV2.BlockType.ZeroBlock);
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 5);
 
-			board.PutStone(0, 0, Board.CellValue.White);
+			board.PutStone(0, 0, CellValue.White);
 			listPattern = evo.GetStonePatternForDiagonal(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 1);
 			pattern = listPattern[0];
 			Assert.IsTrue(pattern.blockType == EvaluateV2.BlockType.OneSideBlock);
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 5);
 
-			board.PutStone(6, 6, Board.CellValue.White);
+			board.PutStone(6, 6, CellValue.White);
 			listPattern = evo.GetStonePatternForDiagonal(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 1);
 			pattern = listPattern[0];
@@ -267,11 +267,11 @@ namespace Testing.SharpMoku
             */
 
 			board = new Board(15);
-			board.PutStone(1, 1, Board.CellValue.Black);
-			board.PutStone(2, 2, Board.CellValue.Black);
-			board.PutStone(3, 3, Board.CellValue.Empty);
-			board.PutStone(4, 4, Board.CellValue.Black);
-			board.PutStone(5, 5, Board.CellValue.Black);
+			board.PutStone(1, 1, CellValue.Black);
+			board.PutStone(2, 2, CellValue.Black);
+			board.PutStone(3, 3, CellValue.Empty);
+			board.PutStone(4, 4, CellValue.Black);
+			board.PutStone(5, 5, CellValue.Black);
 			listPattern = evo.GetStonePatternForDiagonal(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 2);
 
@@ -283,7 +283,7 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(pattern.blockType == EvaluateV2.BlockType.ZeroBlock);
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 2);
 
-			board.PutStone(3, 3, Board.CellValue.White);
+			board.PutStone(3, 3, CellValue.White);
 			listPattern = evo.GetStonePatternForDiagonal(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 2);
 
@@ -299,18 +299,18 @@ namespace Testing.SharpMoku
 		public void GetStonePatternForVertical_NoPattern()
 		{
 
-			EvaluateV2 evo = new EvaluateV2();
-			Board board = new Board(15);
+			EvaluateV2 evo = new();
+			Board board = new(15);
 
 			// Number of White stone pattern, it must be 0 because there is no white stone
 			List<EvaluateV2.StonePattern> listPattern = evo.GetStonePatternForVertical(board.Matrix, false);
 			Assert.IsTrue(listPattern.Count == 0);
 
-			board.PutStone(0, 0, Board.CellValue.Black);
-			board.PutStone(1, 0, Board.CellValue.Black);
-			board.PutStone(2, 0, Board.CellValue.Black);
-			board.PutStone(3, 0, Board.CellValue.Black);
-			board.PutStone(4, 0, Board.CellValue.Black);
+			board.PutStone(0, 0, CellValue.Black);
+			board.PutStone(1, 0, CellValue.Black);
+			board.PutStone(2, 0, CellValue.Black);
+			board.PutStone(3, 0, CellValue.Black);
+			board.PutStone(4, 0, CellValue.Black);
 			listPattern = evo.GetStonePatternForVertical(board.Matrix, false);
 			Assert.IsTrue(listPattern.Count == 0);
 
@@ -320,13 +320,13 @@ namespace Testing.SharpMoku
 		public void GetStonePatternForHorizontal()
 		{
 
-			EvaluateV2 evo = new EvaluateV2();
-			Board board = new Board(15);
-			board.PutStone(0, 0, Board.CellValue.Black);
-			board.PutStone(0, 1, Board.CellValue.Black);
-			board.PutStone(0, 2, Board.CellValue.Black);
-			board.PutStone(0, 3, Board.CellValue.Black);
-			board.PutStone(0, 4, Board.CellValue.Black);
+			EvaluateV2 evo = new();
+			Board board = new(15);
+			board.PutStone(0, 0, CellValue.Black);
+			board.PutStone(0, 1, CellValue.Black);
+			board.PutStone(0, 2, CellValue.Black);
+			board.PutStone(0, 3, CellValue.Black);
+			board.PutStone(0, 4, CellValue.Black);
 
 			bool isForCalculateBlackStone = true;
 			//bool isBlackTurn = true;
@@ -342,26 +342,26 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 5);
 
 			board = new Board(15);
-			board.PutStone(0, 0, Board.CellValue.Empty);
-			board.PutStone(0, 1, Board.CellValue.Black);
-			board.PutStone(0, 2, Board.CellValue.Black);
-			board.PutStone(0, 3, Board.CellValue.Black);
-			board.PutStone(0, 4, Board.CellValue.Black);
-			board.PutStone(0, 5, Board.CellValue.Black);
+			board.PutStone(0, 0, CellValue.Empty);
+			board.PutStone(0, 1, CellValue.Black);
+			board.PutStone(0, 2, CellValue.Black);
+			board.PutStone(0, 3, CellValue.Black);
+			board.PutStone(0, 4, CellValue.Black);
+			board.PutStone(0, 5, CellValue.Black);
 			listPattern = evo.GetStonePatternForHorizontal(board.Matrix, isForCalculateBlackStone);
 			pattern = listPattern[0];
 			Assert.IsTrue(listPattern.Count == 1);
 			Assert.IsTrue(pattern.blockType == EvaluateV2.BlockType.ZeroBlock);
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 5);
 
-			board.PutStone(0, 0, Board.CellValue.White);
+			board.PutStone(0, 0, CellValue.White);
 			listPattern = evo.GetStonePatternForHorizontal(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 1);
 			pattern = listPattern[0];
 			Assert.IsTrue(pattern.blockType == EvaluateV2.BlockType.OneSideBlock);
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 5);
 
-			board.PutStone(0, 6, Board.CellValue.White);
+			board.PutStone(0, 6, CellValue.White);
 			listPattern = evo.GetStonePatternForHorizontal(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 1);
 			pattern = listPattern[0];
@@ -372,11 +372,11 @@ namespace Testing.SharpMoku
 			int i;
 			for (i = 0; i < 15; i++)
 			{
-				board.PutStone(i, 1, Board.CellValue.Black);
-				board.PutStone(i, 2, Board.CellValue.Black);
-				board.PutStone(i, 3, Board.CellValue.Black);
-				board.PutStone(i, 4, Board.CellValue.Black);
-				board.PutStone(i, 5, Board.CellValue.Black);
+				board.PutStone(i, 1, CellValue.Black);
+				board.PutStone(i, 2, CellValue.Black);
+				board.PutStone(i, 3, CellValue.Black);
+				board.PutStone(i, 4, CellValue.Black);
+				board.PutStone(i, 5, CellValue.Black);
 			}
 			listPattern = evo.GetStonePatternForHorizontal(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 15);
@@ -388,11 +388,11 @@ namespace Testing.SharpMoku
 			}
 
 			board = new Board(15);
-			board.PutStone(0, 1, Board.CellValue.Black);
-			board.PutStone(0, 2, Board.CellValue.Black);
-			board.PutStone(0, 3, Board.CellValue.Empty);
-			board.PutStone(0, 4, Board.CellValue.Black);
-			board.PutStone(0, 5, Board.CellValue.Black);
+			board.PutStone(0, 1, CellValue.Black);
+			board.PutStone(0, 2, CellValue.Black);
+			board.PutStone(0, 3, CellValue.Empty);
+			board.PutStone(0, 4, CellValue.Black);
+			board.PutStone(0, 5, CellValue.Black);
 			listPattern = evo.GetStonePatternForHorizontal(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 2);
 
@@ -404,7 +404,7 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(pattern.blockType == EvaluateV2.BlockType.ZeroBlock);
 			Assert.IsTrue(pattern.NumberOfConsecutiveStone == 2);
 
-			board.PutStone(0, 3, Board.CellValue.White);
+			board.PutStone(0, 3, CellValue.White);
 			listPattern = evo.GetStonePatternForHorizontal(board.Matrix, isForCalculateBlackStone);
 			Assert.IsTrue(listPattern.Count == 2);
 
@@ -421,19 +421,19 @@ namespace Testing.SharpMoku
 		public void GetStonePatternForHorizontal_NoPattern()
 		{
 
-			EvaluateV2 evo = new EvaluateV2();
-			Board board = new Board(15);
+			EvaluateV2 evo = new();
+			Board board = new(15);
 
 			// Number of White stone pattern, it must be 0 because there is no white stone
 			List<EvaluateV2.StonePattern> listPattern = null;
 			listPattern = evo.GetStonePatternForHorizontal(board.Matrix, false);
 			Assert.IsTrue(listPattern.Count == 0);
 
-			board.PutStone(0, 0, Board.CellValue.Black);
-			board.PutStone(0, 1, Board.CellValue.Black);
-			board.PutStone(0, 2, Board.CellValue.Black);
-			board.PutStone(0, 3, Board.CellValue.Black);
-			board.PutStone(0, 4, Board.CellValue.Black);
+			board.PutStone(0, 0, CellValue.Black);
+			board.PutStone(0, 1, CellValue.Black);
+			board.PutStone(0, 2, CellValue.Black);
+			board.PutStone(0, 3, CellValue.Black);
+			board.PutStone(0, 4, CellValue.Black);
 			listPattern = evo.GetStonePatternForHorizontal(board.Matrix, false);
 			Assert.IsTrue(listPattern.Count == 0);
 
@@ -442,13 +442,13 @@ namespace Testing.SharpMoku
 		public void EvaluatVertical()
 		{
 
-			EvaluateV2 evo = new EvaluateV2();
-			Board board = new Board(15);
-			board.PutStone(0, 0, Board.CellValue.Black);
-			board.PutStone(1, 0, Board.CellValue.Black);
-			board.PutStone(2, 0, Board.CellValue.Black);
-			board.PutStone(3, 0, Board.CellValue.Black);
-			board.PutStone(4, 0, Board.CellValue.Black);
+			EvaluateV2 evo = new();
+			Board board = new(15);
+			board.PutStone(0, 0, CellValue.Black);
+			board.PutStone(1, 0, CellValue.Black);
+			board.PutStone(2, 0, CellValue.Black);
+			board.PutStone(3, 0, CellValue.Black);
+			board.PutStone(4, 0, CellValue.Black);
 
 			bool isForCalculateBlackStone = true;
 			bool isBlackTurn = true;
@@ -466,7 +466,7 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(blackScore == 0);
 
 			board.RemoveStone(2, 0);
-			board.PutStone(2, 0, Board.CellValue.White);
+			board.PutStone(2, 0, CellValue.White);
 			blackScore = evaFunc(board.Matrix, isForCalculateBlackStone, isBlackTurn);
 			Assert.IsTrue(blackScore == 3);
 
@@ -475,7 +475,7 @@ namespace Testing.SharpMoku
 			whiteScore = evaFunc(board.Matrix, !isForCalculateBlackStone, isBlackTurn);
 			Assert.IsTrue(whiteScore == 0);
 
-			board.PutStone(0, 5, Board.CellValue.Black);
+			board.PutStone(0, 5, CellValue.Black);
 			blackScore = evaFunc(board.Matrix, isForCalculateBlackStone, isBlackTurn);
 			Assert.IsTrue(blackScore == 3);
 
@@ -483,14 +483,14 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(blackScore == 3);
 
 			board = new Board(9);
-			board.PutStone(1, 1, Board.CellValue.White);
-			board.PutStone(1, 2, Board.CellValue.White);
-			board.PutStone(2, 1, Board.CellValue.White);
+			board.PutStone(1, 1, CellValue.White);
+			board.PutStone(1, 2, CellValue.White);
+			board.PutStone(2, 1, CellValue.White);
 
-			board.PutStone(2, 2, Board.CellValue.Black);
-			board.PutStone(3, 2, Board.CellValue.Black);
-			board.PutStone(4, 2, Board.CellValue.Black);
-			board.PutStone(5, 2, Board.CellValue.Black);
+			board.PutStone(2, 2, CellValue.Black);
+			board.PutStone(3, 2, CellValue.Black);
+			board.PutStone(4, 2, CellValue.Black);
+			board.PutStone(5, 2, CellValue.Black);
 			blackScore = evaFunc(board.Matrix, isForCalculateBlackStone, isBlackTurn);
 			Assert.IsTrue(blackScore == 1000000);
 
@@ -500,24 +500,24 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void searchBotLosingPosition()
 		{
-			Board board = new Board(9);
-			board.PutStone(1, 1, Board.CellValue.White);
-			board.PutStone(1, 2, Board.CellValue.White);
-			board.PutStone(2, 1, Board.CellValue.White);
+			Board board = new(9);
+			board.PutStone(1, 1, CellValue.White);
+			board.PutStone(1, 2, CellValue.White);
+			board.PutStone(2, 1, CellValue.White);
 
-			board.PutStone(2, 2, Board.CellValue.Black);
-			board.PutStone(3, 2, Board.CellValue.Black);
-			board.PutStone(4, 2, Board.CellValue.Black);
-			board.PutStone(5, 2, Board.CellValue.Black);
+			board.PutStone(2, 2, CellValue.Black);
+			board.PutStone(3, 2, CellValue.Black);
+			board.PutStone(4, 2, CellValue.Black);
+			board.PutStone(5, 2, CellValue.Black);
 
-			board.PutStone(0, 2, Board.CellValue.White);
-			if (board.CurrentTurn == Board.Turn.White)
+			board.PutStone(0, 2, CellValue.White);
+			if (board.CurrentTurn == Turn.White)
 			{
 				board.SwitchTurn();
 			}
 			//Minimax minimax = new Minimax(board, new EvaluateV2(), null);
-			EvaluateV2 bot = new EvaluateV2();
-			int score = bot.getScore(board);
+			EvaluateV2 bot = new();
+			int score = bot.GetScore(board);
 			List<EvaluateV2.StonePattern> list = bot.GetStonePatternForVertical(board.Matrix, isForBlackstone: true);
 			score = bot.calculateConsecutiveStoneSequenceScore(list[0], true);
 
@@ -533,18 +533,18 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void EvaluateDiagonal()
 		{
-			EvaluateV2 evo = new EvaluateV2();
-			Board board = new Board(15);
+			EvaluateV2 evo = new();
+			Board board = new(15);
 			bool isForCalculateBlackStone = true;
 			bool isBlackTurn = true;
 			int blackScore = 0;
 			Func<int[,], bool, bool, int> evaFunc = evo.CalculateScoreForDiagonal;
 
-			board.PutStone(0, 0, Board.CellValue.Black);
-			board.PutStone(1, 1, Board.CellValue.Black);
-			board.PutStone(2, 2, Board.CellValue.Black);
-			board.PutStone(3, 3, Board.CellValue.Black);
-			board.PutStone(4, 4, Board.CellValue.Black);
+			board.PutStone(0, 0, CellValue.Black);
+			board.PutStone(1, 1, CellValue.Black);
+			board.PutStone(2, 2, CellValue.Black);
+			board.PutStone(3, 3, CellValue.Black);
+			board.PutStone(4, 4, CellValue.Black);
 
 			blackScore = evo.CalculateScoreForDiagonal(board.Matrix,
 													   isForBlackStone:
@@ -558,15 +558,15 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void Test01()
 		{
-			EvaluateV2 evo = new EvaluateV2();
-			Board board = new Board(15);
-			board.PutStone(0, 0, Board.CellValue.Black);
-			board.PutStone(0, 1, Board.CellValue.Black);
-			board.PutStone(0, 2, Board.CellValue.Black);
+			EvaluateV2 evo = new();
+			Board board = new(15);
+			board.PutStone(0, 0, CellValue.Black);
+			board.PutStone(0, 1, CellValue.Black);
+			board.PutStone(0, 2, CellValue.Black);
 
-			board.PutStone(8, 0, Board.CellValue.White);
-			board.PutStone(8, 1, Board.CellValue.White);
-			board.PutStone(8, 2, Board.CellValue.White);
+			board.PutStone(8, 0, CellValue.White);
+			board.PutStone(8, 1, CellValue.White);
+			board.PutStone(8, 2, CellValue.White);
 
 			bool isForCalculateBlackStone = true;
 			//bool isPlayerTurn = true;

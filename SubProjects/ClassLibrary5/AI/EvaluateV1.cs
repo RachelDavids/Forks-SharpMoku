@@ -13,13 +13,13 @@ namespace SharpMoku.AI
 				return random.Next(min, max);
 			}
 		}
-		public double evaluateBoard(Board board, bool IsMyturn)
+		public double EvaluateBoard(Board board, bool isMyTurn)
 		{
 			return GetRandomNumber(1, 1000);
 
 		}
 
-		public int getScore(Board board)
+		public int GetScore(Board board)
 		{
 			return GetRandomNumber(1, 1000);
 

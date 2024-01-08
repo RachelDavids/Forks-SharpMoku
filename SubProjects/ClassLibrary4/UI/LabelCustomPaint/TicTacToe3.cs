@@ -69,7 +69,7 @@ namespace SharpMoku.UI.LabelCustomPaint
             }
 
 
-            if (pLabel.CellAttribute.CellValue == Board.CellValue.White)
+            if (pLabel.CellAttribute.CellValue == CellValue.White)
             {
 
                 int offset = 8;
@@ -88,7 +88,7 @@ namespace SharpMoku.UI.LabelCustomPaint
             }
             else
             {
-                if (pLabel.CellAttribute.CellValue == Board.CellValue.Black)
+                if (pLabel.CellAttribute.CellValue == CellValue.Black)
                 {
 
                     RectangleF RecCircle = new RectangleF(8, 8, pLabel.Width - 16, pLabel.Height - 16);

@@ -36,7 +36,6 @@ namespace SharpMoku.UI
 			PointResult.Y += 10;
 			return PointResult;
 
-
 		}
 
 		public delegate void CellClickHandler(PictureBoxGoMoKu pic, PositionEventArgs positionClick);
@@ -169,7 +168,6 @@ namespace SharpMoku.UI
 				YOffSet = cellHeight;
 			}
 
-
 			SpaceBetweenBorderSize = CurrentTheme.SpaceBetweenBorderSize;
 			for (i = 0; i <= LastIndex; i++)
 			{
@@ -189,7 +187,6 @@ namespace SharpMoku.UI
 					L.Height = cellHeight;
 					L.Width = cellWidth;
 					L.BorderStyle = BorderStyle.None;
-
 
 					if (LPreviousLabel == null)
 					{
@@ -252,7 +249,7 @@ namespace SharpMoku.UI
 				for (j = 0; j < NoofColumn; j++)
 				{
 					ExtendLabel Lbl = (ExtendLabel)DicLabel[i.ToString("00") + j.ToString("00")];
-					Board.CellValue cellValue = (Board.CellValue)board.Matrix[i, j];
+					CellValue cellValue = (CellValue)board.Matrix[i, j];
 					Lbl.CellAttribute.IsNeighborCell = board.dicNeighbour.ContainsKey(new Position(i, j).PositionString());
 					Lbl.CellAttribute.CellValue = cellValue;
 					Lbl.Invalidate();
@@ -313,14 +310,14 @@ namespace SharpMoku.UI
 				}
 
 				e.Graphics.DrawString(rowCharacter,
-						ShareGraphicObject.GoMokuBoardFont,
-						ShareGraphicObject.SolidBrush(CurrentTheme.NotationForeColor),
-						new Point(FirstColumnLabel.Width / 2, FirstColumnLabel.Top),
-						format);
+									  ShareGraphicObject.GoMokuBoardFont,
+									  ShareGraphicObject.SolidBrush(CurrentTheme.NotationForeColor),
+									  new Point(FirstColumnLabel.Width / 2, FirstColumnLabel.Top),
+									  format);
 				e.Graphics.DrawString(colCharacter,
-					ShareGraphicObject.GoMokuBoardFont,
-					ShareGraphicObject.SolidBrush(CurrentTheme.NotationForeColor),
-					new Point(FirstRowLabel.Left + 10, 0));
+									  ShareGraphicObject.GoMokuBoardFont,
+									  ShareGraphicObject.SolidBrush(CurrentTheme.NotationForeColor),
+									  new Point(FirstRowLabel.Left + 10, 0));
 
 			}
 		}

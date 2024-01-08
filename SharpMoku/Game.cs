@@ -21,8 +21,8 @@ namespace SharpMoku
 			PlayerVsPlayer = 2,
 
 		}
-		public Board.WinStatus WinResult { get; private set; } = Board.WinStatus.NotDecidedYet;
-		public Board.Turn TheWinner { get; private set; }
+		public WinStatus WinResult { get; private set; } = WinStatus.NotDecidedYet;
+		public Turn TheWinner { get; private set; }
 		public ILog log = null;
 		public GameModeEnum GameMode { get; private set; } = GameModeEnum.PlayerVsBot;
 		public GameStateEnum GameState { get; private set; } = GameStateEnum.NotBegin;
@@ -37,8 +37,8 @@ namespace SharpMoku
 
 		public class WinStatusEventArgs : EventArgs
 		{
-			public Board.WinStatus Winstatus { get; set; }
-			public WinStatusEventArgs(Board.WinStatus winStatus)
+			public WinStatus Winstatus { get; set; }
+			public WinStatusEventArgs(WinStatus winStatus)
 			{
 				Winstatus = winStatus;
 			}
@@ -61,7 +61,7 @@ namespace SharpMoku
 			{
 				bot = pbot;
 			}
-			WinResult = Board.WinStatus.NotDecidedYet;
+			WinResult = WinStatus.NotDecidedYet;
 
 			UI.CellClicked -= UI_CellClicked;
 			UI.HasFinishedMoveCursor -= UI_HasFinishedMoveCursor;
@@ -136,7 +136,7 @@ namespace SharpMoku
 					bool isneedToDoubleUndo = false;
 					if (GameMode == GameModeEnum.BotVsPlayer)
 					{
-						if (WinResult == Board.WinStatus.BlackWon)
+						if (WinResult == WinStatus.BlackWon)
 						{
 							isneedToDoubleUndo = true;
 
@@ -144,7 +144,7 @@ namespace SharpMoku
 					}
 					else
 					{
-						if (WinResult == Board.WinStatus.WhiteWon)
+						if (WinResult == WinStatus.WhiteWon)
 						{
 							isneedToDoubleUndo = true;
 						}
@@ -168,7 +168,7 @@ namespace SharpMoku
 					board.Undo();
 				}
 			}
-			WinResult = Board.WinStatus.NotDecidedYet;
+			WinResult = WinStatus.NotDecidedYet;
 			GameState = GameStateEnum.Playing;
 			UI.RenderUI();
 
@@ -176,7 +176,7 @@ namespace SharpMoku
 		private void UI_HasFinishedMoveCursor(object sender, EventArgs e)
 		{
 
-			PutStone(botMoveToPostion, (Board.CellValue)board.CurrentTurn);
+			PutStone(botMoveToPostion, (CellValue)board.CurrentTurn);
 
 		}
 		public void PutStone(Position position)
@@ -184,7 +184,7 @@ namespace SharpMoku
 			PutStone(position, board.CurrentTurnCellValue);
 		}
 		//public Boolean
-		public void PutStone(Position position, Board.CellValue turn)
+		public void PutStone(Position position, CellValue turn)
 		{
 
 			board.PutStone(position, turn);
@@ -193,7 +193,7 @@ namespace SharpMoku
 
 			WinResult = board.CheckWinStatus();
 
-			if (WinResult == Board.WinStatus.NotDecidedYet)
+			if (WinResult == WinStatus.NotDecidedYet)
 			{
 				//[DEBUG:]
 				board.SwitchTurn();
@@ -228,15 +228,15 @@ namespace SharpMoku
 			}
 		}
 
-		private bool IsPlayer1Turn => board.CurrentTurn == Board.Turn.Black;
+		private bool IsPlayer1Turn => board.CurrentTurn == Turn.Black;
 
 		// This method being used by human only.
-		private void UI_CellClicked(object o, Board.PositionEventArgs positionClick)
+		private void UI_CellClicked(object o, PositionEventArgs positionClick)
 		{
-			bool isPlayerClickDespiteItisBotTurn = (GameMode == GameModeEnum.PlayerVsBot && board.CurrentTurn != Board.Turn.Black) ||
-													  (GameMode == GameModeEnum.BotVsPlayer && board.CurrentTurn != Board.Turn.White);
+			bool isPlayerClickDespiteItisBotTurn = (GameMode == GameModeEnum.PlayerVsBot && board.CurrentTurn != Turn.Black) ||
+													  (GameMode == GameModeEnum.BotVsPlayer && board.CurrentTurn != Turn.White);
 
-			bool isClickedOnNonEmptyCell = board.Matrix[positionClick.Value.Row, positionClick.Value.Col] != (int)Board.CellValue.Empty;
+			bool isClickedOnNonEmptyCell = board.Matrix[positionClick.Value.Row, positionClick.Value.Col] != (int)CellValue.Empty;
 			bool isClickedOInValidPosition = !board.IsValidPosition(positionClick.Value);
 
 			if (GameState != GameStateEnum.Playing
