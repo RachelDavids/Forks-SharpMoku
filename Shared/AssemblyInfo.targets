@@ -1,0 +1,13 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<ItemGroup Condition=" '$(PkgChaucer_Annotatipns)' != '' ">
+		<AssemblyAttribute Include="Chaucer.Annotations.CodeAnalysis.RootNamespace">
+			<_Parameter1>Gendarme</_Parameter1>
+		</AssemblyAttribute>
+		<AssemblyAttribute Include="Chaucer.Annotations.AssemblyAdditionalCopyright">
+			<_Parameter1>Original Copyright (C) 2005-2011 Novell, Inc. and contributors</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+</Project>

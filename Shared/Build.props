@@ -1,0 +1,25 @@
+<Project >
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+		<GeneratePackageOnBuild Condition="'$(GeneratePackageOnBuild)' == ''">false</GeneratePackageOnBuild>
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+		<IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+	</PropertyGroup>
+	<PropertyGroup>
+		<DefineConstants Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(DefineConstants);CODE_ANALYSIS</DefineConstants>
+		<FinalDefineConstants Condition="'$(MSBuildProjectExtension)' == '.vbproj'">$(FinalDefineConstants),CODE_ANALYSIS=-1</FinalDefineConstants>
+	</PropertyGroup>
+	<PropertyGroup>
+		<NeutralLanguage Condition="'$(NeutralLanguage)' == ''">en-US</NeutralLanguage>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<!-- issues with HTTP rathjer than HTTPS -->
+		<NoWarn>$(NoWarn);NU1803</NoWarn>
+	</PropertyGroup>
+</Project>

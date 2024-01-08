@@ -1,4 +1,5 @@
 ﻿using SharpMoku.UI;
+
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -6,15 +7,15 @@ using System.Windows.Forms;
 
 namespace SharpMoku.UI
 {
-    /*
+	/*
      Credit Code for rounding
      https://stackoverflow.com/questions/42627293/label-with-smooth-rounded-corners
      */
 
-    public class ExtendLabel : Label
+	public class ExtendLabel : Label
     {
         public GomokuCellAttribute CellAttribute = new GomokuCellAttribute();
-        public SharpMoku.UI.ThemeSpace.Theme theme;
+        public Theme.Theme theme;
         [Browsable(true)]
         public Color _BackColor
         {

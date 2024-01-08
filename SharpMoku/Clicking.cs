@@ -14,6 +14,7 @@ namespace SharpMoku
 UIntPtr dwExtraInfo);
         private const UInt32 MOUSEEVENTF_LEFTDOWN = 0x0002;
         private const UInt32 MOUSEEVENTF_LEFTUP = 0x0004;
+        [DllImport("user32.dll")]
         private static extern void mouse_event(
                UInt32 dwFlags, // motion and click options
                UInt32 dx, // horizontal position or change

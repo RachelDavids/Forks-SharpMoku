@@ -1,0 +1,15 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+	        <ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<!-- Default is to build for net48 ONLY -->
+		<!-- any project wanting a net core should set these accordingly -->
+		<EnableNet48>true</EnableNet48>
+		<EnableNet5>false</EnableNet5>
+		<EnableNet6>false</EnableNet6>
+		<EnableNet7>false</EnableNet7>
+		<EnableNet8>false</EnableNet8>
+	</PropertyGroup>
+</Project>

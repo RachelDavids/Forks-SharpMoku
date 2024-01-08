@@ -7,16 +7,54 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku", "SharpMoku\Shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.SharpMoku", "SharpMokuUnitTest\Testing.SharpMoku.csproj", "{4DE88A36-BD13-4E2A-BC96-E0D71FAFD008}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "!!Solution!!", "!!Solution!!", "{55F51975-12D8-43F7-ACDE-ED3F7B3EDF24}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "!!Solution!!", "!!Solution!!", "{66539BAF-2DA8-4EA6-AC4B-156ACC7141DF}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.filenesting.json = .filenesting.json
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		global.json = global.json
 		LICENSE = LICENSE
+		My.Working.props = My.Working.props
+		My.Working.targets = My.Working.targets
+		NuGet.Config = NuGet.Config
 		README.md = README.md
 		SharpMoku.sln.DotSettings = SharpMoku.sln.DotSettings
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{19AD06DD-14E7-4A09-9C08-0D055D3C3896}"
+	ProjectSection(SolutionItems) = preProject
+		Shared\+Company.props = Shared\+Company.props
+		Shared\AssemblyInfo.props = Shared\AssemblyInfo.props
+		Shared\AssemblyInfo.targets = Shared\AssemblyInfo.targets
+		Shared\Build.props = Shared\Build.props
+		Shared\GendarmeAnalysis.props = Shared\GendarmeAnalysis.props
+		Shared\GendarmeAnalysis.targets = Shared\GendarmeAnalysis.targets
+		Shared\LanguageVersion.props = Shared\LanguageVersion.props
+		Shared\LanguageVersion.targets = Shared\LanguageVersion.targets
+		Shared\Metrics.props = Shared\Metrics.props
+		Shared\Metrics.targets = Shared\Metrics.targets
+		Shared\Pack.props = Shared\Pack.props
+		Shared\PackageVersions.props = Shared\PackageVersions.props
+		Shared\ProjectSystem.props = Shared\ProjectSystem.props
+		Shared\roslyn.globalconfig = Shared\roslyn.globalconfig
+		Shared\RoslynAnalysis.props = Shared\RoslynAnalysis.props
+		Shared\SharedPackages.Build.props = Shared\SharedPackages.Build.props
+		Shared\SharedPackages.CodeAnalysis.props = Shared\SharedPackages.CodeAnalysis.props
+		Shared\SharedPackages.CodeGeneration.props = Shared\SharedPackages.CodeGeneration.props
+		Shared\Solution.Gendarme.rules.xml = Shared\Solution.Gendarme.rules.xml
+		Shared\TargetFrameworks.props = Shared\TargetFrameworks.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary1", "SubProjects\ClassLibrary1\ClassLibrary1.csproj", "{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary2", "SubProjects\ClassLibrary2\ClassLibrary2.csproj", "{9E0B32A3-D7AE-41C4-82ED-05435DE862AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary3", "SubProjects\ClassLibrary3\ClassLibrary3.csproj", "{687A493A-3F69-4D95-9F7B-52F9C5989FFE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary4", "SubProjects\ClassLibrary4\ClassLibrary4.csproj", "{7B19EA2C-CB2C-4C3D-9542-22E1F5C69102}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +70,28 @@ Global
 		{4DE88A36-BD13-4E2A-BC96-E0D71FAFD008}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DE88A36-BD13-4E2A-BC96-E0D71FAFD008}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DE88A36-BD13-4E2A-BC96-E0D71FAFD008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E0B32A3-D7AE-41C4-82ED-05435DE862AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E0B32A3-D7AE-41C4-82ED-05435DE862AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E0B32A3-D7AE-41C4-82ED-05435DE862AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E0B32A3-D7AE-41C4-82ED-05435DE862AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{687A493A-3F69-4D95-9F7B-52F9C5989FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{687A493A-3F69-4D95-9F7B-52F9C5989FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{687A493A-3F69-4D95-9F7B-52F9C5989FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{687A493A-3F69-4D95-9F7B-52F9C5989FFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B19EA2C-CB2C-4C3D-9542-22E1F5C69102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B19EA2C-CB2C-4C3D-9542-22E1F5C69102}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B19EA2C-CB2C-4C3D-9542-22E1F5C69102}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B19EA2C-CB2C-4C3D-9542-22E1F5C69102}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{19AD06DD-14E7-4A09-9C08-0D055D3C3896} = {66539BAF-2DA8-4EA6-AC4B-156ACC7141DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB1A3C43-04D2-4FA2-9810-C74C02DC5A80}

@@ -1,42 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using SharpMoku.UI.Theme;
+using SharpMoku.Utility;
 
 namespace SharpMoku
 {
-    public class Global
-    {
-        private static SharpMokuSettings _CurrentSettings = null;
-        public static SharpMokuSettings CurrentSettings
-        {
-            get
-            {
+	public static class Global
+	{
+		private static SharpMokuSettings _currentSettings = null;
+		public static SharpMokuSettings CurrentSettings {
+			get {
 
-                if (_CurrentSettings == null)
-                {
-                    if (!System.IO.File.Exists(Utility.FileUtility.SettingPath))
-                    {
-                        Utility.SerializeUtility.CreateNewSettings(Utility.FileUtility.SettingPath);
-                    }
+				if (_currentSettings == null)
+				{
+					if (!System.IO.File.Exists(FileUtility.SettingPath))
+					{
+						SerializeUtility.Serialize(new SharpMokuSettings(), FileUtility.SettingPath);
+					}
 
-                    _CurrentSettings = Utility.SerializeUtility.DeserializeSettings(Utility.FileUtility.SettingPath);
+					_currentSettings = SerializeUtility.Deserialize<SharpMokuSettings>(FileUtility.SettingPath);
 
-                }
-                return _CurrentSettings;
-            }
-        }
-        public static void SaveSettings()
-        {
+				}
+				return _currentSettings;
+			}
+		}
+		public static void SaveSettings()
+		{
 
-            Utility.SerializeUtility.SerializeSettings(_CurrentSettings, Utility.FileUtility.SettingPath);
+			SerializeUtility.Serialize(_currentSettings, FileUtility.SettingPath);
 
-            _CurrentSettings = null;
-        }
+			_currentSettings = null;
+		}
 
-        public static Color BackColor => UI.ThemeSpace.ThemeFactory.BackColor(CurrentSettings.ThemeEnum);
-        public static Color ForeColor => UI.ThemeSpace.ThemeFactory.ForeColor(CurrentSettings.ThemeEnum);
-    }
+		public static Color BackColor => ThemeFactory.BackColor(CurrentSettings.ThemeEnum);
+		public static Color ForeColor => ThemeFactory.ForeColor(CurrentSettings.ThemeEnum);
+
+		public static void CreateNewSettings(string filename)
+		{
+			SerializeUtility.Serialize(new SharpMokuSettings(), filename);
+		}
+
+		public static void SerializeSettings(SharpMokuSettings setting, string filename)
+		{
+			SerializeUtility.Serialize(setting, filename);
+		}
+
+		public static SharpMokuSettings DeserializeSettings(string filename)
+		{
+			return SerializeUtility.Deserialize<SharpMokuSettings>(filename);
+		}
+	}
 }

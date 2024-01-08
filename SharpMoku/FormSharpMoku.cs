@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using SharpMoku.UI;
+using SharpMoku.UI.Theme;
 
 namespace SharpMoku
 {
@@ -26,7 +27,7 @@ namespace SharpMoku
 		public event Board.CellClickHandler CellClicked;
 		public event EventHandler HasFinishedMoveCursor;
 
-		private void UpdateTheme(UI.ThemeSpace.Theme theme)
+		private void UpdateTheme(Theme theme)
 		{
 
 			picGoMoku.Initial(theme);
@@ -49,7 +50,7 @@ namespace SharpMoku
 		private void NewGame(Game.GameModeEnum gameMode,
 							 int boardSize,
 							 int botSearchDepth,
-							 UI.ThemeSpace.ThemeFactory.ThemeEnum themeEnum) =>
+							 ThemeFactory.ThemeEnum themeEnum) =>
 				NewGame(gameMode, boardSize, botSearchDepth, themeEnum, null);
 
 		private void CreateGame(Game.GameModeEnum gameMode, int boardSize, int botDepth, Board board)
@@ -66,11 +67,11 @@ namespace SharpMoku
 		private void NewGame(Game.GameModeEnum gameMode,
 			int boardSize,
 			int botSearchDepth,
-			UI.ThemeSpace.ThemeFactory.ThemeEnum themeEnum,
+			ThemeFactory.ThemeEnum themeEnum,
 			Board board)
 		{
 
-			UI.ThemeSpace.Theme currentTheme = UI.ThemeSpace.ThemeFactory.Create(themeEnum);
+			Theme currentTheme = ThemeFactory.Create(themeEnum);
 			CreateGame(gameMode, boardSize, botSearchDepth, board);
 
 			const int cellWidth = 38;
@@ -179,13 +180,13 @@ namespace SharpMoku
 
 			switch (Global.CurrentSettings.ThemeEnum)
 			{
-				case UI.ThemeSpace.ThemeFactory.ThemeEnum.TicTacToe1:
-				case UI.ThemeSpace.ThemeFactory.ThemeEnum.TicTacToe2:
-				case UI.ThemeSpace.ThemeFactory.ThemeEnum.TicTacToe3:
+				case ThemeFactory.ThemeEnum.TicTacToe1:
+				case ThemeFactory.ThemeEnum.TicTacToe2:
+				case ThemeFactory.ThemeEnum.TicTacToe3:
 					whiteTurn = "X";
 					blackTurn = "O";
 					break;
-				case UI.ThemeSpace.ThemeFactory.ThemeEnum.TableTennis:
+				case ThemeFactory.ThemeEnum.TableTennis:
 					blackTurn = "Orange";
 					break;
 			}
@@ -260,10 +261,10 @@ namespace SharpMoku
 			 * Without Application.DoEvents
 			 * When player click on the cell, it will not be render immidately it will wait
 			 * until the bot has put the cell also. So instead of when player put black, the game render black first
-			 * the game just make the bot caluculate its position immidately then render both white and black
+			 * the game just make the bot calculate its position immediately then render both white and black
 			 *
 			 * 1.First solution I tried to use Timer to delay the bot action, it works but it has
-			 * the problem with UI thread becasue the thread created by the Timer cannot access UI thread
+			 * the problem with UI thread because the thread created by the Timer cannot access UI thread
 			 *
 			 * 2. Second solution, do not delay anything just put Application.DoEvents();
 			 */
@@ -357,7 +358,7 @@ namespace SharpMoku
 				return;
 			}
 
-			UpdateTheme(UI.ThemeSpace.ThemeFactory.Create(Global.CurrentSettings.ThemeEnum));
+			UpdateTheme(ThemeFactory.Create(Global.CurrentSettings.ThemeEnum));
 			undoToolStripMenuItem.Enabled = Global.CurrentSettings.IsAllowUndo;
 
 		}
@@ -396,7 +397,7 @@ namespace SharpMoku
 			}
 			string fileName = spf.FileName;
 
-			Utility.SerializeUtility.SerializeBoard(game.board, fileName);
+			Utility.SerializeUtility.Serialize(game.board, fileName);
 		}
 
 		private void loadBoardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -414,13 +415,13 @@ namespace SharpMoku
 			}
 			string fileName = opf.FileName;
 
-			Board board = Utility.SerializeUtility.DeserializeBoard(fileName);
+			Board board = Utility.SerializeUtility.Deserialize<Board>(fileName);
 
 			NewGame(Global.CurrentSettings.GameMode,
-				Global.CurrentSettings.BoardSize,
-				Global.CurrentSettings.BotDepth,
-				Global.CurrentSettings.ThemeEnum,
-				board);
+					Global.CurrentSettings.BoardSize,
+					Global.CurrentSettings.BotDepth,
+					Global.CurrentSettings.ThemeEnum,
+					board);
 
 		}
 
@@ -439,7 +440,7 @@ namespace SharpMoku
 			}
 			string fileName = spf.FileName;
 
-			Utility.SerializeUtility.SerializeBoard(game.board, fileName);
+			Utility.SerializeUtility.Serialize(game.board, fileName);
 
 		}
 
@@ -457,7 +458,7 @@ namespace SharpMoku
 				return;
 			}
 			string fileName = opf.FileName;
-			Board board = Utility.SerializeUtility.DeserializeBoard(fileName);
+			Board board = Utility.SerializeUtility.Deserialize<Board>(fileName);
 
 			Global.CurrentSettings.BoardSize = board.BoardSize;
 			NewGame(Global.CurrentSettings.GameMode,

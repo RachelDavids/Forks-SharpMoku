@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Label="Definitions">
+		<!--for an example see https://nugettoolsdev.azurewebsites.net/5.6.0/find-best-version-match?versionRange=%5B2-*%2C+3.0.0%5D&versions=1.1.0%0D%0A1.2.0-rc.1%0D%0A1.2.0-rc.2%0D%0A2.0.0%0D%0A3.0.0-beta.1 -->
+		<!--This is a practiucally open ended version -->
+		<LatestStablePackageRequiredVersion Condition="'$(LatestStablePackageRequiredVersion)' == ''">*</LatestStablePackageRequiredVersion>
+		<LatestIncludingPreReleasePackageRequiredVersion Condition="'$(LatestIncludingPreReleasePackageRequiredVersion)' == ''">*-*</LatestIncludingPreReleasePackageRequiredVersion>
+	</PropertyGroup>
+	<PropertyGroup Label="Main">
+		<BuildPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</BuildPackageRequiredVersion>
+		<BuildTasksPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</BuildTasksPackageRequiredVersion>
+		<CorePackageRequiredVersion>$(LatestStablePackageRequiredVersion)</CorePackageRequiredVersion>
+		<GendarmePackageRequiredVersion>$(LatestStablePackageRequiredVersion)</GendarmePackageRequiredVersion>
+		<NDeskOptionsPackageVersion>$(CorePackageRequiredVersion)</NDeskOptionsPackageVersion>
+	</PropertyGroup>
+	<PropertyGroup Label="3rdParty">
+		<ICSCDPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</ICSCDPackageRequiredVersion>
+		<MonoCecilPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</MonoCecilPackageRequiredVersion>
+		<FastColoredTextBoxPackageName>PavelTorgashov.Forms.FastColoredTextBox</FastColoredTextBoxPackageName>
+		<FastColoredTextBoxPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</FastColoredTextBoxPackageRequiredVersion>
+	</PropertyGroup>
+	<PropertyGroup Label="Microsoft">
+		<MSWCompatibilityPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</MSWCompatibilityPackageRequiredVersion>
+		<MSCodeAnalysisPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</MSCodeAnalysisPackageRequiredVersion>
+		<SystemMemoryPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</SystemMemoryPackageRequiredVersion>
+	</PropertyGroup>
+	<PropertyGroup Label="Test">
+		<MSTestPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</MSTestPackageRequiredVersion>
+		<MSTestSdkPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</MSTestSdkPackageRequiredVersion>
+		<NUnitPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</NUnitPackageRequiredVersion>
+	</PropertyGroup>
+
+</Project>

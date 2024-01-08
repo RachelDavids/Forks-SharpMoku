@@ -1,0 +1,15 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup>
+		<!-- Tool Creation in this solution is opt-in -->
+		<PackAsTool>false</PackAsTool>
+		<!-- Package Creation in this solution is opt-in -->
+		<IsPackable>false</IsPackable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageOutputPath>$(SolutionDir)PkgOut\</PackageOutputPath>
+		<!--<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
+		<!--<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>-->
+	</PropertyGroup>
+</Project>

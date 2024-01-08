@@ -1,0 +1,9 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+    <PropertyGroup>
+        <Company>SharpMoku</Company>
+        <CompanyIdentifier>SharpMoku</CompanyIdentifier>
+    </PropertyGroup>
+</Project>

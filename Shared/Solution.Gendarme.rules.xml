@@ -1,0 +1,69 @@
+<gendarme>
+  <ruleset name="allrules">
+	<exclusions>
+	  <exclusion Type="type">System.Range</exclusion>
+	  <exclusion Type="type">System.Index</exclusion>
+	</exclusions>
+	<rules include="*"
+		   from="Gendarme.Rules.BadPractice.dll">
+	  <parameter rule="EqualsShouldHandleNullArgRule" property="ExcludeGeneratedCode" value="false" />
+	</rules>
+	<rules include="*" from="Gendarme.Rules.Concurrency.dll" />
+	<rules include="*"
+		   exclude="NullDerefRule"
+		   from="Gendarme.Rules.Correctness.dll"/>
+	<rules include="*"
+		   exclude="ConsiderUsingNamedTypesRule"
+		   from="Gendarme.Rules.Design.dll">
+	  <parameter rule="MarkAssemblyWithAssemblyCompanyRule" property="CompanyName" value="SharpMoku" />
+	  <parameter rule="AvoidSmallNamespaceRule" property="Minimum" value="1" />
+	</rules>
+	<rules include="*" from="Gendarme.Rules.Design.Generic.dll"/>
+	<rules include="*" from="Gendarme.Rules.Design.Linq.dll"/>
+	<rules include="*"
+		   exclude="MissingExceptionConstructorsRule"
+		   from="Gendarme.Rules.Exceptions.dll" />
+	<rules include="*" from="Gendarme.Rules.Interoperability.dll"/>
+	<rules include="*"
+		   from="Gendarme.Rules.Naming.dll" >
+	  <parameter rule="AvoidDeepNamespaceHierarchyRule" property="MaxDepth" value="5" />
+	  <parameter rule="NamespaceShouldStartWithValidRootRule" property="RootNamespaces" value="SharpMoku,Testing" />
+	</rules>
+	<rules include="*" from="Gendarme.Rules.Performance.dll" />
+	<rules include="*"
+		   exclude="PreferTypeInfoOverTypeRule|ExitCodeIsLimitedOnUnixRule"
+		   from="Gendarme.Rules.Portability.dll" />
+	<rules include="*" from="Gendarme.Rules.Security.dll" />
+	<rules include="*" from="Gendarme.Rules.Security.Cas.dll" />
+	<rules include="*"
+		   exclude="MarkEnumerationsAsSerializableRule|MissingSerializationConstructorRule|MissingSerializableAttributeOnISerializableTypeRule"
+		   from="Gendarme.Rules.Serialization.dll">
+	  <parameter rule="UseCorrectSignatureForSerializationMethodsRule" property="RequireSerializableType" value="false" />
+	</rules>
+	<rules include="*" from="Gendarme.Rules.Ui.dll" />
+	<!--<rules include="*" exclude="AvoidUnnecessarySpecializationRule" from="Gendarme.Rules.Maintainability.dll"/>-->
+	<rules include="*"
+		   exclude ="AvoidLackOfCohesionOfMethodsRule"
+		   from="Gendarme.Rules.Maintainability.dll">
+	  <!--<parameter rule="AvoidComplexMethodsRule" property="SuccessThreshold" value="21" />-->
+	</rules>
+	<rules include="*" from="Gendarme.Rules.Globalization.dll"/>
+	<!--refactoring in progress rule broken -->
+	<!--<rules include="*" exclude="DefectsMustBeReportedRule" from="Gendarme.Rules.Gendarme.dll" />-->
+	<rules include="*" from="Gendarme.Rules.Gendarme.dll" />
+	<rules include="*" from="Gendarme.Rules.Interoperability.Com.dll" />
+	<!--<rules include="*" from="Gendarme.Rules.NUnit.dll"/>-->
+	<!--<rules include="*" from="Gendarme.Rules.MSTest.dll"/>-->
+	<rules include="*"
+		   exclude="AvoidSwitchStatementsRule"
+		   from="Gendarme.Rules.Smells.dll">
+	  <!--<parameter rule="AvoidLongMethodsRule" property="MaxSourceLinesOfCode" value="35" />-->
+	</rules>
+  </ruleset>
+  <ruleset name="unittestTests">
+	<rules include="*" from="Gendarme.Rules.NUnit.dll"/>
+	<rules include="*" from="Gendarme.Rules.MSTest.dll"/>
+	<rules include="*" from="Gendarme.Rules.Maintainability.dll"/>
+	<rules include="*" from="Gendarme.Rules.BadPractice.dll" />
+  </ruleset>
+</gendarme>

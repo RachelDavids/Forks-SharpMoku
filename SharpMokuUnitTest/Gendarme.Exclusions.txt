@@ -1,0 +1,87 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+# begin extra entries generated from defects
+# added on 08/01/2024 18:42:46 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.BadPractice.DisableDebuggingCodeRule
+M: System.Void Testing.SharpMoku.EvaluateTestingV2::Test01()
+
+R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
+M: System.Boolean Testing.SharpMoku.BoardTesting::IsBoardTheSame(SharpMoku.Board,SharpMoku.Board)
+M: System.Boolean Testing.SharpMoku.BoardTesting::IsDicContainKey(System.Collections.Generic.Dictionary`2<System.String,SharpMoku.Position>,System.Collections.Generic.List`1<SharpMoku.Position>)
+M: System.Boolean Testing.SharpMoku.EvaluateTestingV3::IsListValueEqual(System.Collections.Generic.List`1<System.Int32>,System.Collections.Generic.List`1<System.Int32>)
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: System.Void Testing.SharpMoku.PictureBoardTesting::GetBoardPosition()
+
+R: Gendarme.Rules.Correctness.MethodCanBeMadeStaticRule
+M: System.Boolean Testing.SharpMoku.BoardTesting::IsDicContainKey(System.Collections.Generic.Dictionary`2<System.String,SharpMoku.Position>,System.Collections.Generic.List`1<SharpMoku.Position>)
+M: System.Boolean Testing.SharpMoku.EvaluateTestingV3::IsListValueEqual(System.Collections.Generic.List`1<System.Int32>,System.Collections.Generic.List`1<System.Int32>)
+M: System.Void Testing.SharpMoku.GameTesting::PlayerVsBotUndo()
+
+R: Gendarme.Rules.Design.Generic.DoNotExposeGenericListsRule
+T: Testing.SharpMoku.BoardTesting
+T: Testing.SharpMoku.EvaluateTestingV3
+
+R: Gendarme.Rules.Design.MarkAssemblyWithAssemblyCompanyRule
+A: Testing.SharpMoku
+
+R: Gendarme.Rules.Exceptions.DoNotSwallowErrorsCatchingNonSpecificExceptionsRule
+M: System.Void Testing.SharpMoku.BoardTesting::PutStoneInvalidPosition()
+M: System.Void Testing.SharpMoku.BoardTesting::PutStoneInvalidStoneValue()
+
+R: Gendarme.Rules.Maintainability.AvoidComplexMethodsRule
+M: System.Boolean Testing.SharpMoku.BoardTesting::IsBoardTheSame(SharpMoku.Board,SharpMoku.Board)
+
+R: Gendarme.Rules.Maintainability.AvoidUnnecessarySpecializationRule
+M: System.Boolean Testing.SharpMoku.BoardTesting::IsDicContainKey(System.Collections.Generic.Dictionary`2<System.String,SharpMoku.Position>,System.Collections.Generic.List`1<SharpMoku.Position>)
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+M: System.Void Testing.SharpMoku.EvaluateTestingV2::calculateConsecutiveStoneSequenceScore()
+M: System.Void Testing.SharpMoku.EvaluateTestingV2::searchBotLosingPosition()
+
+R: Gendarme.Rules.Performance.AvoidEmptyMethodsRule
+M: System.Void Testing.SharpMoku.GameTesting::Ui_CellClicked(System.Object,SharpMoku.Board/PositionEventArgs)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: System.Void Testing.SharpMoku.BoardTesting::PutStone()
+M: System.Void Testing.SharpMoku.EvaluateTestingV3::ValuePosition()
+
+R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
+M: System.Void Testing.SharpMoku.GameTesting::Ui_CellClicked(System.Object,SharpMoku.Board/PositionEventArgs)
+
+R: Gendarme.Rules.Smells.AvoidCodeDuplicatedInSameClassRule
+T: Testing.SharpMoku.BoardTesting
+T: Testing.SharpMoku.EvaluateTestingV2
+T: Testing.SharpMoku.EvaluateTestingV3
+T: Testing.SharpMoku.GameTesting
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: System.Boolean Testing.SharpMoku.BoardTesting::IsBoardTheSame(SharpMoku.Board,SharpMoku.Board)
+M: System.Void Testing.SharpMoku.BoardTesting::PutStone()
+M: System.Void Testing.SharpMoku.EvaluateTestingV2::EvaluatVertical()
+M: System.Void Testing.SharpMoku.EvaluateTestingV2::GetStonePatternForDiagonal()
+M: System.Void Testing.SharpMoku.EvaluateTestingV2::GetStonePatternForHorizontal()
+M: System.Void Testing.SharpMoku.EvaluateTestingV2::GetStonePatternForVertical()
+M: System.Void Testing.SharpMoku.EvaluateTestingV3::GetCellValueInDirection()
+M: System.Void Testing.SharpMoku.EvaluateTestingV3::ValuePosition()
+M: System.Void Testing.SharpMoku.GameTesting::PlayerVsPlayerUndo()
+
+# end extra entries generated from defects
+

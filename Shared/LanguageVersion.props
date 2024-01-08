@@ -1,0 +1,9 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(MSBuildProjectExtension)' == '.csproj' ">
+		<LangVersion Condition="'$(LangVersion)' == ''">preview</LangVersion>
+		<Nullable Condition=" '$(Nullable)' == '' ">disable</Nullable>
+	</PropertyGroup>
+</Project>

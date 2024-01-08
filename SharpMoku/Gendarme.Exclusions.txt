@@ -1,0 +1,589 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+# begin extra entries generated from defects
+# added on 08/01/2024 18:42:33 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.BadPractice.AvoidVisibleConstantFieldRule
+T: SharpMoku.AI.EvaluateV3
+
+R: Gendarme.Rules.BadPractice.DoNotForgetNotImplementedMethodsRule
+M: System.String SharpMoku.SimpleLog::GetLogMessage()
+
+R: Gendarme.Rules.BadPractice.PreferOnEventOverrideRule
+M: System.Void SharpMoku.FormAbout::FormAbout_Load(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormCustomMessageBox::FormCustomMessageBox_Load(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormNewGame::FormNewGame_Load(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormOption::FormOption_Load(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::FormSharpMoku_Load(System.Object,System.EventArgs)
+
+R: Gendarme.Rules.BadPractice.UseFileOpenOnlyWithFileAccessRule
+M: T SharpMoku.Utility.SerializeUtility::Deserialize(System.String)
+
+R: Gendarme.Rules.Concurrency.NonConstantStaticFieldsShouldNotBeVisibleRule
+T: SharpMoku.AI.EvaluateV3
+
+R: Gendarme.Rules.Concurrency.WriteStaticFieldFromInstanceMethodRule
+M: System.Double SharpMoku.AI.EvaluateV3::evaluateBoardForWhite(SharpMoku.Board,System.Boolean)
+
+R: Gendarme.Rules.Correctness.AvoidConstructorsInStaticTypesRule
+T: SharpMoku.Clicking
+T: SharpMoku.Global
+T: SharpMoku.MouseAction
+T: SharpMoku.ShareGraphicObject
+T: SharpMoku.UI.ThemeSpace.ThemeFactory
+
+R: Gendarme.Rules.Correctness.AvoidFloatingPointEqualityRule
+M: System.Double SharpMoku.AI.EvaluateV2::calculateBoardScoreForOpponenet(SharpMoku.Board,System.Boolean)
+
+R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
+M: SharpMoku.AI.EvaluateV3/NumberofScorePattern SharpMoku.AI.EvaluateV3::valuePosition(System.Collections.Generic.List`1<System.Collections.Generic.List`1<System.Int32>>,System.Boolean)
+M: SharpMoku.AI.MoveScore SharpMoku.AI.Minimax::searchBotWinningPosition(SharpMoku.Board,SharpMoku.AI.IEvaluate)
+M: SharpMoku.AI.MoveScore SharpMoku.AI.Minimax::searchOpponentWinningPosition(SharpMoku.Board,SharpMoku.AI.IEvaluate)
+M: System.Boolean SharpMoku.AI.EvaluateV3::IsAnyInArrays(System.Collections.Generic.List`1<System.Collections.Generic.List`1<System.Int32>>,System.Collections.Generic.List`1<System.Int32>)
+M: System.Boolean SharpMoku.Board::IsThere5inRow(SharpMoku.Position)
+M: System.Boolean SharpMoku.Board::IsValidPosition(SharpMoku.Position)
+M: System.Collections.Generic.List`1<SharpMoku.AI.EvaluateV2/StonePattern> SharpMoku.AI.EvaluateV2::GetStonePatternForDiagonal(System.Int32[0...,0...],System.Boolean)
+M: System.Collections.Generic.List`1<SharpMoku.AI.EvaluateV2/StonePattern> SharpMoku.AI.EvaluateV2::GetStonePatternForHorizontal(System.Int32[0...,0...],System.Boolean)
+M: System.Collections.Generic.List`1<SharpMoku.AI.EvaluateV2/StonePattern> SharpMoku.AI.EvaluateV2::GetStonePatternForVertical(System.Int32[0...,0...],System.Boolean)
+M: System.Collections.Generic.List`1<SharpMoku.Position> SharpMoku.Board::GetListNeighborPosition(SharpMoku.Position,System.Int32)
+M: System.Collections.Generic.List`1<System.Collections.Generic.List`1<System.Int32>> SharpMoku.AI.EvaluateV3::GetListAllDirection(SharpMoku.Board,SharpMoku.Position,SharpMoku.Board/CellValue)
+M: System.Collections.Generic.List`1<System.Int32> SharpMoku.AI.EvaluateV3::GetCellValueInDirection(System.Int32[0...,0...],SharpMoku.Board/CellValue,SharpMoku.Position,SharpMoku.Position)
+M: System.Drawing.Point SharpMoku.UI.PictureBoxGoMoKu::GetLowerRightPoint(SharpMoku.Position)
+M: System.Int32 SharpMoku.AI.EvaluateV2::getScore(SharpMoku.Board,System.Boolean,System.Boolean)
+M: System.Int32 SharpMoku.AI.EvaluateV2::getScore(SharpMoku.Board)
+M: System.Int32 SharpMoku.AI.EvaluateV3::getScoreByPattern(SharpMoku.AI.EvaluateV3/NumberofScorePattern)
+M: System.Int32 SharpMoku.AI.EvaluateV3::heuristic(SharpMoku.Board)
+M: System.Void SharpMoku.Board::.ctor(SharpMoku.Board)
+M: System.Void SharpMoku.Board::PutStone(SharpMoku.Position,SharpMoku.Board/CellValue)
+M: System.Void SharpMoku.Board::PutStone(SharpMoku.Position)
+M: System.Void SharpMoku.Board::PutStoneAndSwitchTurn(SharpMoku.Position,SharpMoku.Board/CellValue)
+M: System.Void SharpMoku.Board::PutStoneAndSwitchTurn(SharpMoku.Position)
+M: System.Void SharpMoku.Board::RemoveStone(SharpMoku.Position)
+M: System.Void SharpMoku.Connect5Paint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.FormSharpMoku::MoveCursorTo(SharpMoku.Position)
+M: System.Void SharpMoku.UI.ClassicPaint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::PaintNeighbour(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::PaintStone(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.LabelCustomPaint.TicTacToe2::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::.ctor(SharpMoku.Board,System.Int32,System.Int32)
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::ApplyThemeToBoard(System.Windows.Forms.Panel)
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::ApplyThemeToBoard(System.Windows.Forms.PictureBox)
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::ApplyThemeToCell(SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.TicTacToe1::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.Utility.FileUtility::CopyFileIfItIsDifferentPath(System.String,System.String)
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: SharpMoku.UI.ThemeSpace.Theme SharpMoku.UI.ThemeSpace.ThemeFactory::Create(SharpMoku.UI.ThemeSpace.ThemeFactory/ThemeEnum)
+M: System.Drawing.Font SharpMoku.ShareGraphicObject::get_GoMokuBoardFont()
+M: System.Drawing.Point SharpMoku.UI.PictureBoxGoMoKu::GetLowerRightPoint(SharpMoku.Position)
+M: System.Drawing.SolidBrush SharpMoku.ShareGraphicObject::SolidBrush(System.Drawing.Color)
+M: System.Void SharpMoku.FormAbout::linkLabel1_LinkClicked(System.Object,System.Windows.Forms.LinkLabelLinkClickedEventArgs)
+M: System.Void SharpMoku.FormSharpMoku::toolStripMenuItemOption_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.UI.ClassicPaint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.ExtendLabel::MakeRound()
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
+
+R: Gendarme.Rules.Correctness.MethodCanBeMadeStaticRule
+M: System.Boolean SharpMoku.AI.EvaluateV3::IsAnyInArrays(System.Collections.Generic.List`1<System.Collections.Generic.List`1<System.Int32>>,System.Collections.Generic.List`1<System.Int32>)
+M: System.Boolean SharpMoku.Board::IsThereAnyOneWon()
+M: System.Boolean SharpMoku.Board::IsValidValue(System.Int32)
+M: System.Collections.Generic.List`1<System.Int32> SharpMoku.AI.EvaluateV3::GetCellValueInDirection(System.Int32[0...,0...],SharpMoku.Board/CellValue,SharpMoku.Position,SharpMoku.Position)
+M: System.Drawing.RectangleF SharpMoku.UI.LabelCustomPaint.GoMokuPaint::GetRectangleCircle(System.Int32,System.Int32)
+M: System.Int32 SharpMoku.AI.EvaluateV2::calculateConsecutiveStoneSequenceScore(System.Int32,SharpMoku.AI.EvaluateV2/BlockType,System.Boolean)
+M: System.Int32 SharpMoku.AI.EvaluateV3::getScoreByPattern(SharpMoku.AI.EvaluateV3/NumberofScorePattern)
+M: System.String SharpMoku.AI.Minimax::GetTab(System.Int32)
+M: System.Void SharpMoku.FormCustomMessageBox::SetTheme()
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetBottomBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetLeftBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetRightBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetTopBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::CopyImage(System.Drawing.Bitmap,System.Drawing.Graphics,System.Drawing.Rectangle)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.ThemeSpace.Theme)
+
+R: Gendarme.Rules.Correctness.ReviewUselessControlFlowRule
+M: System.Void SharpMoku.FormSharpMoku::Game_GameFinishedV2(SharpMoku.Board/WinStatus)
+
+R: Gendarme.Rules.Correctness.TypesWithDisposableFieldsShouldBeDisposableRule
+T: SharpMoku.Game
+T: SharpMoku.UI.LabelCustomPaint.GoMokuPaint
+
+R: Gendarme.Rules.Design.AvoidPropertiesInValueTypesRule
+T: SharpMoku.AI.MoveScore
+
+R: Gendarme.Rules.Design.AvoidVisibleFieldsRule
+T: SharpMoku.AI.EvaluateV2/StonePattern
+T: SharpMoku.AI.EvaluateV3
+T: SharpMoku.AI.EvaluateV3/ListStonePattern
+T: SharpMoku.AI.EvaluateV3/NumberofScorePattern
+T: SharpMoku.AI.Minimax
+T: SharpMoku.AI.Minimax/miniMaxParameter
+T: SharpMoku.Board
+T: SharpMoku.FormCustomMessageBox
+T: SharpMoku.Game
+T: SharpMoku.GomokuCellAttribute
+T: SharpMoku.MouseAction/Point
+T: SharpMoku.Position
+T: SharpMoku.UI.ExtendLabel
+T: SharpMoku.UI.ThemeSpace.Theme
+
+R: Gendarme.Rules.Design.AvoidVisibleNestedTypesRule
+T: SharpMoku.AI.EvaluateV2/BlockType
+T: SharpMoku.AI.EvaluateV2/StonePattern
+T: SharpMoku.AI.EvaluateV3/ListStonePattern
+T: SharpMoku.AI.EvaluateV3/NumberofScorePattern
+T: SharpMoku.AI.Minimax/miniMaxParameter
+T: SharpMoku.Board/CellClickHandler
+T: SharpMoku.Board/CellValue
+T: SharpMoku.Board/PositionEventArgs
+T: SharpMoku.Board/Turn
+T: SharpMoku.Board/WinStatus
+T: SharpMoku.FormOption/ThemChangedEventArgs
+T: SharpMoku.Game/GameModeEnum
+T: SharpMoku.Game/GameStateEnum
+T: SharpMoku.Game/WinStatusEventArgs
+T: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum
+T: SharpMoku.MouseAction/Point
+T: SharpMoku.UI.PictureBoxGoMoKu/CellClickHandler
+T: SharpMoku.UI.PictureBoxGoMoKu/PositionEventArgs
+T: SharpMoku.UI.ThemeSpace.ThemeFactory/ThemeEnum
+
+R: Gendarme.Rules.Design.ConsiderConvertingMethodToPropertyRule
+M: SharpMoku.MouseAction/Point SharpMoku.MouseAction::GetCursorPosition()
+M: SharpMoku.Position SharpMoku.AI.MoveScore::GetPosition()
+M: System.Boolean SharpMoku.Board::IsThereAnyOneWon()
+M: System.String SharpMoku.ILog::GetLogMessage()
+
+R: Gendarme.Rules.Design.ConsiderUsingStaticTypeRule
+T: SharpMoku.Clicking
+T: SharpMoku.Global
+T: SharpMoku.MouseAction
+T: SharpMoku.ShareGraphicObject
+T: SharpMoku.UI.ThemeSpace.ThemeFactory
+
+R: Gendarme.Rules.Design.DeclareEventHandlersCorrectlyRule
+E: SharpMoku.Board/CellClickHandler SharpMoku.FormSharpMoku::CellClicked
+E: SharpMoku.Board/CellClickHandler SharpMoku.UI.IUI::CellClicked
+E: SharpMoku.Board/CellClickHandler SharpMoku.UI.MOCKUI::CellClicked
+E: SharpMoku.UI.PictureBoxGoMoKu/CellClickHandler SharpMoku.UI.PictureBoxGoMoKu::CellClicked
+
+R: Gendarme.Rules.Design.EnumsShouldDefineAZeroValueRule
+T: SharpMoku.Board/Turn
+
+R: Gendarme.Rules.Design.Generic.AvoidDeclaringCustomDelegatesRule
+T: SharpMoku.Board/CellClickHandler
+T: SharpMoku.FormCustomMessageBox/DisplayDialogCallback
+T: SharpMoku.UI.PictureBoxGoMoKu/CellClickHandler
+
+R: Gendarme.Rules.Design.Generic.AvoidMethodWithUnusedGenericTypeRule
+M: T SharpMoku.Utility.SerializeUtility::Deserialize(System.String)
+
+R: Gendarme.Rules.Design.Generic.DoNotExposeGenericListsRule
+T: SharpMoku.AI.EvaluateV2
+T: SharpMoku.AI.EvaluateV3
+T: SharpMoku.AI.EvaluateV3/ListStonePattern
+T: SharpMoku.Board
+
+R: Gendarme.Rules.Design.Generic.UseGenericEventHandlerRule
+T: SharpMoku.Board/CellClickHandler
+
+R: Gendarme.Rules.Design.ImplementEqualsAndGetHashCodeInPairRule
+T: SharpMoku.Position
+
+R: Gendarme.Rules.Design.MarkAssemblyWithAssemblyCompanyRule
+A: SharpMoku
+
+R: Gendarme.Rules.Exceptions.AvoidThrowingBasicExceptionsRule
+M: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum SharpMoku.UI.PictureBoxGoMoKu::GetBoardPosition(System.Int32,System.Int32)
+M: System.Boolean SharpMoku.Board::IsThereAnyOneWon()
+M: System.Collections.Generic.List`1<SharpMoku.AI.EvaluateV2/StonePattern> SharpMoku.AI.EvaluateV2::GetStonePatternForDiagonal(System.Int32[0...,0...],System.Boolean)
+M: System.Void SharpMoku.Board::RemoveStone(SharpMoku.Position)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::LoadPositionIntersection(System.Collections.Generic.List`1<System.Tuple`2<System.Int32,System.Int32>>&)
+
+R: Gendarme.Rules.Exceptions.DoNotSwallowErrorsCatchingNonSpecificExceptionsRule
+M: System.Void SharpMoku.SimpleLog::ClearLog()
+M: System.Void SharpMoku.SimpleLog::Log(System.String)
+
+R: Gendarme.Rules.Exceptions.InstantiateArgumentExceptionCorrectlyRule
+M: SharpMoku.Position SharpMoku.AI.Minimax::calculateNextMove(System.Int32)
+
+R: Gendarme.Rules.Exceptions.UseObjectDisposedExceptionRule
+M: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum SharpMoku.UI.PictureBoxGoMoKu::GetBoardPosition(System.Int32,System.Int32)
+M: System.Drawing.Point SharpMoku.UI.PictureBoxGoMoKu::GetLowerRightPoint(SharpMoku.Position)
+M: System.Void SharpMoku.FormCustomMessageBox::DisplayDialog()
+M: System.Void SharpMoku.FormCustomMessageBox::set_Message(System.String)
+M: System.Void SharpMoku.FormCustomMessageBox::set_ShowCancel(System.Boolean)
+M: System.Void SharpMoku.FormCustomMessageBox::ShowDialogAtCenter()
+M: System.Void SharpMoku.FormSharpMoku::Game_BotFinishedThinking(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::Game_BotThinking(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::Game_GameFinished(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::MoveCursorTo(SharpMoku.Position)
+M: System.Void SharpMoku.FormSharpMoku::RenderUI()
+M: System.Void SharpMoku.UI.ExtendLabel::set__BackColor(System.Drawing.Color)
+M: System.Void SharpMoku.UI.ExtendLabel::set_CustomPaint(SharpMoku.UI.IExtendLabelCustomPaint)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::Initial(SharpMoku.UI.ThemeSpace.Theme)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::ReleaseResource()
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::SetBoad(SharpMoku.Board)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::SetBoardValueToLabel()
+
+R: Gendarme.Rules.Interoperability.CentralizePInvokesIntoNativeMethodsTypeRule
+M: System.Boolean SharpMoku.MouseAction::GetCursorPos(SharpMoku.MouseAction/Point&)
+M: System.Boolean SharpMoku.MouseAction::SetCursorPos(System.Int32,System.Int32)
+M: System.Void SharpMoku.Clicking::mouse_event(System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.IntPtr)
+M: System.Void SharpMoku.Clicking::mouse_event(System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UIntPtr)
+M: System.Void SharpMoku.MouseAction::mouse_event(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)
+
+R: Gendarme.Rules.Interoperability.MarshalBooleansInPInvokeDeclarationsRule
+M: System.Boolean SharpMoku.MouseAction::SetCursorPos(System.Int32,System.Int32)
+
+R: Gendarme.Rules.Maintainability.AvoidComplexMethodsRule
+M: System.Int32 SharpMoku.AI.EvaluateV3::getScoreByPattern(SharpMoku.AI.EvaluateV3/NumberofScorePattern)
+
+R: Gendarme.Rules.Maintainability.AvoidUnnecessarySpecializationRule
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::ApplyThemeToBoard(System.Windows.Forms.Panel)
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::ApplyThemeToBoard(System.Windows.Forms.PictureBox)
+
+R: Gendarme.Rules.Maintainability.ExtensionModulesShouldBeMarkedWithAttributeRule
+T: SharpMoku.Utility.Extensions
+
+R: Gendarme.Rules.Maintainability.VariableNamesShouldNotMatchFieldNamesRule
+T: SharpMoku.AI.EvaluateV2/StonePattern
+T: SharpMoku.Game
+T: SharpMoku.SimpleLog
+T: SharpMoku.UI.LabelCustomPaint.GoMokuPaint
+T: SharpMoku.UI.PictureBoxGoMoKu
+
+R: Gendarme.Rules.Naming.AvoidNonAlphanumericIdentifierRule
+E: System.EventHandler SharpMoku.FormOption::Themed_Changed
+M: System.Drawing.Color SharpMoku.UI.ExtendLabel::get__BackColor()
+M: System.Drawing.Drawing2D.GraphicsPath SharpMoku.UI.ExtendLabel::_getRoundRectangle(System.Drawing.Rectangle)
+M: System.Void SharpMoku.FormSharpMoku::Game_BotFinishedThinking(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::Game_BotThinking(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::Game_GameFinished(System.Object,System.EventArgs)
+M: System.Void SharpMoku.UI.ExtendLabel::set__BackColor(System.Drawing.Color)
+M: System.Void SharpMoku.UI.IUI::Game_BotFinishedThinking(System.Object,System.EventArgs)
+M: System.Void SharpMoku.UI.IUI::Game_BotThinking(System.Object,System.EventArgs)
+M: System.Void SharpMoku.UI.IUI::Game_GameFinished(System.Object,System.EventArgs)
+M: System.Void SharpMoku.UI.MOCKUI::Game_BotFinishedThinking(System.Object,System.EventArgs)
+M: System.Void SharpMoku.UI.MOCKUI::Game_BotThinking(System.Object,System.EventArgs)
+M: System.Void SharpMoku.UI.MOCKUI::Game_GameFinished(System.Object,System.EventArgs)
+T: SharpMoku.AI.EvaluateV2
+T: SharpMoku.AI.EvaluateV3
+T: SharpMoku.AI.Minimax
+
+R: Gendarme.Rules.Naming.AvoidRedundancyInMethodNameRule
+M: System.Boolean SharpMoku.Board::IsValidPosition(SharpMoku.Position)
+M: System.Collections.Generic.Dictionary`2<System.String,SharpMoku.Position> SharpMoku.Board::GetHshByCellValue(SharpMoku.Board/CellValue)
+M: System.Collections.Generic.List`1<SharpMoku.Position> SharpMoku.Board::GetListNeighborPosition(SharpMoku.Position,System.Int32)
+M: System.Collections.Generic.List`1<SharpMoku.Position> SharpMoku.Board::GetListNeighborPosition(SharpMoku.Position)
+M: System.Double SharpMoku.AI.EvaluateV2::calculateBoardScoreForOpponenet(SharpMoku.Board,System.Boolean)
+M: System.Double SharpMoku.AI.EvaluateV3::evaluateBoardForWhite(SharpMoku.Board,System.Boolean)
+M: System.Double SharpMoku.AI.IEvaluate::evaluateBoard(SharpMoku.Board,System.Boolean)
+M: System.Void SharpMoku.FormSharpMoku::UpdateTheme(SharpMoku.UI.ThemeSpace.Theme)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.ThemeSpace.Theme)
+M: System.Void SharpMoku.Utility.SerializeUtility::SerializeBoard(SharpMoku.Board,System.String)
+
+R: Gendarme.Rules.Naming.NamespaceShouldStartWithValidRootRule
+A: SharpMoku
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+M: SharpMoku.AI.EvaluateV3/NumberofScorePattern SharpMoku.AI.EvaluateV3::valuePosition(System.Collections.Generic.List`1<System.Collections.Generic.List`1<System.Int32>>,System.Boolean)
+M: SharpMoku.AI.MoveScore SharpMoku.AI.Minimax::minimaxSearchAlphaBeta(System.Int32,SharpMoku.Board,System.Boolean,System.Double,System.Double)
+M: SharpMoku.AI.MoveScore SharpMoku.AI.Minimax::searchBotWinningPosition(SharpMoku.Board,SharpMoku.AI.IEvaluate)
+M: SharpMoku.AI.MoveScore SharpMoku.AI.Minimax::searchOpponentWinningPosition(SharpMoku.Board,SharpMoku.AI.IEvaluate)
+M: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum SharpMoku.UI.PictureBoxGoMoKu::GetBoardPosition(System.Int32,System.Int32)
+M: SharpMoku.MouseAction/Point SharpMoku.MouseAction::convertDrawingPointToStructPoint(System.Drawing.Point)
+M: SharpMoku.Position SharpMoku.AI.Minimax::calculateNextMove(System.Int32)
+M: System.Boolean SharpMoku.MouseAction::SetCursorPosition(System.Int32,System.Int32)
+M: System.Boolean SharpMoku.UI.PictureBoxGoMoKu::IsIntersecton(System.Int32,System.Int32)
+M: System.Collections.Generic.List`1<SharpMoku.Position> SharpMoku.Board::generateNeighbourMoves()
+M: System.Collections.Generic.List`1<SharpMoku.Position> SharpMoku.Board::generateNeighbourMoves(System.Int32)
+M: System.Collections.Generic.List`1<System.Collections.Generic.List`1<System.Int32>> SharpMoku.AI.EvaluateV3/ListStonePattern::convertListValue(System.Collections.Generic.List`1<System.Collections.Generic.List`1<System.Int32>>)
+M: System.Double SharpMoku.AI.EvaluateV1::evaluateBoard(SharpMoku.Board,System.Boolean)
+M: System.Double SharpMoku.AI.EvaluateV2::calculateBoardScoreForOpponenet(SharpMoku.Board,System.Boolean)
+M: System.Double SharpMoku.AI.EvaluateV2::evaluateBoard(SharpMoku.Board,System.Boolean)
+M: System.Double SharpMoku.AI.EvaluateV3::evaluateBoard(SharpMoku.Board,System.Boolean)
+M: System.Double SharpMoku.AI.EvaluateV3::evaluateBoardForWhite(SharpMoku.Board,System.Boolean)
+M: System.Double SharpMoku.AI.IEvaluate::evaluateBoard(SharpMoku.Board,System.Boolean)
+M: System.Drawing.Drawing2D.GraphicsPath SharpMoku.UI.ExtendLabel::_getRoundRectangle(System.Drawing.Rectangle)
+M: System.Int32 SharpMoku.AI.EvaluateV1::getScore(SharpMoku.Board)
+M: System.Int32 SharpMoku.AI.EvaluateV2::calculateConsecutiveStoneSequenceScore(SharpMoku.AI.EvaluateV2/StonePattern,System.Boolean)
+M: System.Int32 SharpMoku.AI.EvaluateV2::calculateConsecutiveStoneSequenceScore(System.Int32,SharpMoku.AI.EvaluateV2/BlockType,System.Boolean)
+M: System.Int32 SharpMoku.AI.EvaluateV2::getScore(SharpMoku.Board,System.Boolean,System.Boolean)
+M: System.Int32 SharpMoku.AI.EvaluateV2::getScore(SharpMoku.Board)
+M: System.Int32 SharpMoku.AI.EvaluateV3::getScore(SharpMoku.Board)
+M: System.Int32 SharpMoku.AI.EvaluateV3::getScoreByPattern(SharpMoku.AI.EvaluateV3/NumberofScorePattern)
+M: System.Int32 SharpMoku.AI.EvaluateV3::heuristic(SharpMoku.Board)
+M: System.Int32 SharpMoku.AI.IEvaluate::getScore(SharpMoku.Board)
+M: System.Void SharpMoku.Board::PutStone(System.Int32,System.Int32,System.Int32)
+M: System.Void SharpMoku.FormCustomMessageBox::btnCancel_Click_1(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormCustomMessageBox::btnOK_Click_1(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormOption::cboTheme_SelectedIndexChanged_1(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::copyBoardToolStripMenuItem_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::loadBoardToolStripMenuItem_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::MoveCursor(System.Drawing.Point,System.Drawing.Point)
+M: System.Void SharpMoku.FormSharpMoku::MoveCursor(System.Drawing.Point)
+M: System.Void SharpMoku.ILog::Log(System.String)
+M: System.Void SharpMoku.SimpleLog::Log(System.String)
+M: System.Void SharpMoku.SimpleLog::WriteLog(System.String)
+M: System.Void SharpMoku.StringBuilderLog::Log(System.String)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
+P: SharpMoku.AI.EvaluateV3/ListStonePattern SharpMoku.AI.EvaluateV3::listStonePatternforBlack()
+P: SharpMoku.AI.EvaluateV3/ListStonePattern SharpMoku.AI.EvaluateV3::listStonePatternforWhite()
+P: SharpMoku.Board SharpMoku.AI.Minimax/miniMaxParameter::board()
+P: System.Collections.Generic.Dictionary`2<System.String,SharpMoku.Position> SharpMoku.Board::dicBlackStone()
+P: System.Collections.Generic.Dictionary`2<System.String,SharpMoku.Position> SharpMoku.Board::dicNeighbour()
+P: System.Collections.Generic.Dictionary`2<System.String,SharpMoku.Position> SharpMoku.Board::dicWhiteStone()
+P: System.Collections.Generic.List`1<System.Tuple`2<System.Int32,System.Int32>> SharpMoku.UI.PictureBoxGoMoKu::positionIntersectionList()
+P: System.Drawing.Color SharpMoku.UI.ExtendLabel::_BackColor()
+P: System.Int32 SharpMoku.UI.PictureBoxGoMoKu::cellHeight()
+P: System.Int32 SharpMoku.UI.PictureBoxGoMoKu::cellWidth()
+T: SharpMoku.AI.Minimax/miniMaxParameter
+
+R: Gendarme.Rules.Naming.UseCorrectSuffixRule
+T: SharpMoku.Game/GameModeEnum
+T: SharpMoku.Game/GameStateEnum
+T: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum
+T: SharpMoku.UI.ThemeSpace.ThemeFactory/ThemeEnum
+
+R: Gendarme.Rules.Performance.AvoidEmptyMethodsRule
+M: System.Void SharpMoku.FormCustomMessageBox::SetTheme()
+M: System.Void SharpMoku.FormOption::cboTheme_SelectedIndexChanged_1(System.Object,System.EventArgs)
+M: System.Void SharpMoku.SimpleLog::WriteLog(System.String)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.ThemeSpace.Theme)
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::P_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum SharpMoku.UI.PictureBoxGoMoKu::GetBoardPosition(System.Int32,System.Int32)
+M: System.Void SharpMoku.FormNewGame::btnOK_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormNewGame::InitialValue()
+M: System.Void SharpMoku.FormOption::btnOK_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormOption::InitialValue()
+M: System.Void SharpMoku.FormSharpMoku::FormSharpMoku_Load(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::Game_GameFinishedV2(SharpMoku.Board/WinStatus)
+M: System.Void SharpMoku.FormSharpMoku::loadBoardToolStripMenuItem_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::toolStripMenuItem1_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::toolStripMenuItemNewGame_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::toolStripMenuItemOption_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::Initial(SharpMoku.UI.ThemeSpace.Theme)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::PictureBoxGoMoKu_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
+
+R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
+M: System.Void SharpMoku.Clicking::mouse_event(System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UIntPtr)
+M: System.Void SharpMoku.FormCustomMessageBox::SetTheme()
+M: System.Void SharpMoku.FormSharpMoku::copyBoardToolStripMenuItem_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::loadBoardToolStripMenuItem_Click(System.Object,System.EventArgs)
+M: System.Void SharpMoku.FormSharpMoku::TShowPicGoMokue_Tick(System.Object,System.EventArgs)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::P_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
+
+R: Gendarme.Rules.Performance.AvoidUninstantiatedInternalClassesRule
+T: SharpMoku.AI.EvaluateV1
+
+R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
+M: System.Void SharpMoku.AI.EvaluateV3/NumberofScorePattern::.ctor()
+M: System.Void SharpMoku.AI.EvaluateV3/NumberofScorePattern::.ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)
+M: System.Void SharpMoku.AI.Minimax::.ctor(SharpMoku.Board,SharpMoku.AI.IEvaluate,SharpMoku.ILog)
+M: System.Void SharpMoku.FormAbout::.ctor()
+M: System.Void SharpMoku.FormCustomMessageBox::.ctor()
+M: System.Void SharpMoku.FormNewGame::.ctor()
+M: System.Void SharpMoku.FormOption::.ctor()
+M: System.Void SharpMoku.FormSharpMoku::.ctor()
+M: System.Void SharpMoku.Game::.ctor(SharpMoku.UI.IUI,SharpMoku.Board,SharpMoku.AI.IEvaluate,System.Int32,SharpMoku.Game/GameModeEnum)
+M: System.Void SharpMoku.Game::.ctor(SharpMoku.UI.IUI,System.Int32,SharpMoku.AI.IEvaluate,System.Int32,SharpMoku.Game/GameModeEnum)
+M: System.Void SharpMoku.GomokuCellAttribute::.ctor()
+M: System.Void SharpMoku.SharpMokuSettings::.ctor()
+M: System.Void SharpMoku.UI.ExtendLabel::.ctor()
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::.ctor(System.String,System.String,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Pen,System.Drawing.Pen)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaintBuilder::.ctor()
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::.ctor(SharpMoku.Board,System.Int32,System.Int32)
+M: System.Void SharpMoku.UI.ThemeSpace.GomokuThemeBuilder::.ctor()
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::.ctor()
+M: System.Void SharpMoku.UI.ThemeSpace.ThemeFactory::.cctor()
+
+R: Gendarme.Rules.Performance.AvoidUnsealedUninheritedInternalTypeRule
+T: SharpMoku.AI.EvaluateV1
+T: SharpMoku.UI.LabelCustomPaint.TicTacToe3
+
+R: Gendarme.Rules.Performance.AvoidUnusedParametersRule
+M: System.Double SharpMoku.AI.EvaluateV3::evaluateBoardForWhite(SharpMoku.Board,System.Boolean)
+M: System.Void SharpMoku.SimpleLog::WriteLog(System.String)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetBottomBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetLeftBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetRightBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetTopBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.ThemeSpace.Theme)
+
+R: Gendarme.Rules.Performance.CompareWithEmptyStringEfficientlyRule
+M: System.Boolean SharpMoku.UI.ThemeSpace.Theme::get_HasImage()
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::PaintStone(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::LoadBoardImage()
+
+R: Gendarme.Rules.Performance.OverrideValueTypeDefaultsRule
+T: SharpMoku.AI.EvaluateV2/StonePattern
+T: SharpMoku.AI.MoveScore
+T: SharpMoku.MouseAction/Point
+
+R: Gendarme.Rules.Performance.PreferLiteralOverInitOnlyFieldsRule
+T: SharpMoku.AI.EvaluateV2
+
+R: Gendarme.Rules.Performance.UseStringEmptyRule
+M: System.Boolean SharpMoku.UI.ThemeSpace.Theme::get_HasImage()
+M: System.Void SharpMoku.SimpleLog::.ctor(System.String)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::.ctor(System.String,System.String,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Pen,System.Drawing.Pen)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::PaintStone(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaintBuilder::.ctor()
+M: System.Void SharpMoku.UI.ThemeSpace.GomokuThemeBuilder::.ctor()
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::.ctor()
+M: System.Void SharpMoku.UI.ThemeSpace.Theme::LoadBoardImage()
+
+R: Gendarme.Rules.Portability.NewLineLiteralRule
+M: System.Void SharpMoku.FormSharpMoku::Game_GameFinishedV2(SharpMoku.Board/WinStatus)
+
+R: Gendarme.Rules.Smells.AvoidCodeDuplicatedInSameClassRule
+T: SharpMoku.AI.EvaluateV2
+T: SharpMoku.AI.Minimax
+T: SharpMoku.FormCustomMessageBox
+T: SharpMoku.FormSharpMoku
+
+R: Gendarme.Rules.Smells.AvoidLargeClassesRule
+T: SharpMoku.AI.EvaluateV3/ListStonePattern
+T: SharpMoku.AI.EvaluateV3/NumberofScorePattern
+T: SharpMoku.Game
+T: SharpMoku.UI.LabelCustomPaint.GoMokuPaint
+T: SharpMoku.UI.LabelCustomPaint.GoMokuPaintBuilder
+T: SharpMoku.UI.PictureBoxGoMoKu
+T: SharpMoku.UI.ThemeSpace.GomokuThemeBuilder
+T: SharpMoku.UI.ThemeSpace.ThemeFactory
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: SharpMoku.AI.MoveScore SharpMoku.AI.Minimax::minimaxSearchAlphaBeta(System.Int32,SharpMoku.Board,System.Boolean,System.Double,System.Double)
+M: SharpMoku.Position SharpMoku.AI.Minimax::calculateNextMove(System.Int32)
+M: System.Collections.Generic.List`1<SharpMoku.AI.EvaluateV2/StonePattern> SharpMoku.AI.EvaluateV2::GetStonePatternForDiagonal(System.Int32[0...,0...],System.Boolean)
+M: System.Collections.Generic.List`1<SharpMoku.AI.EvaluateV2/StonePattern> SharpMoku.AI.EvaluateV2::GetStonePatternForHorizontal(System.Int32[0...,0...],System.Boolean)
+M: System.Collections.Generic.List`1<SharpMoku.AI.EvaluateV2/StonePattern> SharpMoku.AI.EvaluateV2::GetStonePatternForVertical(System.Int32[0...,0...],System.Boolean)
+M: System.Collections.Generic.List`1<SharpMoku.Position> SharpMoku.Board::generateNeighbourMoves(System.Int32)
+M: System.Collections.Generic.List`1<System.Int32> SharpMoku.AI.EvaluateV3::GetCellValueInDirection(System.Int32[0...,0...],SharpMoku.Board/CellValue,SharpMoku.Position,SharpMoku.Position)
+M: System.Int32 SharpMoku.AI.EvaluateV2::calculateConsecutiveStoneSequenceScore(System.Int32,SharpMoku.AI.EvaluateV2/BlockType,System.Boolean)
+M: System.Int32 SharpMoku.AI.EvaluateV3::getScoreByPattern(SharpMoku.AI.EvaluateV3/NumberofScorePattern)
+M: System.Void SharpMoku.Board::AdjustEmptyNeighborOf(SharpMoku.Position)
+M: System.Void SharpMoku.Game::Undo()
+M: System.Void SharpMoku.MouseAction::WindMouse(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)
+M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::PaintBorder(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.LabelCustomPaint.TicTacToe3::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::Initial(SharpMoku.UI.ThemeSpace.Theme)
+
+R: Gendarme.Rules.Smells.AvoidLongParameterListsRule
+T: SharpMoku.Game
+T: SharpMoku.MouseAction
+T: SharpMoku.UI.LabelCustomPaint.GoMokuPaint
+T: SharpMoku.UI.ThemeSpace.GomokuTheme
+
+R: Gendarme.Rules.Smells.AvoidUnnecessaryDelegationRule
+T: SharpMoku.Global
+T: SharpMoku.Utility.FileUtility
+
+# end extra entries generated from defects
+
+# begin extra entries generated from defects
+# added on 08/01/2024 19:09:39 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Correctness.AvoidConstructorsInStaticTypesRule
+T: SharpMoku.UI.Theme.ThemeFactory
+
+R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
+M: System.Void SharpMoku.UI.Theme.Theme::ApplyThemeToBoard(System.Windows.Forms.Panel)
+M: System.Void SharpMoku.UI.Theme.Theme::ApplyThemeToBoard(System.Windows.Forms.PictureBox)
+M: System.Void SharpMoku.UI.Theme.Theme::ApplyThemeToCell(SharpMoku.UI.ExtendLabel)
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: SharpMoku.UI.Theme.Theme SharpMoku.UI.Theme.ThemeFactory::Create(SharpMoku.UI.Theme.ThemeFactory/ThemeEnum)
+
+R: Gendarme.Rules.Correctness.MethodCanBeMadeStaticRule
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.Theme.Theme)
+
+R: Gendarme.Rules.Correctness.ReviewUselessControlFlowRule
+M: SharpMoku.UI.Theme.Theme SharpMoku.UI.Theme.ThemeFactory::Create(SharpMoku.UI.Theme.ThemeFactory/ThemeEnum)
+
+R: Gendarme.Rules.Design.AvoidVisibleFieldsRule
+T: SharpMoku.UI.Theme.Theme
+
+R: Gendarme.Rules.Design.AvoidVisibleNestedTypesRule
+T: SharpMoku.UI.Theme.ThemeFactory/ThemeEnum
+
+R: Gendarme.Rules.Design.ConsiderUsingStaticTypeRule
+T: SharpMoku.UI.Theme.ThemeFactory
+
+R: Gendarme.Rules.Exceptions.UseObjectDisposedExceptionRule
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::Initial(SharpMoku.UI.Theme.Theme)
+
+R: Gendarme.Rules.Maintainability.AvoidUnnecessarySpecializationRule
+M: System.Void SharpMoku.UI.Theme.Theme::ApplyThemeToBoard(System.Windows.Forms.Panel)
+M: System.Void SharpMoku.UI.Theme.Theme::ApplyThemeToBoard(System.Windows.Forms.PictureBox)
+
+R: Gendarme.Rules.Naming.AvoidRedundancyInMethodNameRule
+M: System.Void SharpMoku.FormSharpMoku::UpdateTheme(SharpMoku.UI.Theme.Theme)
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.Theme.Theme)
+
+R: Gendarme.Rules.Naming.AvoidRedundancyInTypeNameRule
+T: SharpMoku.UI.Theme.ThemeFactory
+
+R: Gendarme.Rules.Naming.UseCorrectSuffixRule
+T: SharpMoku.UI.Theme.ThemeFactory/ThemeEnum
+
+R: Gendarme.Rules.Performance.AvoidEmptyMethodsRule
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.Theme.Theme)
+M: System.Void SharpMoku.UI.Theme.Theme::P_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::Initial(SharpMoku.UI.Theme.Theme)
+
+R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
+M: System.Void SharpMoku.UI.Theme.Theme::P_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
+
+R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
+M: System.Void SharpMoku.UI.Theme.GomokuThemeBuilder::.ctor()
+M: System.Void SharpMoku.UI.Theme.Theme::.ctor()
+M: System.Void SharpMoku.UI.Theme.ThemeFactory::.cctor()
+
+R: Gendarme.Rules.Performance.AvoidUnusedParametersRule
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.Theme.Theme)
+
+R: Gendarme.Rules.Performance.CompareWithEmptyStringEfficientlyRule
+M: System.Boolean SharpMoku.UI.Theme.Theme::get_HasImage()
+M: System.Void SharpMoku.UI.Theme.Theme::LoadBoardImage()
+
+R: Gendarme.Rules.Performance.UseStringEmptyRule
+M: System.Boolean SharpMoku.UI.Theme.Theme::get_HasImage()
+M: System.Void SharpMoku.UI.Theme.GomokuThemeBuilder::.ctor()
+M: System.Void SharpMoku.UI.Theme.Theme::.ctor()
+M: System.Void SharpMoku.UI.Theme.Theme::LoadBoardImage()
+
+R: Gendarme.Rules.Smells.AvoidLargeClassesRule
+T: SharpMoku.UI.Theme.GomokuThemeBuilder
+T: SharpMoku.UI.Theme.ThemeFactory
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: System.Void SharpMoku.UI.PictureBoxGoMoKu::Initial(SharpMoku.UI.Theme.Theme)
+
+R: Gendarme.Rules.Smells.AvoidLongParameterListsRule
+T: SharpMoku.UI.Theme.GomokuTheme
+
+# end extra entries generated from defects
+

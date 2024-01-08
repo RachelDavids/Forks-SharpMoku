@@ -1,0 +1,23 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Product>Chaucer Code Analysis (Gendarme)</Product>
+		<!--<AssemblyTitle>$(CompanyIdentifier).$(MSBuildProjectName)</AssemblyTitle>-->
+		<AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+	</PropertyGroup>
+	<PropertyGroup>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<GenerateComVisibleAttribute>true</GenerateComVisibleAttribute>
+		<ComVisible>false</ComVisible>
+		<!-- Since Mono.Cecil is not marked ClsCompliant, we should avoid doing so :( -->
+		<MarkClsCompliant Condition="'$(MarkClsCompliant)' == ''">AlwaysFalse</MarkClsCompliant>
+	</PropertyGroup>
+	<PropertyGroup Label="Version">
+		<Today>$([System.DateTime]::Now.ToString("y.M.d"))</Today>
+		<AssemblyBuildCycle Condition=" '$(AssemblyBuildCycle)' == ''">0</AssemblyBuildCycle>
+		<AssemblyVersion>$(Today).$(AssemblyBuildCycle)</AssemblyVersion>
+		<Version>$(AssemblyVersion)</Version>
+	</PropertyGroup>
+</Project>

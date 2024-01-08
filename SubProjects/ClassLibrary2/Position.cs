@@ -25,7 +25,7 @@ namespace SharpMoku
             Row = pRow;
             Col = pCol;
         }
-        public int GetHashCode()
+        public override int GetHashCode()
         {
             return (Row.ToString() + "_" + Col.ToString()).GetHashCode();
         }

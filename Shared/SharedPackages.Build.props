@@ -1,0 +1,12 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Chaucer.Annotations"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  GeneratePathProperty="true"/>
+		<PackageReference Include="Mono.Cecil"
+		                  Version="$(MonoCecilPackageRequiredVersion)" />
+	</ItemGroup>
+</Project>

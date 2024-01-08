@@ -1,0 +1,27 @@
+<Project>
+	<!-- for some reason TargetDir is not set at "props" inclusion -->
+	<PropertyGroup>
+		<GenerateMetrics Condition="'$(GenerateMetrics)' == ''">false</GenerateMetrics>
+		<MetricsOutputFile Condition="'$(MetricsOutputFile)' == ''">$(TargetDir)$(MSBuildProjectName).Metrics.xml</MetricsOutputFile>
+		<MetricsOutputFile Condition="'$(MetricsOutputFile)' == '$(MSBuildProjectName).Metrics.xml'">$(TargetDir)$(MSBuildProjectName).Metrics.xml</MetricsOutputFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!--force exclusion from Source Control -->
+		<None Remove="$(MetricsOutputFile)" />
+	</ItemGroup>
+
+	<!-- will obviously fail if Metrics package is not installed -->
+	<Target Name="BuildMetrics"
+					AfterTargets="Build"
+					Inputs="@(Compile)"
+					Outputs="$(MetricsOutputFile)"
+					Condition=" '$(GenerateMetrics)' != 'false' ">
+		<CallTarget Targets="Metrics" />
+	</Target>
+	<Target Name="CleanMetrics"
+					BeforeTargets="AfterClean"
+					Condition=" Exists('$(MetricsOutputFile)') ">
+		<Delete Files="$(MetricsOutputFile)" />
+	</Target>
+</Project>

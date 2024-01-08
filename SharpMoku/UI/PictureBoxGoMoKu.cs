@@ -4,7 +4,8 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using SharpMoku.UI.LabelCustomPaint;
-using SharpMoku.UI.ThemeSpace;
+using SharpMoku.UI.Theme;
+
 namespace SharpMoku.UI
 {
 	public class PictureBoxGoMoKu : PictureBox
@@ -71,8 +72,8 @@ namespace SharpMoku.UI
 			NoofColumn = board.Matrix.GetLength(1);
 
 		}
-		private SharpMoku.UI.ThemeSpace.Theme _CurrentTheme = null;
-		public SharpMoku.UI.ThemeSpace.Theme CurrentTheme {
+		private Theme.Theme _CurrentTheme = null;
+		public Theme.Theme CurrentTheme {
 			get {
 				_CurrentTheme ??= ThemeFactory.Create(ThemeFactory.ThemeEnum.Gomoku1);
 				return _CurrentTheme;
@@ -138,11 +139,11 @@ namespace SharpMoku.UI
 		private bool IsIntersecton(int Row, int Col)
 			=> positionIntersectionList.Contains(new Tuple<int, int>(Row, Col));
 
-		public void UpdateTheme(SharpMoku.UI.ThemeSpace.Theme currentTheme)
+		public void UpdateTheme(Theme.Theme currentTheme)
 		{
 
 		}
-		public void Initial(SharpMoku.UI.ThemeSpace.Theme currentTheme)
+		public void Initial(Theme.Theme currentTheme)
 		{
 			int i;
 			int j;

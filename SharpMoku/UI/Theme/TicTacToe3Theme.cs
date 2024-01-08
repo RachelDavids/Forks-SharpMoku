@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SharpMoku.UI.ThemeSpace
+namespace SharpMoku.UI.Theme
 {
-    public class TicTacToe3Theme : Theme
-    {
-        public TicTacToe3Theme()
-        {
+	public class TicTacToe3Theme : Theme
+	{
+		public TicTacToe3Theme()
+		{
 
-            this.NotationForeColor = Color.White ;
-            this.CellBackColor = Color.White ;
-            this.BoardColor = Color.White;
-            this.XColor = Color.FromArgb(230, 107, 38); 
-            this.OColor = Color.FromArgb(20, 185, 150);
-            this.CustomPaint = new LabelCustomPaint.TicTacToe3();
+			NotationForeColor = Color.White;
+			CellBackColor = Color.White;
+			BoardColor = Color.White;
+			XColor = Color.FromArgb(230, 107, 38);
+			OColor = Color.FromArgb(20, 185, 150);
+			CustomPaint = new LabelCustomPaint.TicTacToe3();
 
-        }
-    }
-
+		}
+	}
 }

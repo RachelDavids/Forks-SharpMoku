@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SharpMoku.UI.ThemeSpace
+namespace SharpMoku.UI.Theme
 {
-    /*
+	/*
      *Credit:https://codepen.io/mudrenok/pen/gpMXgg
      */
-    public class SleekTheme : Theme
-    {
-        public SleekTheme()
-        {
-            this.NotationForeColor = Color.White;
-            this.CellBackColor = Color.FromArgb(52, 73, 94);
-            this.BoardColor = Color.FromArgb(40, 50, 70);
+	public class SleekTheme : Theme
+	{
+		public SleekTheme()
+		{
+			NotationForeColor = Color.White;
+			CellBackColor = Color.FromArgb(52, 73, 94);
+			BoardColor = Color.FromArgb(40, 50, 70);
 
-            this.CellCornerRadius = 10;
-            this.CellBorderStyle = BorderStyle.FixedSingle;
-            this.XColor = Color.FromArgb(46, 204, 113);
-            this.OColor = Color.OrangeRed;
-            this.CustomPaint = new TicTacToe1();
+			CellCornerRadius = 10;
+			CellBorderStyle = BorderStyle.FixedSingle;
+			XColor = Color.FromArgb(46, 204, 113);
+			OColor = Color.OrangeRed;
+			CustomPaint = new TicTacToe1();
 
-
-        }
-    }
+		}
+	}
 }

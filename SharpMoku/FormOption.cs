@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using SharpMoku.UI.Theme;
+
 namespace SharpMoku
 {
-    public partial class FormOption : Form
+	public partial class FormOption : Form
     {
         public FormOption()
         {
@@ -19,8 +21,8 @@ namespace SharpMoku
         public event EventHandler Themed_Changed;
         public class ThemChangedEventArgs : EventArgs
         {
-            public UI.ThemeSpace.Theme Theme { get; private set; }
-            public ThemChangedEventArgs(UI.ThemeSpace.Theme theme)
+            public Theme Theme { get; private set; }
+            public ThemChangedEventArgs(Theme theme)
             {
                 this.Theme = theme;
             }
@@ -53,14 +55,14 @@ namespace SharpMoku
         private void CboTheme_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            var themeEnum = (UI.ThemeSpace.ThemeFactory.ThemeEnum)this.cboTheme.SelectedIndex;
+            var themeEnum = (ThemeFactory.ThemeEnum)this.cboTheme.SelectedIndex;
 
-            ThemChangedEventArgs eventArgs = new ThemChangedEventArgs(UI.ThemeSpace.ThemeFactory.Create(themeEnum));
+            ThemChangedEventArgs eventArgs = new ThemChangedEventArgs(ThemeFactory.Create(themeEnum));
             Themed_Changed?.Invoke(this, eventArgs);
 
-            UI.ThemeSpace.ThemeFactory.BackColor(themeEnum);
-            UpdateUIColor(UI.ThemeSpace.ThemeFactory.BackColor(themeEnum),
-            UI.ThemeSpace.ThemeFactory.ForeColor(themeEnum));
+			ThemeFactory.BackColor(themeEnum);
+            UpdateUIColor(ThemeFactory.BackColor(themeEnum),
+			ThemeFactory.ForeColor(themeEnum));
 
         }
 
@@ -79,7 +81,7 @@ namespace SharpMoku
             Global.CurrentSettings.IsAllowUndo = this.chkAllowUndo.Checked;
             Global.CurrentSettings.IsWriteLog = this.chkWriteLogFile.Checked;
 
-            Global.CurrentSettings.ThemeEnum = (UI.ThemeSpace.ThemeFactory.ThemeEnum)this.cboTheme.SelectedIndex;
+            Global.CurrentSettings.ThemeEnum = (ThemeFactory.ThemeEnum)this.cboTheme.SelectedIndex;
 
             Global.SaveSettings();
             this.DialogResult = DialogResult.OK;

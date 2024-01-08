@@ -12,7 +12,7 @@ guidelines_style = 1px dotted magenta
 [*.{cs,vb}]
 guidelines = 80 1px dotted deeppink, 120 1px dashed maroon, 132 2px solid red
 
-# Treat all cs files in this folder as generated code
+# Treat all _ prefixed files as generated code
 [_*.{cs,vb}]
 generated_code = false
 
@@ -222,3 +222,29 @@ xmldoc_spaces_inside_tags =false
 xmldoc_wrap_text = true
 xmldoc_max_blank_lines_between_tags = 0
 xmldoc_max_line_length = 100
+
+[*.{cs,vb}]
+# NET8.0 RC2 code analysis suppressions
+# // Use concrete types when possible for improved performance
+dotnet_diagnostic.CA1859.severity = none
+dotnet_diagnostic.CA1001.severity = none
+dotnet_diagnostic.CA1002.severity = none
+dotnet_diagnostic.CA1003.severity = none
+dotnet_diagnostic.CA1008.severity = none
+dotnet_diagnostic.CA1034.severity = none
+dotnet_diagnostic.CA1051.severity = none
+dotnet_diagnostic.CA1052.severity = none
+dotnet_diagnostic.CA1311.severity = none
+dotnet_diagnostic.CA1805.severity = none
+dotnet_diagnostic.CA1814.severity = none
+dotnet_diagnostic.CA1815.severity = none
+dotnet_diagnostic.CA1820.severity = none
+dotnet_diagnostic.CA1824.severity = none
+dotnet_diagnostic.CA1834.severity = none
+dotnet_diagnostic.CA1852.severity = none
+dotnet_diagnostic.CA1853.severity = none
+dotnet_diagnostic.CA1854.severity = none
+dotnet_diagnostic.CA2300.severity = none
+dotnet_diagnostic.CA2301.severity = none
+dotnet_diagnostic.CA5392.severity = none
+dotnet_diagnostic.CA5394.severity = none

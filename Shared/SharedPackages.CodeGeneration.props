@@ -1,0 +1,37 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup>
+		<GeneratorProvider>Rachel</GeneratorProvider>
+	</PropertyGroup>
+	<ItemGroup Label="Code Generation">
+		<PackageReference Include="$(GeneratorProvider).Generators.CheckDisposed"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  developmentDependency="true">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="$(GeneratorProvider).Generators.ApplicationConfiguration"
+		                  Condition=" '$(TargetFrameworkIdentifier)' == '.NETFramework' AND '$(OutputType)' == 'WinExe' "
+		                  Version="*">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<PackageReference Include="$(GeneratorProvider).Generators.AssemblyAttributes"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  developmentDependency="true">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<!-- require opt-in by project -->
+	<ItemGroup Condition=" Exists('$(MSBuildProjectDirectory)\NativeMethods.txt') ">
+		<PackageReference Include="Microsoft.Windows.CsWin32" Version="*-*">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+</Project>
