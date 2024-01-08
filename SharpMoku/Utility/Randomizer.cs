@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace SharpMoku.Utility
 {
-    public class Randomizer
-    {
+	public static class Randomizer
+	{
 
-        private static readonly Random getrandom = new Random();
+		private static readonly Random SharedRandom = new();
 
-        public static int GetRandomNumber(int min, int max)
-        {
-            lock (getrandom) // synchronize
-            {
-                return getrandom.Next(min, max);
-            }
-        }
-    }
+		public static int GetRandomNumber(int min, int max)
+		{
+			lock (SharedRandom) // synchronize
+			{
+				return SharedRandom.Next(min, max);
+			}
+		}
+	}
 }

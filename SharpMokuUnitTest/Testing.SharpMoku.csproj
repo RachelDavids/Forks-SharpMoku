@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>$(MSBuildProjectName)</RootNamespace>
+		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<UseWindowsForms>true</UseWindowsForms>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\SharpMoku\SharpMoku.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
+		<PackageReference Include="MSTest.TestAdapter" Version="*" />
+		<PackageReference Include="MSTest.TestFramework" Version="*" />
+	</ItemGroup>
+</Project>
