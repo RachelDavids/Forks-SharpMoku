@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using SharpMoku.UI.Theme;
@@ -13,90 +7,80 @@ using SharpMoku.UI.Theme;
 namespace SharpMoku
 {
 	public partial class FormOption : Form
-    {
-        public FormOption()
-        {
-            InitializeComponent();
-        }
-        public event EventHandler Themed_Changed;
-        public class ThemChangedEventArgs : EventArgs
-        {
-            public Theme Theme { get; private set; }
-            public ThemChangedEventArgs(Theme theme)
-            {
-                this.Theme = theme;
-            }
+	{
+		public FormOption()
+		{
+			InitializeComponent();
+		}
+		public event EventHandler<ThemeChangedEventArgs> ThemeChanged;
 
+		private void InitialValue()
+		{
 
-        }
-        private void InitialValue()
-        {
+			chkAllowUndo.Checked = Common.CurrentSettings.IsAllowUndo;
+			chkWriteLogFile.Checked = Common.CurrentSettings.IsWriteLog;
 
+			chkBotMouseMove.Checked = Common.CurrentSettings.IsUseBotMouseMove;
+			cboTheme.SelectedIndex = (int)Common.CurrentSettings.ThemeEnum;
 
-            this.chkAllowUndo.Checked = Global.CurrentSettings.IsAllowUndo;
-            this.chkWriteLogFile.Checked = Global.CurrentSettings.IsWriteLog;
+			cboTheme.SelectedIndexChanged += CboTheme_SelectedIndexChanged;
+			UpdateUIColor(Common.BackColor, Common.ForeColor);
 
-            this.chkBotMouseMove.Checked = Global.CurrentSettings.IsUseBotMouseMove;
-            this.cboTheme.SelectedIndex = (int)Global.CurrentSettings.ThemeEnum;
+		}
+		private void UpdateUIColor(Color backColor, Color foreColor)
+		{
+			lblTheme.ForeColor = foreColor;
+			chkBotMouseMove.ForeColor = foreColor;
+			chkWriteLogFile.ForeColor = foreColor;
+			chkAllowUndo.ForeColor = foreColor;
 
-            this.cboTheme.SelectedIndexChanged += CboTheme_SelectedIndexChanged;
-            UpdateUIColor(Global.BackColor, Global.ForeColor);
+			BackColor = backColor;
+		}
+		private void CboTheme_SelectedIndexChanged(object sender, EventArgs e)
+		{
 
-        }
-        private void UpdateUIColor(Color backColor, Color foreColor)
-        {
-            this.lblTheme.ForeColor = foreColor;
-            this.chkBotMouseMove.ForeColor = foreColor;
-            this.chkWriteLogFile.ForeColor = foreColor;
-            this.chkAllowUndo.ForeColor = foreColor;
+			ThemeFactory.ThemeEnum themeEnum = (ThemeFactory.ThemeEnum)cboTheme.SelectedIndex;
 
-            this.BackColor = backColor;
-        }
-        private void CboTheme_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            var themeEnum = (ThemeFactory.ThemeEnum)this.cboTheme.SelectedIndex;
-
-            ThemChangedEventArgs eventArgs = new ThemChangedEventArgs(ThemeFactory.Create(themeEnum));
-            Themed_Changed?.Invoke(this, eventArgs);
+			ThemeChangedEventArgs eventArgs = new(ThemeFactory.Create(themeEnum));
+			ThemeChanged?.Invoke(this, eventArgs);
 
 			ThemeFactory.BackColor(themeEnum);
-            UpdateUIColor(ThemeFactory.BackColor(themeEnum),
+			UpdateUIColor(ThemeFactory.BackColor(themeEnum),
 			ThemeFactory.ForeColor(themeEnum));
 
-        }
+		}
 
-        private void FormOption_Load(object sender, EventArgs e)
-        {
-            this.Icon = Resource1.SharpMokuIcon;
+		private void FormOption_Load(object sender, EventArgs e)
+		{
+			Icon = Resource1.SharpMokuIcon;
 
-            this.InitialValue();
-        }
+			InitialValue();
+		}
 
-        private void btnOK_Click(object sender, EventArgs e)
-        {
+		private void btnOK_Click(object sender, EventArgs e)
+		{
 
-            Global.CurrentSettings.IsUseBotMouseMove = this.chkBotMouseMove.Checked;
+			Common.CurrentSettings.IsUseBotMouseMove = chkBotMouseMove.Checked;
 
-            Global.CurrentSettings.IsAllowUndo = this.chkAllowUndo.Checked;
-            Global.CurrentSettings.IsWriteLog = this.chkWriteLogFile.Checked;
+			Common.CurrentSettings.IsAllowUndo = chkAllowUndo.Checked;
+			Common.CurrentSettings.IsWriteLog = chkWriteLogFile.Checked;
 
-            Global.CurrentSettings.ThemeEnum = (ThemeFactory.ThemeEnum)this.cboTheme.SelectedIndex;
+			Common.CurrentSettings.ThemeEnum = (ThemeFactory.ThemeEnum)cboTheme.SelectedIndex;
 
-            Global.SaveSettings();
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
+			Common.SaveSettings();
+			DialogResult = DialogResult.OK;
+			Close();
+		}
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
+		private void btnCancel_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.Cancel;
+			Close();
+		}
 
-        private void cboTheme_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
+		private void cboTheme_SelectedIndexChanged_1(object sender, EventArgs e)
+		{
 
-        }
-    }
+		}
+	}
 }

@@ -7,21 +7,7 @@
 		Condition=" Exists($([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', $(MSBuildThisFileDirectory)..)))"/>
 
 	<!-- This level working props -->
-	<PropertyGroup Label="Code Analysis">
-		<GendarmeMaxThreads Condition=" '$(GendarmeMaxThreads)' == '' ">4</GendarmeMaxThreads>
-	</PropertyGroup>
 	<PropertyGroup>
-		<!-- move to Sdk -->
-		<NeutralLanguage>en-US</NeutralLanguage>
-		<GenerateNeutralResourcesLanguageAttribute>true</GenerateNeutralResourcesLanguageAttribute>
-	</PropertyGroup>
-	<PropertyGroup>
-		<UseNuGetTargetRepositoryKeys>true</UseNuGetTargetRepositoryKeys>
 		<AltGendarmeCompanyName>Chaucer Underwriting Services Ltd</AltGendarmeCompanyName>
-		<RunGendarmeAnalysis>true</RunGendarmeAnalysis>
 	</PropertyGroup>
-	<ItemGroup>
-		<NuGetTargetRepositoryKey Include="Dev Team" />
-		<NuGetTargetRepositoryKey Include="BaGet" />
-	</ItemGroup>
 </Project>

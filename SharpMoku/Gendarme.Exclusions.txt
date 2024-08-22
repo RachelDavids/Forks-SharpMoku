@@ -609,3 +609,25 @@ M: System.Void SharpMoku.FormSharpMoku::Game_GameFinishedV2(SharpMoku.WinStatus)
 
 # end extra entries generated from defects
 
+# begin extra entries generated from defects
+# added on 10/01/2024 09:33:18 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Correctness.ReviewUselessControlFlowRule
+M: System.Void SharpMoku.FormNewGame::InitialValue()
+
+R: Gendarme.Rules.Serialization.MarkAllNonSerializableFieldsRule
+T: SharpMoku.SharpMokuSettings
+
+# end extra entries generated from defects
+
+# begin extra entries generated from defects
+# added on 22/08/2024 18:24:33 by RACHEL-240818/rache
+
+R: Gendarme.Rules.Performance.PreferLiteralOverInitOnlyFieldsRule
+T: SharpMoku.MouseAction
+
+R: Gendarme.Rules.Smells.AvoidUnnecessaryDelegationRule
+T: SharpMoku.Common
+
+# end extra entries generated from defects
+

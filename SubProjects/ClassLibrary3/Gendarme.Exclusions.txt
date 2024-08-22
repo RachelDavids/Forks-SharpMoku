@@ -40,3 +40,21 @@ M: System.Void SharpMoku.SimpleLog::.ctor(System.String,SharpMoku.ILogSettings)
 
 # end extra entries generated from defects
 
+# begin extra entries generated from defects
+# added on 10/01/2024 11:14:24 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Design.ConsiderConvertingMethodToPropertyRule
+M: System.String SharpMoku.Logging.ILog::GetLogMessage()
+
+R: Gendarme.Rules.Exceptions.DoNotSwallowErrorsCatchingNonSpecificExceptionsRule
+M: System.Void SharpMoku.Logging.SimpleLog::ClearLog()
+M: System.Void SharpMoku.Logging.SimpleLog::Log(System.String)
+
+R: Gendarme.Rules.Maintainability.VariableNamesShouldNotMatchFieldNamesRule
+T: SharpMoku.Logging.SimpleLog
+
+R: Gendarme.Rules.Performance.UseStringEmptyRule
+M: System.Void SharpMoku.Logging.SimpleLog::.ctor(System.String,SharpMoku.Logging.ILogSettings)
+
+# end extra entries generated from defects
+

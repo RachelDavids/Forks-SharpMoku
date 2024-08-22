@@ -1,7 +1,11 @@
+using System.Runtime.Versioning;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using SharpMoku;
 using SharpMoku.UI;
+
+[assembly: SupportedOSPlatform("windows")]
 
 namespace Testing.SharpMoku
 {
@@ -20,22 +24,22 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.NotBegin);
 
 			game.NewGame();
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
 
 			ui.PutStoneByUI(0, 0);
 
-			Assert.IsTrue(game.board.CurrentTurn == Turn.White);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.White);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
-			Assert.IsTrue(game.board.Matrix[0, 0] == blackStoneCellValue);
+			Assert.IsTrue(game.Board.Matrix[0, 0] == blackStoneCellValue);
 
 			ui.PutStoneByUI(1, 0);
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
-			Assert.IsTrue(game.board.Matrix[1, 0] == whiteStoneCellValue);
+			Assert.IsTrue(game.Board.Matrix[1, 0] == whiteStoneCellValue);
 
 		}
 
@@ -59,16 +63,16 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.NotBegin);
 
 			game.NewGame();
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
 
 			ui.PutStoneByUI(0, 4);
 
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.End);
 			Assert.IsTrue(game.WinResult == WinStatus.BlackWon);
-			Assert.IsTrue(game.board.Matrix[0, 4] == blackStoneCellValue);
+			Assert.IsTrue(game.Board.Matrix[0, 4] == blackStoneCellValue);
 
 		}
 
@@ -97,43 +101,43 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.NotBegin);
 
 			game.NewGame();
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
 
 			ui.PutStoneByUI(0, 3);
-			Assert.IsTrue(game.board.CurrentTurn == Turn.White);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.White);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
 
 			game.Undo();
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
-			Assert.IsTrue(game.board.Matrix[0, 3] == emptyStoneCellvalue);
+			Assert.IsTrue(game.Board.Matrix[0, 3] == emptyStoneCellvalue);
 
 			ui.PutStoneByUI(0, 3); //Black
-			Assert.IsTrue(game.board.CurrentTurn == Turn.White);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.White);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
 
 			ui.PutStoneByUI(8, 8); // White
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
 
 			ui.PutStoneByUI(0, 4); // Black
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.End);
 			Assert.IsTrue(game.WinResult == WinStatus.BlackWon);
-			Assert.IsTrue(game.board.Matrix[0, 4] == blackStoneCellValue);
+			Assert.IsTrue(game.Board.Matrix[0, 4] == blackStoneCellValue);
 
 			game.Undo();
 
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
-			Assert.IsTrue(game.board.Matrix[0, 4] == emptyStoneCellvalue);
+			Assert.IsTrue(game.Board.Matrix[0, 4] == emptyStoneCellvalue);
 
 		}
 
@@ -160,7 +164,7 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.NotBegin);
 
 			game.NewGame();
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
 
@@ -168,16 +172,16 @@ namespace Testing.SharpMoku
 			//Just put Stone into any postion that not make game finish
 			//After ui.PutStoneByUI, the botwill automatically put stone.
 
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
-			Assert.IsTrue(game.board.Matrix[0, 8] == blackStoneCellValue);
+			Assert.IsTrue(game.Board.Matrix[0, 8] == blackStoneCellValue);
 			game.Undo();
 
-			Assert.IsTrue(game.board.CurrentTurn == Turn.Black);
+			Assert.IsTrue(game.Board.CurrentTurn == Turn.Black);
 			Assert.IsTrue(game.GameState == Game.GameStateEnum.Playing);
 			Assert.IsTrue(game.WinResult == WinStatus.NotDecidedYet);
-			Assert.IsTrue(game.board.Matrix[0, 8] == emptyStoneCellvalue);
+			Assert.IsTrue(game.Board.Matrix[0, 8] == emptyStoneCellvalue);
 
 		}
 		private void Ui_CellClicked(object sender, PositionEventArgs positionClick)

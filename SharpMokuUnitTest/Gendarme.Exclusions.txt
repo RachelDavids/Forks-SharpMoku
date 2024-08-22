@@ -96,3 +96,14 @@ M: System.Void Testing.SharpMoku.GameTesting::Ui_CellClicked(System.Object,Sharp
 
 # end extra entries generated from defects
 
+# begin extra entries generated from defects
+# added on 22/08/2024 18:24:33 by RACHEL-240818/rache
+
+R: Gendarme.Rules.Performance.AvoidRedundantCallsRule
+M: System.Void Testing.SharpMoku.EvaluateTestingV3::IsInArray()
+
+R: Gendarme.Rules.Performance.DoNotIgnoreMethodResultRule
+M: System.Void Testing.SharpMoku.EvaluateTestingV3::IsInArray()
+
+# end extra entries generated from defects
+

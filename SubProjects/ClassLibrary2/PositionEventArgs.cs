@@ -2,12 +2,9 @@ using System;
 
 namespace SharpMoku
 {
-	public class PositionEventArgs : EventArgs
+	public class PositionEventArgs(Position position)
+		: EventArgs
 	{
-		public Position Value { get; set; }
-		public PositionEventArgs(Position position)
-		{
-			Value = position;
-		}
+		public Position Value { get; set; } = position;
 	}
 }

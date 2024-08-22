@@ -1,65 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SharpMoku
 {
-    public partial class FormCustomMessageBox : Form
-    {
-        public FormCustomMessageBox()
-        {
-            InitializeComponent();
-        }
+	public partial class FormCustomMessageBox : Form
+	{
+		public FormCustomMessageBox()
+		{
+			InitializeComponent();
+		}
 
-        public String Caption
-        {
-            get => this.Text;
-            set => this.Text = value;
+		public string Caption {
+			get => Text;
+			set => Text = value;
 
-        }
-        public String Message
-        {
-            get => this.txtMessage.Text;
-            set => this.txtMessage.Text = value;
-        }
+		}
+		public string Message {
+			get => txtMessage.Text;
+			set => txtMessage.Text = value;
+		}
 
-        private Boolean _ShowCancel = false;
-        public Boolean ShowCancel
-        {
-            get => _ShowCancel;
-            set
-            {
-                _ShowCancel = value;
-                SetCancelbuttonVisible();
-            }
-        }
-        private void SetCancelbuttonVisible()
-        {
-            this.btnCancel.Visible = true;
-            this.btnOK.Left = 247;
-            if (!_ShowCancel)
-            {
-                this.btnCancel.Visible = false;
-                this.btnOK.Left = this.btnCancel.Left;
-            }
-        }
-        private void UpdateUIColor(Color backColor, Color foreColor)
-        {
+		private bool _ShowCancel = false;
+		public bool ShowCancel {
+			get => _ShowCancel;
+			set {
+				_ShowCancel = value;
+				SetCancelbuttonVisible();
+			}
+		}
+		private void SetCancelbuttonVisible()
+		{
+			btnCancel.Visible = true;
+			btnOK.Left = 247;
+			if (!_ShowCancel)
+			{
+				btnCancel.Visible = false;
+				btnOK.Left = btnCancel.Left;
+			}
+		}
+		private void UpdateUIColor(Color backColor, Color foreColor)
+		{
 
-            this.txtMessage.BackColor = backColor;
-            this.txtMessage.ForeColor = foreColor;
+			txtMessage.BackColor = backColor;
+			txtMessage.ForeColor = foreColor;
 
-            this.BackColor = backColor;
-        }
-        private void SetTheme()
-        {
-            /*
+			BackColor = backColor;
+		}
+		private void SetTheme()
+		{
+			/*
             this.txtMessage.BackColor = Global.CurrentTheme.FormBackColor;
             this.txtMessage.ForeColor = Global.CurrentTheme.LabelForeColor;
             Utility.UI.MakeFormCaptionToBeDarkMode(this, Global.CurrentTheme.IsFormCaptionDarkMode);
@@ -69,69 +59,66 @@ namespace SharpMoku
                 .SetForm(this);
 
             */
-        }
-        private void FormCustomMessageBox_Load(object sender, EventArgs e)
-        {
-            this.Icon = Resource1.SharpMokuIcon;
+		}
+		private void FormCustomMessageBox_Load(object sender, EventArgs e)
+		{
+			Icon = Resource1.SharpMokuIcon;
 
-            this.pictureBox1.Image = SystemIcons.Information.ToBitmap();
-            //this.SetTheme();
-            this.txtMessage.GotFocus += (txts, txte)
-                => this.btnOK.Focus();
+			pictureBox1.Image = SystemIcons.Information.ToBitmap();
+			//this.SetTheme();
+			txtMessage.GotFocus += (_, _) => btnOK.Focus();
 
+			UpdateUIColor(Common.BackColor, Common.ForeColor);
+		}
 
+		private delegate void DisplayDialogCallback();
+		public Form parentForm = null;
+		public void ShowDialogAtCenter()
+		{
+			Left = parentForm.Left + ((parentForm.Width - Width) / 2);
+			Top = parentForm.Top + ((parentForm.Height - Height) / 2);
 
-            UpdateUIColor(Global.BackColor, Global.ForeColor);
-        }
+			ShowDialog();
+		}
+		public void DisplayDialog()
+		{
+			if (InvokeRequired)
+			{
+				Invoke(new DisplayDialogCallback(DisplayDialog));
+				return;
+			}
 
-        private delegate void DisplayDialogCallback();
-        public Form parentForm = null;
-        public void ShowDialogAtCenter()
-        {
-            this.Left = parentForm.Left + ((parentForm.Width - this.Width) / 2);
-            this.Top = parentForm.Top + ((parentForm.Height - this.Height) / 2);
+			if (IsHandleCreated)
+			{
+				if (parentForm != null)
+				{
+					Left = parentForm.Left + ((parentForm.Width - Width) / 2);
+					Top = parentForm.Top + ((parentForm.Height - Height) / 2);
+				}
+				ShowDialog();
 
-            this.ShowDialog();
-        }
-        public void DisplayDialog()
-        {
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new DisplayDialogCallback(DisplayDialog));
-                return;
-            }
+				if (CanFocus)
+				{
+					Focus();
+				}
+			}
+			else
+			{
+				// Handle the error
+			}
 
-            if (this.Handle != (IntPtr)0) // you can also use: this.IsHandleCreated
-            {
-                if (parentForm != null)
-                {
-                    this.Left = parentForm.Left + ((parentForm.Width - this.Width) / 2);
-                    this.Top = parentForm.Top + ((parentForm.Height - this.Height) / 2);
-                }
-                this.ShowDialog();
+		}
 
-                if (this.CanFocus)
-                {
-                    this.Focus();
-                }
-            }
-            else
-            {
-                // Handle the error
-            }
+		private void btnOK_Click_1(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.OK;
+			Close();
+		}
 
-        }
-
-        private void btnOK_Click_1(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
-
-        private void btnCancel_Click_1(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-    }
+		private void btnCancel_Click_1(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.Cancel;
+			Close();
+		}
+	}
 }

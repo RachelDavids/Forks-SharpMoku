@@ -187,8 +187,8 @@ namespace Testing.SharpMoku
 						[0, 1, 1, 0, 1, 0],
 
 					];
-
-			global::SharpMoku.AI.EvaluateV3 evo = new();
+			_ = new
+			global::SharpMoku.AI.EvaluateV3();
 			List<int> listvalue = [0, 1, 1, 1, 1, 0];
 			bool isIn = EvaluateV3.IsAnyInArrays(Stone4WithNoBlock, listvalue);
 
@@ -320,7 +320,7 @@ namespace Testing.SharpMoku
 			global::SharpMoku.AI.EvaluateV3.NumberOfScorePattern numPattern = new(1, 0, 0, 0, 0, 0);
 			global::SharpMoku.AI.EvaluateV3 evo = new();
 
-			int scoreByPattern = 0;
+			int scoreByPattern;
 			scoreByPattern = evo.getScoreByPattern(numPattern);
 
 			const int wonPattern = 1000000000;
@@ -412,11 +412,9 @@ namespace Testing.SharpMoku
 			board.PutStone(0, 4, CellValue.White);
 
 			Board cloneBoard = board.Clone();
-
-			double score = evo.GetScore(board);// evo.GetScore(board, IsThisforblack, IsThisBlackTurn);
+			_ = evo.GetScore(board);// evo.GetScore(board, IsThisforblack, IsThisBlackTurn);
 
 			//Make sure that evo.GetScore will not update value in the board
-			BoardTesting boardTesting = new();
 			Assert.AreEqual(true, BoardTesting.IsBoardTheSame(board, cloneBoard));
 
 			board = new Board(15);
@@ -425,7 +423,7 @@ namespace Testing.SharpMoku
 			board.PutStone(0, 3, CellValue.White);
 			board.PutStone(0, 4, CellValue.White);
 			board.PutStone(0, 5, CellValue.Black);
-			score = evo.GetScore(board); // evo.GetScore(board, IsThisforblack, IsThisBlackTurn);
+			_ = evo.GetScore(board);
 
 			board = new Board(9);
 			board.PutStone(1, 3, CellValue.Black);
@@ -433,7 +431,7 @@ namespace Testing.SharpMoku
 			board.PutStone(2, 3, CellValue.Black);
 			board.PutStone(2, 7, CellValue.White);
 			board.PutStone(4, 3, CellValue.Black);
-			score = evo.GetScore(board);
+			_ = evo.GetScore(board);
 
 		}
 	}

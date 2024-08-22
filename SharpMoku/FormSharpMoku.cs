@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+using SharpMoku.Logging;
 using SharpMoku.UI;
 using SharpMoku.UI.Theme;
 
@@ -10,7 +11,7 @@ namespace SharpMoku
 	public partial class FormSharpMoku : Form, IUI
 	{
 		/* This class imeplement IUI
-		 * It has UI.PictureBoxGoMoKu picGoMoku that responsible for rendering a board
+		 * It has UI.PictureBoxGomoku picGoMoku that responsible for rendering a board
 		 * It has game object that use to bind between this class, game object and the board information
 		 */
 		public FormSharpMoku()
@@ -18,11 +19,11 @@ namespace SharpMoku
 			InitializeComponent();
 		}
 
-		private UI.PictureBoxGoMoKu picGoMoku = null;
-		private Game game = null;
+		private PictureBoxGomoku _picGoMoku = null;
+		private Game _game = null;
 
 		//AI.IEvaluate bot = new AI.EvaluateV2();
-		private AI.IEvaluate bot = new AI.EvaluateV3();
+		private readonly AI.IEvaluate bot = new AI.EvaluateV3();
 
 		public event EventHandler<PositionEventArgs> CellClicked;
 		public event EventHandler HasFinishedMoveCursor;
@@ -30,19 +31,19 @@ namespace SharpMoku
 		private void UpdateTheme(Theme theme)
 		{
 
-			picGoMoku.Initial(theme);
-			picGoMoku.ReRender();
+			_picGoMoku.Initial(theme);
+			_picGoMoku.ReRender();
 			ScaleBoard();
 		}
 		private void ScaleBoard()
 		{
 			//Scale the board to be bigger in case the board size is 9
-			if (game.board.BoardSize == 9)
+			if (_game.Board.BoardSize == 9)
 			{
-				picGoMoku.Visible = false;
-				picGoMoku.Scale(new SizeF(1.5f, 1.5f));
-				picGoMoku.Top = menuStrip1.Height + 5;
-				picGoMoku.Visible = true;
+				_picGoMoku.Visible = false;
+				_picGoMoku.Scale(new SizeF(1.5f, 1.5f));
+				_picGoMoku.Top = menuStrip1.Height + 5;
+				_picGoMoku.Visible = true;
 			}
 		}
 		// int iCountGameID = 0;
@@ -55,21 +56,21 @@ namespace SharpMoku
 
 		private void CreateGame(Game.GameModeEnum gameMode, int boardSize, int botDepth, Board board)
 		{
-			game?.ReleaseResource();
+			_game?.ReleaseResource();
 
-			game = board != null
+			_game = board != null
 					   ? new Game(this, board, bot, botDepth, gameMode)
 					   : new Game(this, boardSize, bot, botDepth, gameMode);
 
-			game.log = new SimpleLog(Utility.FileUtility.LogFilePath,
-									 Global.CurrentSettings);
+			_game.log = new SimpleLog(Utility.FileUtility.LogFilePath,
+									 Common.CurrentSettings);
 
 		}
 		private void NewGame(Game.GameModeEnum gameMode,
-			int boardSize,
-			int botSearchDepth,
-			ThemeFactory.ThemeEnum themeEnum,
-			Board board)
+							 int boardSize,
+							 int botSearchDepth,
+							 ThemeFactory.ThemeEnum themeEnum,
+							 Board board)
 		{
 
 			Theme currentTheme = ThemeFactory.Create(themeEnum);
@@ -80,47 +81,47 @@ namespace SharpMoku
 
 			// If it is the first time to loadboard or the boardSize is different
 			// So we need to create a new picGoMoku
-			if (picGoMoku == null ||
-					picGoMoku.NoofRow != boardSize)
+			if (_picGoMoku == null ||
+					_picGoMoku.RowNumber != boardSize)
 			{
-				if (picGoMoku != null)
+				if (_picGoMoku != null)
 				{
-					picGoMoku.CellClicked -= PicGoMoku_CellClicked;
-					picGoMoku.ReleaseResource();
-					Controls.Remove(picGoMoku);
+					_picGoMoku.CellClicked -= PicGoMoku_CellClicked;
+					_picGoMoku.ReleaseResource();
+					Controls.Remove(_picGoMoku);
 				}
-				picGoMoku = new PictureBoxGoMoKu(game.board, cellWidth, cellHeight) {
-					NoofRow = boardSize,
-					NoofColumn = boardSize,
+				_picGoMoku = new PictureBoxGomoku(_game.Board, cellWidth, cellHeight) {
+					RowNumber = boardSize,
+					ColumnNumber = boardSize,
 					BorderStyle = BorderStyle.FixedSingle,
 
 					Left = 0,
 					Top = menuStrip1.Height + 5
 				};
-				picGoMoku.Initial(currentTheme);
-				picGoMoku.CellClicked -= PicGoMoku_CellClicked;
-				picGoMoku.CellClicked += PicGoMoku_CellClicked;
+				_picGoMoku.Initial(currentTheme);
+				_picGoMoku.CellClicked -= PicGoMoku_CellClicked;
+				_picGoMoku.CellClicked += PicGoMoku_CellClicked;
 
 			}
 			else
 			{
 				//Using the old picGomoku
 				//picGoMoku.Top = this.menuStrip1.Height + 5;
-				picGoMoku.SetBoad(game.board);
-				picGoMoku.Initial(currentTheme);
+				_picGoMoku.SetBoard(_game.Board);
+				_picGoMoku.Initial(currentTheme);
 			}
-			if (!Controls.Contains(picGoMoku))
+			if (!Controls.Contains(_picGoMoku))
 			{
-				Controls.Add(picGoMoku);
+				Controls.Add(_picGoMoku);
 			}
 
-			game.NewGame();
+			_game.NewGame();
 
-			picGoMoku.Visible = true;
+			_picGoMoku.Visible = true;
 			ScaleBoard();
 
-			Height = picGoMoku.Height + picGoMoku.Top + menuStrip1.Height - 5;
-			Width = picGoMoku.Width + picGoMoku.Left;
+			Height = _picGoMoku.Height + _picGoMoku.Top + menuStrip1.Height - 5;
+			Width = _picGoMoku.Width + _picGoMoku.Left;
 
 			RenderUI();
 		}
@@ -135,7 +136,7 @@ namespace SharpMoku
 
 		private bool IsBotThinking = false;// If this value is true it will prevent user from click on the cell
 
-		private Cursor tempCursor = Cursors.Default;
+		//private readonly Cursor tempCursor = Cursors.Default;
 		public void Game_BotThinking(object sender, EventArgs e)
 		{
 			IsBotThinking = true;
@@ -145,7 +146,7 @@ namespace SharpMoku
 		private void TShowPicGoMokue_Tick(object sender, EventArgs e)
 		{
 
-			picGoMoku.Visible = true;
+			_picGoMoku.Visible = true;
 			// throw new NotImplementedException();
 		}
 
@@ -153,14 +154,14 @@ namespace SharpMoku
 		{
 			IsBotThinking = false;
 			//    this.Cursor = Cursors.Default;
-			if (game.GameState == Game.GameStateEnum.End)
+			if (_game.GameState == Game.GameStateEnum.End)
 			{
 				/*
 				bool isPlaywon =
 					   (game.WinResult == Board.WinStatus.BlackWon && game.GameMode == Game.GameModeEnum.PlayerVsBot)
 					|| (game.WinResult == Board.WinStatus.WhiteWon && game.GameMode == Game.GameModeEnum.BotVsPlayer);
 					*/
-				Game_GameFinishedV2(game.WinResult);
+				Game_GameFinishedV2(_game.WinResult);
 				/*
 				if (isPlaywon)
 				{
@@ -179,7 +180,7 @@ namespace SharpMoku
 			string whiteTurn = "White";
 			string blackTurn = "Black";
 
-			switch (Global.CurrentSettings.ThemeEnum)
+			switch (Common.CurrentSettings.ThemeEnum)
 			{
 				case ThemeFactory.ThemeEnum.TicTacToe1:
 				case ThemeFactory.ThemeEnum.TicTacToe2:
@@ -189,6 +190,18 @@ namespace SharpMoku
 					break;
 				case ThemeFactory.ThemeEnum.TableTennis:
 					blackTurn = "Orange";
+					break;
+				case ThemeFactory.ThemeEnum.Gomoku1:
+					break;
+				case ThemeFactory.ThemeEnum.Gomoku2:
+					break;
+				case ThemeFactory.ThemeEnum.Gomoku3:
+					break;
+				case ThemeFactory.ThemeEnum.Gomoku4:
+					break;
+				case ThemeFactory.ThemeEnum.Gomoku5:
+					break;
+				default:
 					break;
 			}
 			string message;// = whiteTurn + " Won.";
@@ -202,6 +215,7 @@ namespace SharpMoku
 				WinStatus.BlackWon => $"{blackTurn} Won.",
 				WinStatus.WhiteWon => $"{whiteTurn} Won.",
 				WinStatus.Draw => " Draw.",
+				WinStatus.NotDecidedYet => throw new NotImplementedException(),
 				_ => throw new InvalidOperationException($"winStatus is not correct {winStatus}"),
 			};
 			message += "\n Click ok if you want a rematch.";
@@ -218,10 +232,10 @@ namespace SharpMoku
 				return;
 			}
 			// Rematch();
-			NewGame(Global.CurrentSettings.GameMode,
-					Global.CurrentSettings.BoardSize,
-					Global.CurrentSettings.BotDepth,
-					Global.CurrentSettings.ThemeEnum);
+			NewGame(Common.CurrentSettings.GameMode,
+					Common.CurrentSettings.BoardSize,
+					Common.CurrentSettings.BotDepth,
+					Common.CurrentSettings.ThemeEnum);
 
 		}
 
@@ -229,22 +243,22 @@ namespace SharpMoku
 		{
 			Icon = Resource1.SharpMokuIcon;
 
-			NewGame(Global.CurrentSettings.GameMode,
-					Global.CurrentSettings.BoardSize,
-					Global.CurrentSettings.BotDepth,
-					Global.CurrentSettings.ThemeEnum);
-			undoToolStripMenuItem.Enabled = Global.CurrentSettings.IsAllowUndo;
+			NewGame(Common.CurrentSettings.GameMode,
+					Common.CurrentSettings.BoardSize,
+					Common.CurrentSettings.BotDepth,
+					Common.CurrentSettings.ThemeEnum);
+			undoToolStripMenuItem.Enabled = Common.CurrentSettings.IsAllowUndo;
 
 		}
 
-		private void PicGoMoku_CellClicked(PictureBoxGoMoKu pic, PictureBoxGoMoKu.PositionEventArgs positionClick)
+		private void PicGoMoku_CellClicked(PictureBoxGomoku pic, PictureBoxGomoku.PositionEventArgs positionClick)
 		{
 			if (IsBotThinking)
 			{
 				return;
 			}
 
-			if (game.GameState != Game.GameStateEnum.Playing)
+			if (_game.GameState != Game.GameStateEnum.Playing)
 			{
 				return;
 			}
@@ -256,7 +270,7 @@ namespace SharpMoku
 		public void RenderUI()
 		{
 
-			picGoMoku.ReRender();
+			_picGoMoku.ReRender();
 			Application.DoEvents();
 			/*
 			 * Without Application.DoEvents
@@ -273,7 +287,7 @@ namespace SharpMoku
 
 		public void MoveCursorTo(Position position)
 		{
-			if (!Global.CurrentSettings.IsUseBotMouseMove)
+			if (!Common.CurrentSettings.IsUseBotMouseMove)
 			{
 				MouseAction_HasFinishedMoved(this, new EventArgs());
 				return;
@@ -281,13 +295,13 @@ namespace SharpMoku
 
 			if (position.Row < 0 ||
 				position.Col < 0 ||
-				position.Row >= game.board.BoardSize ||
-				position.Col >= game.board.BoardSize)
+				position.Row >= _game.Board.BoardSize ||
+				position.Col >= _game.Board.BoardSize)
 			{
 				return;
 			}
 
-			Point ToPoint = picGoMoku.GetLowerRightPoint(position);
+			Point ToPoint = _picGoMoku.GetLowerRightPoint(position);
 
 			MoveCursor(ToPoint);
 
@@ -297,7 +311,7 @@ namespace SharpMoku
 			MoveCursor(Cursor.Position, ToPoint);
 		}
 
-		private Random RandomGenerator = new();
+		private readonly Random RandomGenerator = new();
 		private void MoveCursor(Point FromPoint, Point ToPoint)
 		{
 			MouseAction.HasFinishedMoved -= MouseAction_HasFinishedMoved;
@@ -339,10 +353,10 @@ namespace SharpMoku
 				return;
 			}
 
-			NewGame(Global.CurrentSettings.GameMode,
-				Global.CurrentSettings.BoardSize,
-				Global.CurrentSettings.BotDepth,
-				Global.CurrentSettings.ThemeEnum);
+			NewGame(Common.CurrentSettings.GameMode,
+				Common.CurrentSettings.BoardSize,
+				Common.CurrentSettings.BotDepth,
+				Common.CurrentSettings.ThemeEnum);
 
 		}
 
@@ -350,8 +364,8 @@ namespace SharpMoku
 		{
 			FormOption f = new();
 			// f.Parent = this;
-			f.Themed_Changed -= F_Themed_Changed;
-			f.Themed_Changed += F_Themed_Changed;
+			f.ThemeChanged -= FThemeChanged;
+			f.ThemeChanged += FThemeChanged;
 			f.StartPosition = FormStartPosition.CenterParent;
 			f.ShowDialog(this);
 			if (f.DialogResult != DialogResult.OK)
@@ -359,28 +373,28 @@ namespace SharpMoku
 				return;
 			}
 
-			UpdateTheme(ThemeFactory.Create(Global.CurrentSettings.ThemeEnum));
-			undoToolStripMenuItem.Enabled = Global.CurrentSettings.IsAllowUndo;
+			UpdateTheme(ThemeFactory.Create(Common.CurrentSettings.ThemeEnum));
+			undoToolStripMenuItem.Enabled = Common.CurrentSettings.IsAllowUndo;
 
 		}
 
-		private void F_Themed_Changed(object sender, EventArgs e)
+		private void FThemeChanged(object sender, EventArgs e)
 		{
-			FormOption.ThemChangedEventArgs eChange = (FormOption.ThemChangedEventArgs)e;
+			ThemeChangedEventArgs eChange = (ThemeChangedEventArgs)e;
 			UpdateTheme(eChange.Theme);
 
 		}
 
 		private void undoToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (game == null ||
-			   !game.CanUndo ||
+			if (_game == null ||
+			   !_game.CanUndo ||
 			   IsBotThinking)
 			{
 				return;
 			}
 
-			game.Undo();
+			_game.Undo();
 		}
 
 		private void copyBoardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -398,7 +412,7 @@ namespace SharpMoku
 			}
 			string fileName = spf.FileName;
 
-			Utility.SerializeUtility.Serialize(game.board, fileName);
+			Utility.SerializeUtility.Serialize(_game.Board, fileName);
 		}
 
 		private void loadBoardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -418,10 +432,10 @@ namespace SharpMoku
 
 			Board board = Utility.SerializeUtility.Deserialize<Board>(fileName);
 
-			NewGame(Global.CurrentSettings.GameMode,
-					Global.CurrentSettings.BoardSize,
-					Global.CurrentSettings.BotDepth,
-					Global.CurrentSettings.ThemeEnum,
+			NewGame(Common.CurrentSettings.GameMode,
+					Common.CurrentSettings.BoardSize,
+					Common.CurrentSettings.BotDepth,
+					Common.CurrentSettings.ThemeEnum,
 					board);
 
 		}
@@ -441,7 +455,7 @@ namespace SharpMoku
 			}
 			string fileName = spf.FileName;
 
-			Utility.SerializeUtility.Serialize(game.board, fileName);
+			Utility.SerializeUtility.Serialize(_game.Board, fileName);
 
 		}
 
@@ -461,11 +475,11 @@ namespace SharpMoku
 			string fileName = opf.FileName;
 			Board board = Utility.SerializeUtility.Deserialize<Board>(fileName);
 
-			Global.CurrentSettings.BoardSize = board.BoardSize;
-			NewGame(Global.CurrentSettings.GameMode,
-				Global.CurrentSettings.BoardSize,
-				Global.CurrentSettings.BotDepth,
-				Global.CurrentSettings.ThemeEnum,
+			Common.CurrentSettings.BoardSize = board.BoardSize;
+			NewGame(Common.CurrentSettings.GameMode,
+				Common.CurrentSettings.BoardSize,
+				Common.CurrentSettings.BotDepth,
+				Common.CurrentSettings.ThemeEnum,
 				board);
 		}
 

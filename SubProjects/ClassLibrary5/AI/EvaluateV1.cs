@@ -5,12 +5,12 @@ namespace SharpMoku.AI
 	//This is just a random evaluate function for random bot
 	internal class EvaluateV1 : IEvaluate
 	{
-		private static Random random = new();
+		private static readonly Random s_random = new();
 		private static int GetRandomNumber(int min, int max)
 		{
-			lock (random) // synchronize
+			lock (s_random) // synchronize
 			{
-				return random.Next(min, max);
+				return s_random.Next(min, max);
 			}
 		}
 		public double EvaluateBoard(Board board, bool isMyTurn)

@@ -6,9 +6,5 @@
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', $(MSBuildThisFileDirectory)..))"
 		Condition=" Exists($([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', $(MSBuildThisFileDirectory)..)))"/>
 
-	<PropertyGroup Label="Generated Code">
-		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-		<CompilerGeneratedFilesOutputPath>$(IntermediateOutputPath)/generated</CompilerGeneratedFilesOutputPath>
-	</PropertyGroup>
 </Project>
 

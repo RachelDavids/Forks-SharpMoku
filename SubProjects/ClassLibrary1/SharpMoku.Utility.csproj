@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+		<TargetFrameworks>net48;net8.0</TargetFrameworks>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Update="AppInfo\Resources\shinkaya1.jpg">
@@ -21,6 +21,11 @@
 		<Content Include="AppInfo\Resources\lizzie_white0.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Text.Json"
+		                  Version="8.0.4"
+		                  Condition=" '$(TargetFrameworkIdentifier)' != '.NETCoreApp' " />
 	</ItemGroup>
 
 </Project>

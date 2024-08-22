@@ -1,0 +1,22 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup>
+		<EnableGeneratedRegex Condition="'$(EnableGeneratedRegex)' == ''">true</EnableGeneratedRegex>
+		<EnableGeneratedRegex Condition=" '$(TargetFrameworkIdentifier)' == '.NETCoreApp' AND  $([MSBuild]::VersionGreaterThanOrEquals($(TargetFrameworkVersion), '7.0')) ">false</EnableGeneratedRegex>
+	</PropertyGroup>
+
+	<ItemGroup Label="Code Generation"
+		Condition=" '$(ProjectLanguage)' == 'CSharp' ">
+		<!-- RegexGen is obly valid for C# -->
+		<PackageReference Include="$(GeneratorProvider).Generators.GeneratedRegex.$(ProjectLanguage)"
+		                  Condition=" '$(EnableGeneratedRegex)' == 'true'"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  developmentDependency="true">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>

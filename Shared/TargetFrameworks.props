@@ -4,12 +4,9 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<!-- Default is to build for net48 ONLY -->
-		<!-- any project wanting a net core should set these accordingly -->
 		<EnableNet48>true</EnableNet48>
-		<EnableNet5>false</EnableNet5>
-		<EnableNet6>false</EnableNet6>
+		<EnableNet6>true</EnableNet6>
 		<EnableNet7>false</EnableNet7>
-		<EnableNet8>false</EnableNet8>
+		<EnableNet8>true</EnableNet8>
 	</PropertyGroup>
 </Project>

@@ -8,6 +8,16 @@
 			<IncludeAssets>build; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
+	<ItemGroup Label="Analyzer Config">
+		<PackageReference Include="Chaucer.AnalyzerConfig.CodeAnalysis" Version="$(LatestStablePackageRequiredVersion)">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>build; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Chaucer.AnalyzerConfig.DotNetStyle" Version="$(LatestStablePackageRequiredVersion)">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>build; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 	<!-- require opt-in by project -->
 	<ItemGroup Condition=" Exists('$(MSBuildProjectDirectory)\BannedSymbols.txt') ">
 		<PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="$(LatestStablePackageRequiredVersion)">

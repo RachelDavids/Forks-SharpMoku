@@ -1,64 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<!--<EnableCodeAnalysis>false</EnableCodeAnalysis>-->
-		<!--<RunCodeAnalysis Condition=" '$(RunCodeAnalysis)' == '' ">false</RunCodeAnalysis>-->
-		<RunAnalyzersDuringLiveAnalysis Condition=" '$(RunAnalyzers)' == '' ">true</RunAnalyzersDuringLiveAnalysis>
-		<RunAnalyzersDuringBuild Condition=" '$(RunAnalyzers)' == '' ">true</RunAnalyzersDuringBuild>
-		<!--<RunAnalyzers Condition=" '$(RunAnalyzers)' == '' ">true</RunAnalyzers>-->
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
 	</PropertyGroup>
-	<PropertyGroup>
-		<!-- https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#analysismode -->
-		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
-		<!-- https://docs.microsoft.com/en-gb/dotnet/core/project-sdk/msbuild-props#analysislevel -->
-		<AnalysisLevel>preview</AnalysisLevel>
-	</PropertyGroup>
-	<PropertyGroup>
-		<_analyzerStyleConfigFile>$(MSBuildThisFileDirectory)roslyn.globalconfig</_analyzerStyleConfigFile>
-		<ShowHiddenAnalyzerFiles Condition=" '$(ShowHiddenAnalyzerFiles)' == '' ">false</ShowHiddenAnalyzerFiles>
-	</PropertyGroup>
-	<Choose>
-		<When Condition=" Exists('$(_analyzerStyleConfigFile)') ">
-			<ItemGroup>
-				<AdditionalFiles Include="$(_analyzerStyleConfigFile)">
-					<Visible>$(ShowHiddenAnalyzerFiles)</Visible>
-				</AdditionalFiles>
-				<GlobalAnalyzerConfigFiles Include="$(_analyzerStyleConfigFile)">
-					<Visible>$(ShowHiddenAnalyzerFiles)</Visible>
-				</GlobalAnalyzerConfigFiles>
-			</ItemGroup>
-			<PropertyGroup>
-				<projectConfig>$(MSBuildProjectDirectory)\$(MSBuildProjectName).globalconfig</projectConfig>
-			</PropertyGroup>
-			<ItemGroup Condition=" Exists('$(projectConfig)')">
-				<AdditionalFiles Include="$(projectConfig)" />
-				<GlobalAnalyzerConfigFiles Include="$(projectConfig)" />
-			</ItemGroup>
-			<PropertyGroup>
-				<CodeAnalysisRuleSet />
-			</PropertyGroup>
-		</When>
-		<Otherwise>
-			<PropertyGroup>
-				<!-- Global Level File -->
-				<DefaultRuleSetPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), Default.CodeAnalysis.ruleset))</DefaultRuleSetPath>
-				<CodeAnalysisRuleSet Condition=" Exists('$(DefaultRuleSetPath)\Default.CodeAnalysis.ruleset')">$(DefaultRuleSetPath)\Default.CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-				<!-- Company Specific Global Level File -->
-				<CompanyRuleSetPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), $(CompanyName).CodeAnalysis.ruleset))</CompanyRuleSetPath>
-				<CodeAnalysisRuleSet Condition=" Exists('$(DefaultRuleSetPath)\$(CompanyName).CodeAnalysis.ruleset')">$(CompanyRuleSetPath)\$(CompanyName).CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-				<!-- Solution Level File -->
-				<CodeAnalysisRuleSet Condition=" Exists('$(MSBuildThisFileDirectory)Solution.CodeAnalysis.ruleset') ">$(MSBuildThisFileDirectory)\Solution.CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-				<!-- Project Level File -->
-				<CodeAnalysisRuleSet Condition=" Exists('$(MSBuildProjectDirectory)\$(MSBuildProjectName).ruleset') ">$(MSBuildProjectDirectory)$(MSBuildProjectName).ruleset</CodeAnalysisRuleSet>
-			</PropertyGroup>
-		</Otherwise>
-	</Choose>
-	<!--<Target Name="CheckAnalyzerFiles"
-					BeforeTargets="PrepareForBuild" >
-		<Message Importance="High" Text="GA => %(GlobalAnalyzerConfigFiles.Identity)" />
-		<Message Importance="High" Text="AF => %(AdditionalFiles.Identity)" />
-		<Message Importance="High" Text="PC => $(projectConfig)" />
-		<Message Importance="High" Text="MSBuildThisFileDirectory => $(MSBuildThisFileDirectory)" />
-		<Message Importance="High" Text="MSBuildProjectDirectory => $(MSBuildProjectDirectory)" />
-	</Target>-->
+	<ItemGroup>
+		<GlobalAnalyzerConfigFiles Include="$(MSBuildThisFileDirectory)AnalyzerConfig\*.globalconfig" >
+			<Link>_SolutionConfig_\%(Filename)%(Extension)</Link>
+			<Visible>true</Visible>
+		</GlobalAnalyzerConfigFiles>
+	</ItemGroup>
 </Project>
+

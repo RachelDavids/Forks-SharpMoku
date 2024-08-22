@@ -36,3 +36,21 @@ T: SharpMoku.Utility.FileUtility
 
 # end extra entries generated from defects
 
+# begin extra entries generated from defects
+# added on 10/01/2024 09:28:03 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Performance.AvoidUnusedParametersRule
+M: System.Void SharpMoku.Utility.SerializeUtility::Serialize(T,System.String)
+M: T SharpMoku.Utility.SerializeUtility::Deserialize(System.String)
+
+# end extra entries generated from defects
+
+# begin extra entries generated from defects
+# added on 10/01/2024 11:44:30 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Maintainability.RemoveDependenceOnObsoleteCodeRule
+M: System.Void SharpMoku.Utility.SerializeUtility::Serialize(T,System.String)
+M: T SharpMoku.Utility.SerializeUtility::Deserialize(System.String)
+
+# end extra entries generated from defects
+

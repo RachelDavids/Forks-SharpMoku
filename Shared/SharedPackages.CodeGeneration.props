@@ -3,23 +3,29 @@
 		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
 	</PropertyGroup>
 	<PropertyGroup>
-		<GeneratorProvider>Rachel</GeneratorProvider>
+		<GeneratorProvider Condition=" '$(GeneratorProvider)' == '' ">$(CompanyIdentifier)</GeneratorProvider>
 	</PropertyGroup>
 	<ItemGroup Label="Code Generation">
-		<PackageReference Include="$(GeneratorProvider).Generators.CheckDisposed"
+		<PackageReference Include="$(GeneratorProvider).Generators.CheckDisposed.$(ProjectLanguage)"
 		                  Version="$(LatestStablePackageRequiredVersion)"
 		                  developmentDependency="true">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="$(GeneratorProvider).Generators.ApplicationConfiguration"
-		                  Condition=" '$(TargetFrameworkIdentifier)' == '.NETFramework' AND '$(OutputType)' == 'WinExe' "
-		                  Version="*">
+		<PackageReference Include="$(GeneratorProvider).Generators.System.$(ProjectLanguage)"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  Condition=" '$(TargetFrameworkIdentifier)' != '.NETCoreApp' "
+		                  developmentDependency="true">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-
-		<PackageReference Include="$(GeneratorProvider).Generators.AssemblyAttributes"
+		<PackageReference Include="$(GeneratorProvider).Generators.AssemblyAttributes.$(ProjectLanguage)"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  developmentDependency="true">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="$(GeneratorProvider).Generators.ApplicationConfiguration.$(ProjectLanguage)"
 		                  Version="$(LatestStablePackageRequiredVersion)"
 		                  developmentDependency="true">
 			<PrivateAssets>all</PrivateAssets>

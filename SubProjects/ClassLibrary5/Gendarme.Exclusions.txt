@@ -233,3 +233,19 @@ M: System.Int32 SharpMoku.AI.EvaluateV3::getScoreByPattern(SharpMoku.AI.Evaluate
 
 # end extra entries generated from defects
 
+# begin extra entries generated from defects
+# added on 10/01/2024 11:14:59 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
+M: System.Void SharpMoku.AI.Minimax::.ctor(SharpMoku.Board,SharpMoku.AI.IEvaluate,SharpMoku.Logging.ILog)
+
+# end extra entries generated from defects
+
+# begin extra entries generated from defects
+# added on 22/08/2024 17:44:55 by RACHEL-240818/rache
+
+R: Gendarme.Rules.Correctness.ReviewUselessControlFlowRule
+M: SharpMoku.AI.MoveScore SharpMoku.AI.Minimax::searchOpponentWinningPosition(SharpMoku.Board,SharpMoku.AI.IEvaluate)
+
+# end extra entries generated from defects
+

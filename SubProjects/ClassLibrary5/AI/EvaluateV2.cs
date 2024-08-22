@@ -17,7 +17,6 @@ namespace SharpMoku.AI
 
 		public double EvaluateBoard(Board board, bool isMyTurn)
 		{
-
 			return CalculateBoardScoreForOpponent(board, isMyTurn);
 		}
 
@@ -27,22 +26,17 @@ namespace SharpMoku.AI
 			OneSideBlock = 1,
 			BothSideBlock = 2
 		}
-		public struct StonePattern
+		public struct StonePattern(int numberOfConsecutiveStone, BlockType blockType)
 		{
-			public int NumberOfConsecutiveStone;
-			public BlockType blockType;
-			public StonePattern(int numberOfConsecutiveStone, BlockType blockType)
-			{
-				NumberOfConsecutiveStone = numberOfConsecutiveStone;
-				this.blockType = blockType;
-			}
+			public int NumberOfConsecutiveStone = numberOfConsecutiveStone;
+			public BlockType BlockType = blockType;
 		}
 		public double CalculateBoardScoreForOpponent(Board board, bool isMyTurn)
 		{
 
-			bool isItforMe = true;
-			double myScore = GetScore(board, isItforMe, isMyTurn);
-			double opponentScore = GetScore(board, !isItforMe, isMyTurn);
+			bool isItForMe = true;
+			double myScore = GetScore(board, isItForMe, isMyTurn);
+			double opponentScore = GetScore(board, !isItForMe, isMyTurn);
 
 			if (myScore == 0)
 			{
@@ -60,17 +54,17 @@ namespace SharpMoku.AI
 
 			int horizontalScore = CalculateScoreForHorizontal(boardMatrix, isForBlackStone, isBlackTurn);
 			int verticalScore = CalculateScoreForVertical(boardMatrix, isForBlackStone, isBlackTurn);
-			int DiagonalScore = CalculateScoreForDiagonal(boardMatrix, isForBlackStone, isBlackTurn);
+			int diagonalScore = CalculateScoreForDiagonal(boardMatrix, isForBlackStone, isBlackTurn);
 
-			return horizontalScore + verticalScore + DiagonalScore;
+			return horizontalScore + verticalScore + diagonalScore;
 		}
 
 		public int GetScore(Board board)
 		{
-			Position LatestPosition = board.LastPositionPut;
+			_ = board.LastPositionPut;
 
 			CellValue cellValue = board.CurrentTurnCellValue;
-			CellValue opponentCellValue = (CellValue)
+			_ = (CellValue)
 								   (-(int)cellValue);
 
 			bool isBlackTurn = cellValue == CellValue.Black;
@@ -81,7 +75,7 @@ namespace SharpMoku.AI
 			return cellValue == CellValue.Black ? blackStoneValue - whiteStonevalue : whiteStonevalue - blackStoneValue;
 
 		}
-		private int leastStoneForConsecutive = 2;
+		private readonly int leastStoneForConsecutive = 2;
 		public List<StonePattern> GetStonePatternForHorizontal(int[,] boardMatrix, bool isForBlackStone)
 		{
 			List<StonePattern> listPattern = [];
@@ -368,7 +362,7 @@ namespace SharpMoku.AI
 		public int calculateConsecutiveStoneSequenceScore(StonePattern stonePattern, bool isMyTurn)
 		{
 			return calculateConsecutiveStoneSequenceScore(stonePattern.NumberOfConsecutiveStone,
-				stonePattern.blockType,
+				stonePattern.BlockType,
 				isMyTurn);
 		}
 
@@ -413,6 +407,9 @@ namespace SharpMoku.AI
 					{
 						return conSecutiveStone1;
 					}
+
+				default:
+					break;
 			}
 
 			return 0;

@@ -200,3 +200,102 @@ T: SharpMoku.UI.Theme.GomokuTheme
 
 # end extra entries generated from defects
 
+# begin extra entries generated from defects
+# added on 11/01/2024 09:34:06 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
+M: System.Drawing.Point SharpMoku.UI.PictureBoxGomoku::GetLowerRightPoint(SharpMoku.Position)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::.ctor(SharpMoku.Board,System.Int32,System.Int32)
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: System.Drawing.Point SharpMoku.UI.PictureBoxGomoku::GetLowerRightPoint(SharpMoku.Position)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
+
+R: Gendarme.Rules.Correctness.MethodCanBeMadeStaticRule
+M: System.Void SharpMoku.UI.PictureBoxGomoku::CopyImage(System.Drawing.Bitmap,System.Drawing.Graphics,System.Drawing.Rectangle)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::UpdateTheme(SharpMoku.UI.Theme.Theme)
+
+R: Gendarme.Rules.Design.AvoidVisibleNestedTypesRule
+T: SharpMoku.UI.PictureBoxGomoku/CellClickHandler
+T: SharpMoku.UI.PictureBoxGomoku/PositionEventArgs
+
+R: Gendarme.Rules.Design.DeclareEventHandlersCorrectlyRule
+E: SharpMoku.UI.PictureBoxGomoku/CellClickHandler SharpMoku.UI.PictureBoxGomoku::CellClicked
+
+R: Gendarme.Rules.Design.Generic.AvoidDeclaringCustomDelegatesRule
+T: SharpMoku.UI.PictureBoxGomoku/CellClickHandler
+
+R: Gendarme.Rules.Exceptions.AvoidThrowingBasicExceptionsRule
+M: SharpMoku.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::LoadPositionIntersection(System.Collections.Generic.List`1<System.Tuple`2<System.Int32,System.Int32>>&)
+
+R: Gendarme.Rules.Exceptions.UseObjectDisposedExceptionRule
+M: SharpMoku.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
+M: System.Drawing.Point SharpMoku.UI.PictureBoxGomoku::GetLowerRightPoint(SharpMoku.Position)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::Initial(SharpMoku.UI.Theme.Theme)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::ReleaseResource()
+M: System.Void SharpMoku.UI.PictureBoxGomoku::SetBoad(SharpMoku.Board)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::SetBoardValueToLabel()
+
+R: Gendarme.Rules.Maintainability.VariableNamesShouldNotMatchFieldNamesRule
+T: SharpMoku.UI.PictureBoxGomoku
+
+R: Gendarme.Rules.Naming.AvoidRedundancyInMethodNameRule
+M: System.Void SharpMoku.UI.PictureBoxGomoku::UpdateTheme(SharpMoku.UI.Theme.Theme)
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+M: SharpMoku.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
+M: System.Boolean SharpMoku.UI.PictureBoxGomoku::IsIntersecton(System.Int32,System.Int32)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
+P: System.Collections.Generic.List`1<System.Tuple`2<System.Int32,System.Int32>> SharpMoku.UI.PictureBoxGomoku::positionIntersectionList()
+P: System.Int32 SharpMoku.UI.PictureBoxGomoku::cellHeight()
+P: System.Int32 SharpMoku.UI.PictureBoxGomoku::cellWidth()
+
+R: Gendarme.Rules.Performance.AvoidEmptyMethodsRule
+M: System.Void SharpMoku.UI.PictureBoxGomoku::UpdateTheme(SharpMoku.UI.Theme.Theme)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: SharpMoku.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::Initial(SharpMoku.UI.Theme.Theme)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::PictureBoxGoMoKu_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
+
+R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
+M: System.Void SharpMoku.UI.PictureBoxGomoku::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
+
+R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
+M: System.Void SharpMoku.GomokuCellDetail::.ctor()
+M: System.Void SharpMoku.UI.PictureBoxGomoku::.ctor(SharpMoku.Board,System.Int32,System.Int32)
+
+R: Gendarme.Rules.Performance.AvoidUnusedParametersRule
+M: System.Void SharpMoku.UI.PictureBoxGomoku::UpdateTheme(SharpMoku.UI.Theme.Theme)
+
+R: Gendarme.Rules.Smells.AvoidLargeClassesRule
+T: SharpMoku.UI.PictureBoxGomoku
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: System.Void SharpMoku.UI.PictureBoxGomoku::Initial(SharpMoku.UI.Theme.Theme)
+
+# end extra entries generated from defects
+
+# begin extra entries generated from defects
+# added on 22/08/2024 16:34:17 by RACHEL-240818/rache
+
+R: Gendarme.Rules.Exceptions.UseObjectDisposedExceptionRule
+M: System.Void SharpMoku.UI.PictureBoxGomoku::SetBoard(SharpMoku.Board)
+
+# end extra entries generated from defects
+
+# begin extra entries generated from defects
+# added on 22/08/2024 17:44:55 by RACHEL-240818/rache
+
+R: Gendarme.Rules.Performance.AvoidEmptyMethodsRule
+M: System.Void SharpMoku.UI.Theme.Theme::Panel1_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
+
+R: Gendarme.Rules.Performance.AvoidRedundantCallsRule
+M: System.Void SharpMoku.UI.ExtendLabel::MakeRound()
+
+R: Gendarme.Rules.Performance.DoNotIgnoreMethodResultRule
+M: System.Void SharpMoku.UI.ExtendLabel::MakeRound()
+
+# end extra entries generated from defects
+

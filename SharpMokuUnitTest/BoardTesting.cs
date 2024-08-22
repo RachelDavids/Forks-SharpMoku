@@ -77,10 +77,8 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void PutStone()
 		{
-			Position position = null;
-
 			Board board = new(15);
-			position = new Position(0, 0);
+			Position position = new(0, 0);
 			Assert.IsTrue(board.IsEmpty);
 
 			board.PutStone(position, CellValue.Black);
@@ -97,7 +95,7 @@ namespace Testing.SharpMoku
 			];
 
 			Assert.IsTrue(board.CheckWinStatus() == WinStatus.NotDecidedYet);
-			Assert.IsTrue(board.listHistory.Count == 1);
+			Assert.IsTrue(board.ListHistory.Count == 1);
 			Assert.IsTrue(board.dicBlackStone.Count == 1);
 			Assert.IsTrue(board.dicWhiteStone.Count == 0);
 			Assert.IsTrue(board.CurrentTurn == Turn.Black);
@@ -118,7 +116,7 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(board.Matrix[0, 1] == (int)CellValue.White);
 
 			Assert.IsTrue(board.CheckWinStatus() == WinStatus.NotDecidedYet);
-			Assert.IsTrue(board.listHistory.Count == 2);
+			Assert.IsTrue(board.ListHistory.Count == 2);
 			Assert.IsTrue(board.dicBlackStone.Count == 1);
 			Assert.IsTrue(board.dicWhiteStone.Count == 1);
 			Assert.IsTrue(board.CurrentTurn == Turn.Black);
@@ -144,7 +142,7 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(board.Matrix[5, 5] == (int)CellValue.White);
 
 			Assert.IsTrue(board.CheckWinStatus() == WinStatus.NotDecidedYet);
-			Assert.IsTrue(board.listHistory.Count == 1);
+			Assert.IsTrue(board.ListHistory.Count == 1);
 			Assert.IsTrue(board.dicBlackStone.Count == 0);
 			Assert.IsTrue(board.dicWhiteStone.Count == 1);
 			Assert.IsTrue(board.dicWhiteStone.ContainsKey(position.PositionString()));
@@ -168,7 +166,7 @@ namespace Testing.SharpMoku
 				new Position (5,4),
 			];
 			Assert.IsTrue(board.CheckWinStatus() == WinStatus.NotDecidedYet);
-			Assert.IsTrue(board.listHistory.Count == 2);
+			Assert.IsTrue(board.ListHistory.Count == 2);
 			Assert.IsTrue(board.dicBlackStone.Count == 1);
 			Assert.IsTrue(board.dicWhiteStone.Count == 1);
 			Assert.IsTrue(board.CurrentTurn == Turn.Black);
@@ -197,7 +195,7 @@ namespace Testing.SharpMoku
 				new Position (6,9)
 			];
 			Assert.IsTrue(board.CheckWinStatus() == WinStatus.NotDecidedYet);
-			Assert.IsTrue(board.listHistory.Count == 3);
+			Assert.IsTrue(board.ListHistory.Count == 3);
 			Assert.IsTrue(board.dicBlackStone.Count == 1);
 			Assert.IsTrue(board.dicWhiteStone.Count == 2);
 			Assert.IsTrue(board.CurrentTurn == Turn.Black);
@@ -233,9 +231,7 @@ namespace Testing.SharpMoku
 			Assert.IsTrue(board.IsEmpty);
 
 			board.PutStone(0, 0, CellValue.Black);
-
-			WinStatus winStatus = WinStatus.NotDecidedYet;
-			winStatus = board.CheckWinStatus();
+			WinStatus winStatus = board.CheckWinStatus();
 			Assert.IsTrue(winStatus == WinStatus.NotDecidedYet);
 
 		}
@@ -353,10 +349,9 @@ namespace Testing.SharpMoku
 			Board board = new(9);
 			int i;
 			int j;
-			CellValue cellValue = CellValue.Black;
 			for (i = 0; i <= 8; i++)
 			{
-				cellValue = i % 2 == 0 ? CellValue.Black : CellValue.White;
+				CellValue cellValue = i % 2 == 0 ? CellValue.Black : CellValue.White;
 				int iCountCellValue = 0;
 				for (j = 0; j <= 8; j++)
 				{
@@ -389,23 +384,21 @@ namespace Testing.SharpMoku
 			board.PutStone(4, 0, CellValue.Black);
 			board.PutStone(6, 6, CellValue.White);
 			//
-			Board NewBoard = new(board);
-			NewBoard.PutStone(8, 8, CellValue.White);
+			Board newBoard = new(board);
+			newBoard.PutStone(8, 8, CellValue.White);
 
-			Assert.IsTrue(!IsBoardTheSame(board, NewBoard));
+			Assert.IsTrue(!IsBoardTheSame(board, newBoard));
 
-			NewBoard.Undo();
+			newBoard.Undo();
 			board.SwitchTurn();
-			Assert.IsTrue(IsBoardTheSame(board, NewBoard));
+			Assert.IsTrue(IsBoardTheSame(board, newBoard));
 
 		}
 		[TestMethod]
 		public void GetListNeighborPosition()
 		{
-			Position position = null;
-
 			Board board = new(15);
-			position = new Position(0, 0);
+			Position position = new(0, 0);
 			board.PutStone(position, CellValue.Black);
 			Assert.IsTrue(board.Matrix[0, 0] == (int)CellValue.Black);
 
@@ -440,10 +433,8 @@ namespace Testing.SharpMoku
 		[TestMethod]
 		public void AdjustEmptyNeighborOf()
 		{
-			Position position = null;
-
 			Board board = new(15);
-			position = new Position(0, 0);
+			Position position = new(0, 0);
 			board.PutStone(position, CellValue.Black);
 			Assert.IsTrue(board.Matrix[0, 0] == (int)CellValue.Black);
 
@@ -455,7 +446,7 @@ namespace Testing.SharpMoku
 			];
 
 			Assert.IsTrue(board.CheckWinStatus() == WinStatus.NotDecidedYet);
-			Assert.IsTrue(board.listHistory.Count == 1);
+			Assert.IsTrue(board.ListHistory.Count == 1);
 			Assert.IsTrue(board.dicBlackStone.Count == 1);
 			Assert.IsTrue(board.dicWhiteStone.Count == 0);
 			Assert.IsTrue(board.CurrentTurn == Turn.Black);
@@ -475,7 +466,7 @@ namespace Testing.SharpMoku
 
 			Assert.IsTrue(board.Matrix[0, 1] == (int)CellValue.White);
 			Assert.IsTrue(board.CheckWinStatus() == WinStatus.NotDecidedYet);
-			Assert.IsTrue(board.listHistory.Count == 2);
+			Assert.IsTrue(board.ListHistory.Count == 2);
 			Assert.IsTrue(board.dicBlackStone.Count == 1);
 			Assert.IsTrue(board.dicWhiteStone.Count == 1);
 			Assert.IsTrue(board.CurrentTurn == Turn.Black);
@@ -552,16 +543,16 @@ namespace Testing.SharpMoku
 			{
 				return false;
 			}
-			if (board1.listHistory != null && board2.listHistory == null)
+			if (board1.ListHistory != null && board2.ListHistory == null)
 			{
 				return false;
 			}
-			if (board2.listHistory != null && board1.listHistory == null)
+			if (board2.ListHistory != null && board1.ListHistory == null)
 			{
 				return false;
 			}
 
-			if (board1.listHistory.Count != board2.listHistory.Count)
+			if (board1.ListHistory.Count != board2.ListHistory.Count)
 			{
 				return false;
 			}
@@ -624,9 +615,9 @@ namespace Testing.SharpMoku
 				}
 			}
 
-			for (i = 0; i < board1.listHistory.Count; i++)
+			for (i = 0; i < board1.ListHistory.Count; i++)
 			{
-				if (!board1.listHistory[i].IsEqual(board2.listHistory[i]))
+				if (!board1.ListHistory[i].IsEqual(board2.ListHistory[i]))
 				{
 					return false;
 				}

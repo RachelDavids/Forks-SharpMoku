@@ -8,118 +8,107 @@ using SharpMoku.UI.Theme;
 
 namespace SharpMoku.UI
 {
-	public class PictureBoxGoMoKu : PictureBox
+	public partial class PictureBoxGomoku(Board board, int cellWidth, int cellHeight)
+				: PictureBox
 	{
-		public class PositionEventArgs : EventArgs
+		public class PositionEventArgs(Position position)
+			: EventArgs
 		{
-			public Position Value { get; set; }
-			public PositionEventArgs(Position position)
-			{
-				Value = position;
-			}
+			public Position Value { get; set; } = position;
 		}
 
 		public Point GetLowerRightPoint(Position position)
 		{
-			Label L = DicLabel[position.Row.ToString("00") +
-				position.Col.ToString("00")];
+			Label label = _labels[position.Row.ToString("00") + position.Col.ToString("00")];
 			// Point point = new Point(L.Top, L.Left);
-			Point PointResult = Point.Empty;
-			Form f = L.FindForm();
-			f.Invoke(new MethodInvoker(delegate () {
-				PointResult = L.PointToScreen(Point.Empty);
+			Point point = Point.Empty;
+			Form f = label.FindForm();
+			_ = f.Invoke(new MethodInvoker(delegate () {
+				point = label.PointToScreen(Point.Empty);
 			}));
 
-			PointResult.X += L.Width / 2;
-			PointResult.Y += L.Height / 2;
-			PointResult.X += 10;
-			PointResult.Y += 10;
-			return PointResult;
+			point.X += label.Width / 2;
+			point.Y += label.Height / 2;
+			point.X += 10;
+			point.Y += 10;
+			return point;
 
 		}
 
-		public delegate void CellClickHandler(PictureBoxGoMoKu pic, PositionEventArgs positionClick);
+		public delegate void CellClickHandler(PictureBoxGomoku pic, PositionEventArgs positionClick);
 
 		public event CellClickHandler CellClicked;
 
 		private Bitmap BoardImage => CurrentTheme.BoardImage;
 
-		private int LastIndex => NoofRow - 1;
-		public int NoofRow { get; set; } = 8;
-		public int NoofColumn { get; set; } = 8;
-		public int BoardSize => NoofRow;
+		private int LastIndex => RowNumber - 1;
+		public int RowNumber { get; set; } = board.Matrix.GetLength(0);
+		public int ColumnNumber { get; set; } = board.Matrix.GetLength(1);
+		public int BoardSize => RowNumber;
 
-		private Dictionary<string, Label> DicLabel = [];
-		private bool IsRenderNotation = true;
-		private Board board = null;
-		public int cellWidth { get; private set; } = 0;
-		public int cellHeight { get; private set; } = 0;
+		private readonly Dictionary<string, Label> _labels = [];
+		private readonly bool _renderNotation = true;
+		private Board _board = board;
+		public int CellWidth { get; private set; } = cellWidth;
+		public int CellHeight { get; private set; } = cellHeight;
 		public void ReleaseResource()
 		{
-			board = null;
+			_board = null;
 		}
-		public void SetBoad(Board board)
+		public void SetBoard(Board board)
 		{
-			this.board = board;
+			CheckDisposed();
+			_board = board;
 		}
-		public PictureBoxGoMoKu(Board board, int cellWidth, int cellHeight)
-		{
-			this.board = board;
-			this.cellWidth = cellWidth;
-			this.cellHeight = cellHeight;
-			NoofRow = board.Matrix.GetLength(0);
-			NoofColumn = board.Matrix.GetLength(1);
 
-		}
-		private Theme.Theme _CurrentTheme = null;
+		private Theme.Theme _currentTheme = null;
 		public Theme.Theme CurrentTheme {
 			get {
-				_CurrentTheme ??= ThemeFactory.Create(ThemeFactory.ThemeEnum.Gomoku1);
-				return _CurrentTheme;
+				_currentTheme ??= ThemeFactory.Create(ThemeFactory.ThemeEnum.Gomoku1);
+				return _currentTheme;
 			}
 		}
 
-		private List<Tuple<int, int>> positionIntersectionList {
+		private List<Tuple<int, int>> PositionIntersectionList {
 			get {
-				if (_positionIntersectionList == null ||
-					_positionIntersectionList.Count == 0)
+				if (_positionIntersectionList == null
+					|| _positionIntersectionList.Count == 0)
 				{
-					LoadPositionIntersection(ref _positionIntersectionList);
+					LoadPositionIntersection(out _positionIntersectionList);
 				}
 				return _positionIntersectionList;
 			}
 		}
 
-		private List<Tuple<int, int>> _positionIntersectionList = null;
-		private void LoadPositionIntersection(ref List<Tuple<int, int>> position)
+		private List<Tuple<int, int>> _positionIntersectionList;// = null;
+		private void LoadPositionIntersection(out List<Tuple<int, int>> position)
 		{
 			position = [];
-			int i;
-			int j;
+			int start, end, delta;
 			if (BoardSize == 15)
 			{
-				for (i = 3; i <= 11; i += 4)
-				{
-					for (j = 3; j <= 11; j += 4)
-					{
-						position.Add(new Tuple<int, int>(i, j));
-					}
-				}
+				(start, end, delta) = (3, 11, 4);
 			}
 			else if (BoardSize == 9)
 			{
-				for (i = 2; i <= 6; i += 4)
-				{
-					for (j = 2; j <= 6; j += 4)
-					{
-						position.Add(new Tuple<int, int>(i, j));
-					}
-				}
-				position.Add(new Tuple<int, int>(4, 4));
+				(start, end, delta) = (2, 6, 4);
 			}
 			else
 			{
-				throw new Exception(String.Format("BoardSize must be 9 or 15, it cannot be {0}", BoardSize));
+				throw new Exception($"BoardSize must be 9 or 15, it cannot be {BoardSize}");
+			}
+			for (int i = start; i <= end; i += delta)
+			{
+				for (int j = start; j <= end; j += delta)
+				{
+					position.Add(new Tuple<int, int>(i, j));
+				}
+				int centre = (BoardSize / 2) - 1;
+				Tuple<int, int> t = new(centre, centre);
+				if (!position.Contains(t))
+				{
+					position.Add(t);
+				}
 			}
 			/* For board size 15
              * The loop above give the same result as these below code
@@ -133,97 +122,94 @@ namespace SharpMoku.UI
             position.Add(new Tuple<int, int>(11, 7));
             position.Add(new Tuple<int, int>(11, 11));
             */
-
 		}
-		private bool IsIntersecton(int Row, int Col)
-			=> positionIntersectionList.Contains(new Tuple<int, int>(Row, Col));
+		private bool IsIntersection(int row, int col)
+			=> PositionIntersectionList.Contains(new Tuple<int, int>(row, col));
 
-		public void UpdateTheme(Theme.Theme currentTheme)
-		{
+		//public void UpdateTheme(Theme.Theme currentTheme)
+		//{
 
-		}
+		//}
 		public void Initial(Theme.Theme currentTheme)
 		{
-			int i;
-			int j;
-			DicLabel.Clear();
+			_labels.Clear();
 			Controls.Clear();
 
 			if (currentTheme != null)
 			{
-				_CurrentTheme = currentTheme;
+				_currentTheme = currentTheme;
 			}
-			Label LPreviousLabel = null;
-			int SpaceBetweenBorderSize = 0;
+			Label previousLabel = null;
+			int spaceBetweenBorderSize = 0;
 
 			BackgroundImage = null;
 
-			int LastIndex = BoardSize - 1;
+			int lastIndex = BoardSize - 1;
 
-			int XOffSet = 0;
-			int YOffSet = 0;
-			if (IsRenderNotation)
+			int xOffSet = 0;
+			int yOffSet = 0;
+			if (_renderNotation)
 			{
-				XOffSet = cellWidth;
-				YOffSet = cellHeight;
+				xOffSet = CellWidth;
+				yOffSet = CellHeight;
 			}
 
-			SpaceBetweenBorderSize = CurrentTheme.SpaceBetweenBorderSize;
-			for (i = 0; i <= LastIndex; i++)
+			spaceBetweenBorderSize = CurrentTheme.SpaceBetweenBorderSize;
+			for (int row = 0; row <= lastIndex; row++)
 			{
-				LPreviousLabel = null;
-				for (j = 0; j <= LastIndex; j++)
+				previousLabel = null;
+				for (int col = 0; col <= lastIndex; col++)
 				{
 
-					ExtendLabel L = new();
+					ExtendLabel l = new();
 
-					CurrentTheme.ApplyThemeToCell(L);
+					CurrentTheme.ApplyThemeToCell(l);
 
-					L.CellAttribute.Row = i;
-					L.CellAttribute.Col = j;
-					L.CellAttribute.IsIntersection = IsIntersecton(i, j);
+					l.CellDetail.Row = row;
+					l.CellDetail.Col = col;
+					l.CellDetail.IsIntersection = IsIntersection(row, col);
 
-					L.AutoSize = false;
-					L.Height = cellHeight;
-					L.Width = cellWidth;
-					L.BorderStyle = BorderStyle.None;
+					l.AutoSize = false;
+					l.Height = CellHeight;
+					l.Width = CellWidth;
+					l.BorderStyle = BorderStyle.None;
 
-					if (LPreviousLabel == null)
+					if (previousLabel == null)
 					{
-						L.Top = (i * (L.Height + SpaceBetweenBorderSize)) + SpaceBetweenBorderSize + YOffSet;
-						L.Left = (j * L.Width) + SpaceBetweenBorderSize + XOffSet;
+						l.Top = (row * (l.Height + spaceBetweenBorderSize)) + spaceBetweenBorderSize + yOffSet;
+						l.Left = (col * l.Width) + spaceBetweenBorderSize + xOffSet;
 					}
 					else
 					{
-						L.Top = LPreviousLabel.Top;
-						L.Left = LPreviousLabel.Left + LPreviousLabel.Width + SpaceBetweenBorderSize;
+						l.Top = previousLabel.Top;
+						l.Left = previousLabel.Left + previousLabel.Width + spaceBetweenBorderSize;
 					}
 
-					L.Click -= Label_Click;
-					L.Click += Label_Click;
-					L.CellAttribute.GoboardPosition = GetBoardPosition(i, j);
+					l.Click -= Label_Click;
+					l.Click += Label_Click;
+					l.CellDetail.GoBoardPosition = GetBoardPosition(row, col);
 					if (CurrentTheme.CustomPaint != null)
 					{
 						Type t = CurrentTheme.CustomPaint.GetType();
 						if (t == typeof(GoMokuPaint))
 						{
-							L.Parent = this;
-							L.BackColor = Color.Transparent;
+							l.Parent = this;
+							l.BackColor = Color.Transparent;
 
 						}
 					}
 
-					Controls.Add(L);
-					LPreviousLabel = L;
-					DicLabel.Add(i.ToString("00") + j.ToString("00"), L);
+					Controls.Add(l);
+					previousLabel = l;
+					_labels.Add(row.ToString("00") + col.ToString("00"), l);
 				}
 			}
 
-			Height = LPreviousLabel.Top + (LPreviousLabel.Height * 2);
-			Width = LPreviousLabel.Left + (LPreviousLabel.Width * 2);
+			Height = previousLabel.Top + (previousLabel.Height * 2);
+			Width = previousLabel.Left + (previousLabel.Width * 2);
 			CurrentTheme.ApplyThemeToBoard(this);
 
-			if (IsRenderNotation)
+			if (_renderNotation)
 			{
 				Paint -= PictureBoxGoMoKu_Paint;
 				Paint += PictureBoxGoMoKu_Paint;
@@ -244,14 +230,14 @@ namespace SharpMoku.UI
 		{
 			int i;
 			int j;
-			for (i = 0; i < NoofRow; i++)
+			for (i = 0; i < RowNumber; i++)
 			{
-				for (j = 0; j < NoofColumn; j++)
+				for (j = 0; j < ColumnNumber; j++)
 				{
-					ExtendLabel Lbl = (ExtendLabel)DicLabel[i.ToString("00") + j.ToString("00")];
-					CellValue cellValue = (CellValue)board.Matrix[i, j];
-					Lbl.CellAttribute.IsNeighborCell = board.dicNeighbour.ContainsKey(new Position(i, j).PositionString());
-					Lbl.CellAttribute.CellValue = cellValue;
+					ExtendLabel Lbl = (ExtendLabel)_labels[i.ToString("00") + j.ToString("00")];
+					CellValue cellValue = (CellValue)_board.Matrix[i, j];
+					Lbl.CellDetail.IsNeighborCell = _board.dicNeighbour.ContainsKey(new Position(i, j).PositionString());
+					Lbl.CellDetail.CellValue = cellValue;
 					Lbl.Invalidate();
 
 				}
@@ -260,34 +246,30 @@ namespace SharpMoku.UI
 		private void PictureBoxGoMoKu_Paint(object sender, PaintEventArgs e)
 		{
 
-			int LastIndex = BoardSize - 1;
-			Label TopLeftLabel = DicLabel["0000"];
-			Label TopRghtLabel = DicLabel["00" + LastIndex.ToString("00")];
-			Label BottomRightLabel = DicLabel[LastIndex.ToString("00") + LastIndex.ToString("00")];
-			Label BottomLeftLabel = DicLabel[LastIndex.ToString("00") + "00"];
-
-			PictureBoxGoMoKu pic = (PictureBoxGoMoKu)sender;
+			//int lastIndex = BoardSize - 1;
+			//Label TopLeftLabel = Labels["0000"];
+			//Label TopRghtLabel = Labels["00" + lastIndex.ToString("00")];
+			//Label BottomRightLabel = Labels[lastIndex.ToString("00") + lastIndex.ToString("00")];
+			//Label BottomLeftLabel = Labels[lastIndex.ToString("00") + "00"];
+			PictureBoxGomoku pic = (PictureBoxGomoku)sender;
 			Rectangle rectAll = new(0, 0, pic.Width, pic.Height);
 			if (CurrentTheme.HasImage)
 			{
 
 				CopyImage(BoardImage, e.Graphics, rectAll);
 			}
-
-			int i;
-
 			/*
-             * set it to true to display gomoku Notation
-             * set it to false if you want it to be more
-             * easy for you to debug
+             * set to true to display gomoku Notation
+             * set to false if you want it to be easier
+			 * for you to debug
              */
 			//[DEBUG:]
-			bool isUseGomokuNotation = true;
+			bool useGomokuNotation = true;
 
-			for (i = 0; i < BoardSize; i++)
+			for (int i = 0; i < BoardSize; i++)
 			{
-				Label FirstColumnLabel = DicLabel[i.ToString("00") + "00"];
-				Label FirstRowLabel = DicLabel["00" + i.ToString("00")];
+				Label firstColumnLabel = _labels[i.ToString("00") + "00"];
+				Label firstRowLabel = _labels["00" + i.ToString("00")];
 				StringFormat format = new() {
 					Alignment = StringAlignment.Center
 				};
@@ -295,16 +277,14 @@ namespace SharpMoku.UI
 				string rowCharacter = i.ToString();
 				string colCharacter = i.ToString();
 
-				if (isUseGomokuNotation)
+				if (useGomokuNotation)
 				{
-					string row1to15Character = (BoardSize - i).ToString();
+					string row1To15Character = (BoardSize - i).ToString();
 					// or 1 to 9
-
 					const int asciiValueForA = 65;
 					string colAtoOCharacter = ((char)(asciiValueForA + i)).ToString();
 					// or A to I
-
-					rowCharacter = row1to15Character;
+					rowCharacter = row1To15Character;
 					colCharacter = colAtoOCharacter;
 
 				}
@@ -312,12 +292,12 @@ namespace SharpMoku.UI
 				e.Graphics.DrawString(rowCharacter,
 									  ShareGraphicObject.GoMokuBoardFont,
 									  ShareGraphicObject.SolidBrush(CurrentTheme.NotationForeColor),
-									  new Point(FirstColumnLabel.Width / 2, FirstColumnLabel.Top),
+									  new Point(firstColumnLabel.Width / 2, firstColumnLabel.Top),
 									  format);
 				e.Graphics.DrawString(colCharacter,
 									  ShareGraphicObject.GoMokuBoardFont,
 									  ShareGraphicObject.SolidBrush(CurrentTheme.NotationForeColor),
-									  new Point(FirstRowLabel.Left + 10, 0));
+									  new Point(firstRowLabel.Left + 10, 0));
 
 			}
 		}
@@ -327,8 +307,8 @@ namespace SharpMoku.UI
 
 			ExtendLabel labelSender = (ExtendLabel)sender;
 
-			Position pos = new(labelSender.CellAttribute.Row,
-				labelSender.CellAttribute.Col);
+			Position pos = new(labelSender.CellDetail.Row,
+				labelSender.CellDetail.Col);
 
 			PositionEventArgs posEvent = new(pos);
 			CellClicked?.Invoke(this, posEvent);
@@ -359,35 +339,35 @@ namespace SharpMoku.UI
 
 		}
 
-		private Dictionary<string, GomokuCellAttribute.GoBoardPositionEnum> _DicBoardPositionEnum = null;
-		private Dictionary<string, GomokuCellAttribute.GoBoardPositionEnum> DicBoardPositionEnum {
+		private Dictionary<string, GoBoardPosition> _DicBoardPositionEnum = null;
+		private Dictionary<string, GoBoardPosition> DicBoardPositionEnum {
 			get {
 				if (_DicBoardPositionEnum == null)
 				{
-					_DicBoardPositionEnum = new Dictionary<string, GomokuCellAttribute.GoBoardPositionEnum> {
-						{ "0,0", GomokuCellAttribute.GoBoardPositionEnum.TopLeftCorner },
-						{ "0," + LastIndex, GomokuCellAttribute.GoBoardPositionEnum.TopRightCorner },
-						{ LastIndex + ",0", GomokuCellAttribute.GoBoardPositionEnum.BottomLeftCorner },
-						{ LastIndex + "," + LastIndex, GomokuCellAttribute.GoBoardPositionEnum.BottomRightCorner }
-					};
+					_DicBoardPositionEnum = new Dictionary<string, GoBoardPosition> {
+																						{ "0,0", GoBoardPosition.TopLeftCorner },
+																						{ "0," + LastIndex, GoBoardPosition.TopRightCorner },
+																						{ LastIndex + ",0", GoBoardPosition.BottomLeftCorner },
+																						{ LastIndex + "," + LastIndex, GoBoardPosition.BottomRightCorner }
+																					};
 					int i;
 					for (i = 1; i < LastIndex; i++)
 					{
-						_DicBoardPositionEnum.Add("0," + i, GomokuCellAttribute.GoBoardPositionEnum.TopBorder);
-						_DicBoardPositionEnum.Add(LastIndex + "," + i, GomokuCellAttribute.GoBoardPositionEnum.BottomBorder);
-						_DicBoardPositionEnum.Add(i + ",0", GomokuCellAttribute.GoBoardPositionEnum.LeftBorder);
-						_DicBoardPositionEnum.Add(i + "," + LastIndex, GomokuCellAttribute.GoBoardPositionEnum.RightBorder);
+						_DicBoardPositionEnum.Add("0," + i, GoBoardPosition.TopBorder);
+						_DicBoardPositionEnum.Add(LastIndex + "," + i, GoBoardPosition.BottomBorder);
+						_DicBoardPositionEnum.Add(i + ",0", GoBoardPosition.LeftBorder);
+						_DicBoardPositionEnum.Add(i + "," + LastIndex, GoBoardPosition.RightBorder);
 					}
 				}
 				return _DicBoardPositionEnum;
 			}
 		}
-		public GomokuCellAttribute.GoBoardPositionEnum GetBoardPosition(int Row, int Col)
+		public GoBoardPosition GetBoardPosition(int Row, int Col)
 		{
 
 			if (!(Row == 0 || Col == 0 || Row == LastIndex || Col == LastIndex))
 			{
-				return GomokuCellAttribute.GoBoardPositionEnum.Center;
+				return GoBoardPosition.Center;
 			}
 
 			Position pos = new(Row, Col);

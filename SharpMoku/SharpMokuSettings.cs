@@ -1,5 +1,6 @@
 using System;
 
+using SharpMoku.Logging;
 using SharpMoku.UI.Theme;
 
 namespace SharpMoku

@@ -206,7 +206,9 @@ namespace SharpMoku.AI
 			}
 			return false;
 		}
+#pragma warning disable IDE0060 // Remove unused parameter
 		public double EvaluateBoardForWhite(Board board, bool blacksTurn)
+#pragma warning restore IDE0060 // Remove unused parameter
 		{
 
 			// Get board score of both players.
@@ -420,7 +422,8 @@ namespace SharpMoku.AI
 					{
 						case 2: return 3000;
 						case 1: return 2900;
-
+						default:
+							break;
 					}
 					break;
 				case 1:
@@ -429,8 +432,11 @@ namespace SharpMoku.AI
 						case 3: return 3400;
 						case 2: return 3300;
 						case 1: return 3100;
-
+						default:
+							break;
 					}
+					break;
+				default:
 					break;
 			}
 

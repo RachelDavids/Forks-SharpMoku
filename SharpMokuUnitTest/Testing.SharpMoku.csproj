@@ -17,4 +17,7 @@
 		<PackageReference Include="MSTest.TestAdapter" Version="*" />
 		<PackageReference Include="MSTest.TestFramework" Version="*" />
 	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Chaucer.FeatureSupport" Version="*" />
+	</ItemGroup>
 </Project>

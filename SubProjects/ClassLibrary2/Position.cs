@@ -4,18 +4,13 @@ namespace SharpMoku
 {
 
 	[Serializable]
-	public class Position
+	public class Position(int row, int col)
 	{
-		public int Row = -1;
-		public int Col = -1;
+		public int Row { get; } = row;
+		public int Col { get; } = col;
 		public static Position Empty => new(-1, -1);
 		public bool IsEmpty => Row == -1 && Col == -1;
 
-		public Position(int pRow, int pCol)
-		{
-			Row = pRow;
-			Col = pCol;
-		}
 		public override int GetHashCode()
 		{
 			return (Row + "_" + Col).GetHashCode();

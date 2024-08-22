@@ -3,6 +3,11 @@
 		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
 	</PropertyGroup>
 	<PropertyGroup>
+		<ProjectLanguage />
+		<ProjectLanguage Condition=" '$(MSBuildProjectExtension)' == '.csproj' ">CSharp</ProjectLanguage>
+		<ProjectLanguage Condition=" '$(MSBuildProjectExtension)' == '.vbproj' ">VisualBasic</ProjectLanguage>
+	</PropertyGroup>
+	<PropertyGroup>
 		<IsPackable>false</IsPackable>
 		<GeneratePackageOnBuild Condition="'$(GeneratePackageOnBuild)' == ''">false</GeneratePackageOnBuild>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

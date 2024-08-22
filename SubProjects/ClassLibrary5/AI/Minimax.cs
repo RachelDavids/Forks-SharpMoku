@@ -2,26 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using SharpMoku.Logging;
+
 namespace SharpMoku.AI
 {
-	public class Minimax
+	public class Minimax(Board board, IEvaluate evaluator, ILog logger)
 	{
-
-		private Board _board;
-		private ILog _logger;
-		public Minimax(Board board, IEvaluate evaluator, ILog logger)
-		{
-			_evaluator = evaluator ?? new EvaluateV3(); //Default evaluate function
-			_board = board;
-			_logger = logger;
-		}
 		private void Log(string message)
 		{
-			if (_logger == null)
-			{
-				return;
-			}
-			_logger.Log("MiniMaxNew::" + message);
+			logger?.Log("MiniMaxNew::" + message);
 
 		}
 
@@ -41,18 +30,16 @@ namespace SharpMoku.AI
 
 			MoveScore botMoveScore = new();
 
-			if (_board.IsEmpty)
+			if (board.IsEmpty)
 			{
-				botMoveScore.Row = Utility.Randomizer.GetRandomNumber(0, _board.Matrix.GetUpperBound(0));
-				botMoveScore.Col = Utility.Randomizer.GetRandomNumber(0, _board.Matrix.GetUpperBound(1));
+				botMoveScore.Row = Utility.Randomizer.GetRandomNumber(0, board.Matrix.GetUpperBound(0));
+				botMoveScore.Col = Utility.Randomizer.GetRandomNumber(0, board.Matrix.GetUpperBound(1));
 				//bestMove.Row =
 				evaluationCount = 0;
 				return botMoveScore.GetPosition();
 			}
 
-			MoveScore botWinningPosition = new();
-
-			botWinningPosition = searchBotWinningPosition(_board, _evaluator);
+			MoveScore botWinningPosition = searchBotWinningPosition(board, _evaluator);
 
 			if (botWinningPosition.Row != -1)
 			{
@@ -60,8 +47,7 @@ namespace SharpMoku.AI
 				return botWinningPosition.GetPosition();
 			}
 
-			MoveScore OpponentWinningPosition = new();
-			OpponentWinningPosition = searchOpponentWinningPosition(_board, _evaluator);
+			MoveScore OpponentWinningPosition = searchOpponentWinningPosition(board, _evaluator);
 
 			if (OpponentWinningPosition.Row != -1)
 			{
@@ -74,23 +60,23 @@ namespace SharpMoku.AI
 			//  Boolean IsMax = true;
 			//  double Alpha = -1.0;
 			NumberOfNodes = 0;
-			miniMaxParameter Para = new() {
+			MiniMaxParameter Para = new() {
 				Depth = depth,
-				board = _board.Clone(),
+				Board = board.Clone(),
 				IsMax = true,
 				Alpha = -1.0,
 				Beta = CONST_winScore
 			};
 			Log("Before search");
-			NumberOfNodeInEachLevel = [];
+			_numberOfNodeInEachLevel = [];
 			int i;
 			for (i = 0; i <= depth; i++)
 			{
-				NumberOfNodeInEachLevel.Add(0);
+				_numberOfNodeInEachLevel.Add(0);
 			}
 
 			FirstLevelDepth = Para.Depth;
-			botMoveScore = minimaxSearchAlphaBeta(Para.Depth, Para.board, Para.IsMax, Para.Alpha, Para.Beta);
+			botMoveScore = minimaxSearchAlphaBeta(Para.Depth, Para.Board, Para.IsMax, Para.Alpha, Para.Beta);
 
 			Log("  Depth::" + Para.Depth);
 			Log("  Total No of Nodes::" + NumberOfNodes);
@@ -104,7 +90,7 @@ namespace SharpMoku.AI
 			}
 			for (i = 0; i <= depth; i++)
 			{
-				Log("    Nodes[" + i + "] :" + NumberOfNodeInEachLevel[i]);
+				Log("    Nodes[" + i + "] :" + _numberOfNodeInEachLevel[i]);
 			}
 
 			Log($"Score::{botMoveScore.Score}");
@@ -118,35 +104,34 @@ namespace SharpMoku.AI
          * beta : Best Player Move (Min)
          * returns: {score, move[0], move[1]}
          * */
-		public class miniMaxParameter
+		private sealed class MiniMaxParameter
 		{
 			public int Depth { get; set; }
-			public Board board { get; set; }
+			public Board Board { get; set; }
 			public bool IsMax { get; set; }
 			public double Alpha = 0;
 			public double Beta = 0;
-			public miniMaxParameter Clone()
-			{
-				miniMaxParameter CloneObject = new() {
-					Depth = Depth,
-					board = board.Clone(),
-					IsMax = IsMax,
-					Alpha = Alpha,
-					Beta = Beta
-				};
-				return CloneObject;
-			}
+			//public MiniMaxParameter Clone()
+			//{
+			//	return new() {
+			//		Depth = Depth,
+			//		Board = Board.Clone(),
+			//		IsMax = IsMax,
+			//		Alpha = Alpha,
+			//		Beta = Beta
+			//	};
+			//}
 		}
 
-		private IEvaluate _evaluator = null;
-		private List<int> NumberOfNodeInEachLevel = null;
-		private string GetTab(int moveDepth)
+		private readonly IEvaluate _evaluator = evaluator ?? new EvaluateV3();
+		private List<int> _numberOfNodeInEachLevel = null;
+		private static string GetTab(int moveDepth)
 		{
 			int maxDepth = 5;
-			int numberofTab = maxDepth - moveDepth;
+			int numberOfTab = maxDepth - moveDepth;
 			StringBuilder strB = new();
 			int i;
-			for (i = 0; i < numberofTab; i++)
+			for (i = 0; i < numberOfTab; i++)
 			{
 				strB.Append("\t");
 			}
@@ -155,20 +140,19 @@ namespace SharpMoku.AI
 		private MoveScore minimaxSearchAlphaBeta(int depth, Board board, bool IsMax, double AlphaValue, double BetaValue)
 		{
 			NumberOfNodes++;
-			NumberOfNodeInEachLevel[depth]++;
+			_numberOfNodeInEachLevel[depth]++;
 			// Last depth (terminal node), evaluate the current board score.
-			string tabString = GetTab(depth);
-			MoveScore movescore = new();
+			string tabString = Minimax.GetTab(depth);
 			Log($"{tabString}depth{depth}");
 
 			if (depth == 0)
 			{
 
-				movescore = new MoveScore(_evaluator.EvaluateBoard(board, !IsMax));
+				MoveScore moveScore = new(_evaluator.EvaluateBoard(board, !IsMax));
 				Log($"{tabString}Evaluate happens here");
-				Log($"{tabString}Score::{movescore.Score}");
+				Log($"{tabString}Score::{moveScore.Score}");
 
-				return movescore;
+				return moveScore;
 			}
 
 			/*If it is first level, the radiusNeighbor can be 2
@@ -177,7 +161,7 @@ namespace SharpMoku.AI
 			int radiusNeighbour = (depth == FirstLevelDepth)
 				? 2
 				: 1;
-			List<Position> allNeighborPossibleMoves = null;
+			List<Position> allNeighborPossibleMoves;// = null;
 			if (radiusNeighbour == 2)
 			{
 				allNeighborPossibleMoves = board.generateNeighbourMoves(radiusNeighbour);
@@ -192,12 +176,12 @@ namespace SharpMoku.AI
 			}
 
 			// If there is no possible move left, treat this node as a terminal node and return the score.
-			bool IsNothingLeftToSearch = allNeighborPossibleMoves.Count == 0;
+			bool isNothingLeftToSearch = allNeighborPossibleMoves.Count == 0;
 
-			if (IsNothingLeftToSearch)
+			if (isNothingLeftToSearch)
 			{
-				movescore = new MoveScore(_evaluator.EvaluateBoard(board, !IsMax));
-				return movescore;
+				MoveScore moveScore = new(_evaluator.EvaluateBoard(board, !IsMax));
+				return moveScore;
 			}
 
 			/*If we reach this stage it means
@@ -205,11 +189,8 @@ namespace SharpMoku.AI
              */
 
 			MoveScore bestMove = new();
-			int depthChild = 0;
-			bool isMaxChild = false;
-			depthChild = depth - 1;
-			isMaxChild = !IsMax;
-
+			int depthChild = depth - 1;
+			bool isMaxChild = !IsMax;
 			bestMove.Row = allNeighborPossibleMoves[0].Row;
 			bestMove.Col = allNeighborPossibleMoves[0].Col;
 			bestMove.Score = IsMax
@@ -223,41 +204,41 @@ namespace SharpMoku.AI
 				iCountMove++;
 				Log($"{tabString}{iCountMove}.   move::{move.PositionString()}");
 				board.PutStoneAndSwitchTurn(move);
-				movescore = minimaxSearchAlphaBeta(depthChild, board, isMaxChild, AlphaValue, BetaValue);
-				movescore.Row = move.Row;
-				movescore.Col = move.Col;
+				MoveScore moveScore = minimaxSearchAlphaBeta(depthChild, board, isMaxChild, AlphaValue, BetaValue);
+				moveScore.Row = move.Row;
+				moveScore.Col = move.Col;
 
-				Log($"{tabString}Score::{movescore.Score}");
+				Log($"{tabString}Score::{moveScore.Score}");
 				//  board.Undo();
 
 				if (board.IsFull)
 				{
 					Log("{tabString}board.IsFull");
-					return movescore;
+					return moveScore;
 
 				}
 				board.Undo();
 
 				if (IsMax)
 				{
-					AlphaValue = Math.Max(movescore.Score, AlphaValue);
-					if (movescore.Score >= BetaValue)
+					AlphaValue = Math.Max(moveScore.Score, AlphaValue);
+					if (moveScore.Score >= BetaValue)
 					{
 						Log($"{tabString}moveScoe >= Beta");
-						return movescore;
+						return moveScore;
 					}
-					bestMove = MoveScore.Max(bestMove, movescore);
+					bestMove = MoveScore.Max(bestMove, moveScore);
 
 				}
 				else
 				{
-					BetaValue = Math.Min(movescore.Score, BetaValue);
-					if (movescore.Score > AlphaValue)
+					BetaValue = Math.Min(moveScore.Score, BetaValue);
+					if (moveScore.Score > AlphaValue)
 					{
 						Log($"{tabString}moveScore > Alpha");
-						return movescore;
+						return moveScore;
 					}
-					bestMove = MoveScore.Min(bestMove, movescore);
+					bestMove = MoveScore.Min(bestMove, moveScore);
 
 				}
 			}
@@ -322,7 +303,10 @@ namespace SharpMoku.AI
 					maxMoveScore = new MoveScore(Score, move.Row, move.Col);
 				}
 			}
-
+			if (evaluationCount > Int16.MaxValue)
+			{
+				// TODO: this is just a placeholder to see what we need to  (if anything)
+			}
 			return maxMoveScore.Score >= 10000 ? maxMoveScore : winningPosition;
 		}
 	}

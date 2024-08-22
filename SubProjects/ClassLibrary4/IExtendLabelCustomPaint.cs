@@ -1,45 +1,38 @@
-﻿using SharpMoku.UI;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static SharpMoku.UI.ExtendLabel;
-using static SharpMoku.GomokuCellAttribute;
+
+using SharpMoku.UI;
 
 namespace SharpMoku
 {
+	public class Connect5Paint
+		: IExtendLabelCustomPaint
+	{
 
+		public void Paint(Graphics graphics, ExtendLabel pLabel)
+		{
 
+			// Pen P;
+			graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+			int Radius = 8;
+			RectangleF RecCircle = new(Radius, Radius, pLabel.Width - (Radius * 2), pLabel.Height - (Radius * 2));
 
+			Color c = Color.White;
+			switch (pLabel.CellDetail.CellValue)
+			{
+				case CellValue.Black:
+					c = pLabel.theme.XColor;
+					break;
+				case CellValue.White:
+					c = pLabel.theme.OColor;
+					break;
+				case CellValue.Empty:
+					break;
+				default:
+					break;
+			}
 
-    public class Connect5Paint : IExtendLabelCustomPaint
-    {
-
-        public void Paint(Graphics g, ExtendLabel pLabel)
-        {
-
-            // Pen P;
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            int Radius = 8;
-            RectangleF RecCircle = new RectangleF(Radius, Radius, pLabel.Width - Radius * 2, pLabel.Height - Radius * 2);
-
-            Color c = Color.White;
-            switch (pLabel.CellAttribute.CellValue)
-            {
-                case CellValue.Black:
-                    c = pLabel.theme.XColor;
-                    break;
-                case CellValue.White:
-                    c = pLabel.theme.OColor;
-                    break;
-            }
-
-            g.FillEllipse(ShareGraphicObject.SolidBrush(c), RecCircle);
-        }
-    }
+			graphics.FillEllipse(ShareGraphicObject.SolidBrush(c), RecCircle);
+		}
+	}
 
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SharpMoku
 {
@@ -49,7 +48,7 @@ namespace SharpMoku
 			dicWhiteStone = new Dictionary<string, Position>(board.dicWhiteStone);
 			dicBlackStone = new Dictionary<string, Position>(board.dicBlackStone);
 			dicNeighbour = new Dictionary<string, Position>(board.dicNeighbour);
-			listHistory = new List<Position>(board.listHistory);
+			ListHistory = new List<Position>(board.ListHistory);
 			BoardSize = board.BoardSize;
 			CurrentTurn = board.CurrentTurn;
 
@@ -80,7 +79,7 @@ namespace SharpMoku
 			Position newPosition = new(pRow, pCol);
 
 			GetHshByCellValue(cellValue).Add(newPosition.PositionString(), newPosition);
-			listHistory.Add(newPosition);
+			ListHistory.Add(newPosition);
 		}
 		public List<Position> GetListNeighborPosition(Position position) => GetListNeighborPosition(position, 1);
 		public List<Position> GetListNeighborPosition(Position position, int radius)
@@ -200,7 +199,7 @@ namespace SharpMoku
 			Matrix[pRow, pCol] = (int)cellValue;
 			Position newPosition = new(pRow, pCol);
 			GetHshByCellValue(cellValue).Add(newPosition.PositionString(), newPosition);
-			listHistory.Add(newPosition);
+			ListHistory.Add(newPosition);
 			AddEmptyNeighborOf(newPosition);
 		}
 
@@ -318,9 +317,11 @@ namespace SharpMoku
 			return IsFull ? WinStatus.Draw : WinStatus.NotDecidedYet;
 		}
 
-		public List<Position> listHistory = [];
-		public bool CanUndo => listHistory != null && listHistory.Count > 0;
-		public Position LastPositionPut => listHistory == null || listHistory.Count == 0 ? new Position(-1, -1) : listHistory[listHistory.Count - 1];
+		public List<Position> ListHistory { get; } = [];
+		public bool CanUndo => ListHistory is { Count: > 0 };
+		public Position LastPositionPut => ListHistory == null || ListHistory.Count == 0
+			? new Position(-1, -1)
+			: ListHistory[^1];
 
 		public List<Position> generateNeighbourMoves()
 		{
@@ -329,12 +330,12 @@ namespace SharpMoku
 
 		public List<Position> generateNeighbourMoves(int radius)
 		{
-			List<Position> moveList = [];
+			//List<Position> moveList = [];
 			bool IsUsedicNeighbor = radius == 1;
 
 			if (IsUsedicNeighbor)
 			{
-				return dicNeighbour.Values.ToList();
+				return [.. dicNeighbour.Values];
 			}
 
 			HashSet<string> hsh = [];
@@ -456,9 +457,9 @@ namespace SharpMoku
 
 		public void Undo()
 		{
-			int LastIndex = listHistory.Count - 1;
-			Position pos = listHistory[LastIndex];
-			listHistory.RemoveAt(LastIndex);
+			int LastIndex = ListHistory.Count - 1;
+			Position pos = ListHistory[LastIndex];
+			ListHistory.RemoveAt(LastIndex);
 			RemoveStone(pos);
 			AdjustEmptyNeighborOf(pos);
 			SwitchTurn();

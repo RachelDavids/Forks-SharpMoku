@@ -1,0 +1,54 @@
+# Top level entry required to mark this as a global AnalyzerConfig file
+is_global = true
+
+global_level = 500
+
+# Restrict the analyzed API surface for certain analyzers to 'public' (public APIs only).
+# CA1010: Generic interface should also be implemented
+dotnet_code_quality.CA1010.api_surface = public
+# CA1036: Override methods on comparable types
+dotnet_code_quality.CA1036.api_surface = public
+# CA1043: Use integral or string argument for indexers
+dotnet_code_quality.CA1043.api_surface = public
+# CA1707: Identifiers should not contain underscores
+dotnet_code_quality.CA1707.api_surface = public
+# CA1720: Identifiers should not contain type names
+dotnet_code_quality.CA1720.api_surface = public
+# CA1716: Identifiers should not match keywords
+dotnet_code_quality.CA1716.api_surface = public
+
+# Exclude single letter type parameter names
+# CA1715: Identifiers should have correct prefix
+dotnet_code_quality.CA1715.exclude_single_letter_type_parameters = true
+
+# (Naming) CA1716: Identifiers should not match keywords
+# Include the following list during analysis
+# Exclude Parameter
+dotnet_code_quality.CA1716.analyzed_symbol_kinds = Namespace,NamedType,Method,Property,Event
+
+# Require suitable framework (or a new Code Generator)
+# (Maintainability) CA1510: Use ArgumentNullException throw helper
+dotnet_diagnostic.CA1510.severity = warning
+# (Maintainability) CA1512: Use ArgumentOutOfRangeException throw helper
+dotnet_diagnostic.CA1512.severity = warning
+# (Maintainability) CA1513: Use ObjectDisposedException throw helper
+dotnet_diagnostic.CA1513.severity = warning
+
+# (Globalization) CA1305: Specify IFormatProvider
+dotnet_diagnostic.CA1305.severity = suggestion
+# (Maintainability) CA1510: Use ArgumentNullException throw helper
+dotnet_diagnostic.CA1510.severity = suggestion
+# (Maintainability) CA1512: Use ArgumentOutOfRangeException throw helper
+dotnet_diagnostic.CA1512.severity = suggestion
+# (Maintainability) CA1513: Use ObjectDisposedException throw helper
+dotnet_diagnostic.CA1513.severity = suggestion
+
+dotnet_analyzer_diagnostic.category-security.severity = error
+# (Performance) CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = suggestion
+# (Usage) CA2201: Do not raise reserved exception types
+dotnet_diagnostic.CA2201.severity = suggestion
+# (Naming) CA1711: Identifiers should not have incorrect suffix
+dotnet_diagnostic.CA1711.severity = suggestion
+# (Naming) CA1707: Identifiers should not contain underscores
+dotnet_diagnostic.CA1707.severity = suggestion

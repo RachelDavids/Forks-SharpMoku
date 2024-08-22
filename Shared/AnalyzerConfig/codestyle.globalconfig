@@ -1,0 +1,11 @@
+# Top level entry required to mark this as a global AnalyzerConfig file
+is_global = true
+
+global_level = 500
+
+# CA1801 depreceated in favour of IDE0060 Remove unused parameter
+# set scope
+dotnet_code_quality_unused_parameters	= all
+
+# (Style) IDE0059: Unnecessary assignment of a value
+dotnet_diagnostic.IDE0059.severity = suggestion

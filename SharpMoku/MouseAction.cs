@@ -42,20 +42,21 @@ namespace SharpMoku
 
 		}
 
-		private static Random random = new();
-		private static int mouseSpeed = 15;
+		private static readonly Random s_random = new();
+		private static readonly int s_mouseSpeed = 15;
 		/*
          Credit::https://stackoverflow.com/questions/913646/c-sharp-moving-the-mouse-around-realistically
          */
 		public static void MoveMouse(int x, int y, int rx, int ry)
 		{
-			Point c = new();
+			_ = new Point();
+			Point c;
 			GetCursorPos(out c);
 
-			x += random.Next(rx);
-			y += random.Next(ry);
+			x += s_random.Next(rx);
+			y += s_random.Next(ry);
 
-			double randomSpeed = Math.Max(((random.Next(mouseSpeed) / 2.0) + mouseSpeed) / 10.0, 0.1);
+			double randomSpeed = Math.Max(((s_random.Next(s_mouseSpeed) / 2.0) + s_mouseSpeed) / 10.0, 0.1);
 
 			WindMouse(c.X, c.Y, x, y, 9.0, 3.0, 10.0 / randomSpeed,
 				15.0 / randomSpeed, 10.0 * randomSpeed, 10.0 * randomSpeed);
@@ -70,7 +71,9 @@ namespace SharpMoku
 		{
 
 			double dist, windX = 0, windY = 0, veloX = 0, veloY = 0, randomDist, veloMag, step;
-			int oldX, oldY, newX = (int)Math.Round(xs), newY = (int)Math.Round(ys);
+			int oldX, oldY;
+			_ = (int)Math.Round(xs);
+			_ = (int)Math.Round(ys);
 
 			double waitDiff = maxWait - minWait;
 			double sqrt2 = Math.Sqrt(2.0);
@@ -86,7 +89,7 @@ namespace SharpMoku
 
 				if (dist >= targetArea)
 				{
-					int w = random.Next(((int)Math.Round(wind) * 2) + 1);
+					int w = s_random.Next(((int)Math.Round(wind) * 2) + 1);
 					windX = (windX / sqrt3) + ((w - wind) / sqrt5);
 					windY = (windY / sqrt3) + ((w - wind) / sqrt5);
 				}
@@ -96,7 +99,7 @@ namespace SharpMoku
 					windY /= sqrt2;
 					if (maxStep < 3)
 					{
-						maxStep = random.Next(3) + 3.0;
+						maxStep = s_random.Next(3) + 3.0;
 					}
 					else
 					{
@@ -111,7 +114,7 @@ namespace SharpMoku
 
 				if (Hypot(veloX, veloY) > maxStep)
 				{
-					randomDist = (maxStep / 2.0) + random.Next((int)Math.Round(maxStep) / 2);
+					randomDist = (maxStep / 2.0) + s_random.Next((int)Math.Round(maxStep) / 2);
 					veloMag = Hypot(veloX, veloY);
 					veloX = veloX / veloMag * randomDist;
 					veloY = veloY / veloMag * randomDist;
@@ -122,8 +125,8 @@ namespace SharpMoku
 				xs += veloX;
 				ys += veloY;
 				dist = Hypot(xe - xs, ye - ys);
-				newX = (int)Math.Round(xs);
-				newY = (int)Math.Round(ys);
+				int newX = (int)Math.Round(xs);
+				int newY = (int)Math.Round(ys);
 
 				if (oldX != newX || oldY != newY)
 				{
@@ -181,16 +184,10 @@ namespace SharpMoku
 
         */
 		[StructLayout(LayoutKind.Sequential)]
-		public struct Point
+		public struct Point(int x, int y)
 		{
-			public int X;
-			public int Y;
-
-			public Point(int x, int y)
-			{
-				X = x;
-				Y = y;
-			}
+			public int X = x;
+			public int Y = y;
 		}
 
 		public static Point convertDrawingPointToStructPoint(System.Drawing.Point poi)
