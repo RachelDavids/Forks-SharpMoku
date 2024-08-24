@@ -7,5 +7,3 @@ global_level = 500
 # set scope
 dotnet_code_quality_unused_parameters	= all
 
-# (Style) IDE0059: Unnecessary assignment of a value
-dotnet_diagnostic.IDE0059.severity = suggestion

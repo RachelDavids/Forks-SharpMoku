@@ -26,29 +26,7 @@ dotnet_code_quality.CA1715.exclude_single_letter_type_parameters = true
 # Exclude Parameter
 dotnet_code_quality.CA1716.analyzed_symbol_kinds = Namespace,NamedType,Method,Property,Event
 
-# Require suitable framework (or a new Code Generator)
-# (Maintainability) CA1510: Use ArgumentNullException throw helper
-dotnet_diagnostic.CA1510.severity = warning
-# (Maintainability) CA1512: Use ArgumentOutOfRangeException throw helper
-dotnet_diagnostic.CA1512.severity = warning
-# (Maintainability) CA1513: Use ObjectDisposedException throw helper
-dotnet_diagnostic.CA1513.severity = warning
-
-# (Globalization) CA1305: Specify IFormatProvider
-dotnet_diagnostic.CA1305.severity = suggestion
-# (Maintainability) CA1510: Use ArgumentNullException throw helper
-dotnet_diagnostic.CA1510.severity = suggestion
-# (Maintainability) CA1512: Use ArgumentOutOfRangeException throw helper
-dotnet_diagnostic.CA1512.severity = suggestion
-# (Maintainability) CA1513: Use ObjectDisposedException throw helper
-dotnet_diagnostic.CA1513.severity = suggestion
-
 dotnet_analyzer_diagnostic.category-security.severity = error
-# (Performance) CA1822: Mark members as static
-dotnet_diagnostic.CA1822.severity = suggestion
-# (Usage) CA2201: Do not raise reserved exception types
-dotnet_diagnostic.CA2201.severity = suggestion
-# (Naming) CA1711: Identifiers should not have incorrect suffix
-dotnet_diagnostic.CA1711.severity = suggestion
-# (Naming) CA1707: Identifiers should not contain underscores
-dotnet_diagnostic.CA1707.severity = suggestion
+dotnet_analyzer_diagnostic.category-performance.severity = error
+dotnet_analyzer_diagnostic.category-design.severity = error
+dotnet_analyzer_diagnostic.category-naming.severity = error

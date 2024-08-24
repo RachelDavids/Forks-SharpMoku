@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Utility\SharpMoku.Utility.csproj" />
+	  <ProjectReference Include="..\Board\SharpMoku.Board.csproj" />
+	  <ProjectReference Include="..\Logging\SharpMoku.Logging.csproj" />
+	</ItemGroup>
+
+</Project>

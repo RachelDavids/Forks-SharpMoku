@@ -5,8 +5,6 @@ VisualStudioVersion = 17.9.34414.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku", "SharpMoku\SharpMoku.csproj", "{F43005E5-7451-4E69-BEE6-8BCE652E2CBF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.SharpMoku", "SharpMokuUnitTest\Testing.SharpMoku.csproj", "{4DE88A36-BD13-4E2A-BC96-E0D71FAFD008}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "!!Solution!!", "!!Solution!!", "{66539BAF-2DA8-4EA6-AC4B-156ACC7141DF}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -39,7 +37,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{19AD06
 		Shared\Pack.props = Shared\Pack.props
 		Shared\PackageVersions.props = Shared\PackageVersions.props
 		Shared\ProjectSystem.props = Shared\ProjectSystem.props
-		Shared\roslyn.globalconfig = Shared\roslyn.globalconfig
 		Shared\RoslynAnalysis.props = Shared\RoslynAnalysis.props
 		Shared\SharedPackages.Build.props = Shared\SharedPackages.Build.props
 		Shared\SharedPackages.CodeAnalysis.props = Shared\SharedPackages.CodeAnalysis.props
@@ -49,15 +46,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{19AD06
 		Shared\TargetFrameworks.props = Shared\TargetFrameworks.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku.Utility", "SubProjects\ClassLibrary1\SharpMoku.Utility.csproj", "{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku.Utility", "SharpMoku\Utility\SharpMoku.Utility.csproj", "{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku.Board", "SubProjects\ClassLibrary2\SharpMoku.Board.csproj", "{9E0B32A3-D7AE-41C4-82ED-05435DE862AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku.Board", "SharpMoku\Board\SharpMoku.Board.csproj", "{9E0B32A3-D7AE-41C4-82ED-05435DE862AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku.Logging", "SubProjects\ClassLibrary3\SharpMoku.Logging.csproj", "{687A493A-3F69-4D95-9F7B-52F9C5989FFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku.Logging", "SharpMoku\Logging\SharpMoku.Logging.csproj", "{687A493A-3F69-4D95-9F7B-52F9C5989FFE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku.UI", "SubProjects\ClassLibrary4\SharpMoku.UI.csproj", "{7B19EA2C-CB2C-4C3D-9542-22E1F5C69102}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku.UI", "SharpMoku\UI\SharpMoku.UI.csproj", "{7B19EA2C-CB2C-4C3D-9542-22E1F5C69102}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku.AI", "SubProjects\ClassLibrary5\SharpMoku.AI.csproj", "{8C483B6E-4C0A-415F-BB40-651C43B96D84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpMoku.AI", "SharpMoku\AI\SharpMoku.AI.csproj", "{8C483B6E-4C0A-415F-BB40-651C43B96D84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "++Testing++", "++Testing++", "{734119ED-996A-46F0-AAC3-92C5C974F807}"
 EndProject
@@ -73,6 +70,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AnalyzerConfig", "AnalyzerC
 		Shared\AnalyzerConfig\roslyn.globalconfig = Shared\AnalyzerConfig\roslyn.globalconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing.SharpMoku", "Testing\SharpMoku\Testing.SharpMoku.csproj", "{C49DB494-4870-433C-B1A9-44591F8D7A25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,10 +82,6 @@ Global
 		{F43005E5-7451-4E69-BEE6-8BCE652E2CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F43005E5-7451-4E69-BEE6-8BCE652E2CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F43005E5-7451-4E69-BEE6-8BCE652E2CBF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4DE88A36-BD13-4E2A-BC96-E0D71FAFD008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4DE88A36-BD13-4E2A-BC96-E0D71FAFD008}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4DE88A36-BD13-4E2A-BC96-E0D71FAFD008}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4DE88A36-BD13-4E2A-BC96-E0D71FAFD008}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -107,13 +102,16 @@ Global
 		{8C483B6E-4C0A-415F-BB40-651C43B96D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C483B6E-4C0A-415F-BB40-651C43B96D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C483B6E-4C0A-415F-BB40-651C43B96D84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C49DB494-4870-433C-B1A9-44591F8D7A25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C49DB494-4870-433C-B1A9-44591F8D7A25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C49DB494-4870-433C-B1A9-44591F8D7A25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C49DB494-4870-433C-B1A9-44591F8D7A25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F43005E5-7451-4E69-BEE6-8BCE652E2CBF} = {C2A958D2-EB49-465E-8AC1-3725A33179C0}
-		{4DE88A36-BD13-4E2A-BC96-E0D71FAFD008} = {734119ED-996A-46F0-AAC3-92C5C974F807}
 		{19AD06DD-14E7-4A09-9C08-0D055D3C3896} = {66539BAF-2DA8-4EA6-AC4B-156ACC7141DF}
 		{5A04F64B-3DEA-46DD-BDB4-8442DBDABBC8} = {DBEAF220-ADCE-4767-93CC-EEB38919B8DF}
 		{9E0B32A3-D7AE-41C4-82ED-05435DE862AD} = {DBEAF220-ADCE-4767-93CC-EEB38919B8DF}
@@ -121,6 +119,7 @@ Global
 		{7B19EA2C-CB2C-4C3D-9542-22E1F5C69102} = {F5124DF6-A6B5-4FE8-BC28-3152ABAD3701}
 		{8C483B6E-4C0A-415F-BB40-651C43B96D84} = {F5124DF6-A6B5-4FE8-BC28-3152ABAD3701}
 		{875CFAFF-DAC6-4FDD-BCD4-9C84EDBEA140} = {19AD06DD-14E7-4A09-9C08-0D055D3C3896}
+		{C49DB494-4870-433C-B1A9-44591F8D7A25} = {734119ED-996A-46F0-AAC3-92C5C974F807}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB1A3C43-04D2-4FA2-9810-C74C02DC5A80}

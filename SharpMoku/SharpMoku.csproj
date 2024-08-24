@@ -11,12 +11,20 @@
 	<PropertyGroup>
 		<EnablePreSerializedResources>true</EnablePreSerializedResources>
 	</PropertyGroup>
+	<PropertyGroup>
+		<DefaultItemExcludes>AI/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+		<DefaultItemExcludes>Board/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+		<DefaultItemExcludes>Logging/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+		<DefaultItemExcludes>UI/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+		<DefaultItemExcludes>Utility/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+	</PropertyGroup>
+
 	<ItemGroup>
-	  <ProjectReference Include="..\SubProjects\ClassLibrary1\SharpMoku.Utility.csproj" />
-	  <ProjectReference Include="..\SubProjects\ClassLibrary2\SharpMoku.Board.csproj" />
-	  <ProjectReference Include="..\SubProjects\ClassLibrary3\SharpMoku.Logging.csproj" />
-	  <ProjectReference Include="..\SubProjects\ClassLibrary4\SharpMoku.UI.csproj" />
-	  <ProjectReference Include="..\SubProjects\ClassLibrary5\SharpMoku.AI.csproj" />
+	  <ProjectReference Include="AI\SharpMoku.AI.csproj" />
+	  <ProjectReference Include="Board\SharpMoku.Board.csproj" />
+	  <ProjectReference Include="Logging\SharpMoku.Logging.csproj" />
+	  <ProjectReference Include="UI\SharpMoku.UI.csproj" />
+	  <ProjectReference Include="Utility\SharpMoku.Utility.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Chaucer.FeatureSupport" Version="*" />
