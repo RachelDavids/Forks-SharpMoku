@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using SharpMoku.Board;
 using SharpMoku.UI.LabelCustomPaint;
 using SharpMoku.UI.Theme;
 
 namespace SharpMoku.UI
 {
-	public partial class PictureBoxGomoku(Board board, int cellWidth, int cellHeight)
+	public partial class PictureBoxGomoku(Board.Board board, int cellWidth, int cellHeight)
 				: PictureBox
 	{
 		public class PositionEventArgs(Position position)
@@ -48,23 +49,23 @@ namespace SharpMoku.UI
 
 		private readonly Dictionary<string, Label> _labels = [];
 		private readonly bool _renderNotation = true;
-		private Board _board = board;
-		public int CellWidth { get; private set; } = cellWidth;
-		public int CellHeight { get; private set; } = cellHeight;
+		private Board.Board _board = board;
+		public int CellWidth { get; } = cellWidth;
+		public int CellHeight { get; } = cellHeight;
 		public void ReleaseResource()
 		{
 			_board = null;
 		}
-		public void SetBoard(Board board)
+		public void SetBoard(Board.Board board)
 		{
 			CheckDisposed();
 			_board = board;
 		}
 
-		private Theme.Theme _currentTheme = null;
+		private Theme.Theme _currentTheme;
 		public Theme.Theme CurrentTheme {
 			get {
-				_currentTheme ??= ThemeFactory.Create(ThemeFactory.ThemeEnum.Gomoku1);
+				_currentTheme ??= ThemeFactory.Create(KnownTheme.Gomoku1);
 				return _currentTheme;
 			}
 		}
@@ -216,7 +217,7 @@ namespace SharpMoku.UI
 			}
 		}
 
-		private void CopyImage(Bitmap fromImage, Graphics toGraphic, Rectangle rec)
+		private static void CopyImage(Bitmap fromImage, Graphics toGraphic, Rectangle rec)
 		{
 			toGraphic.DrawImage(fromImage, rec.Left, rec.Top, rec, GraphicsUnit.Pixel);
 
@@ -236,7 +237,7 @@ namespace SharpMoku.UI
 				{
 					ExtendLabel Lbl = (ExtendLabel)_labels[i.ToString("00") + j.ToString("00")];
 					CellValue cellValue = (CellValue)_board.Matrix[i, j];
-					Lbl.CellDetail.IsNeighborCell = _board.dicNeighbour.ContainsKey(new Position(i, j).PositionString());
+					Lbl.CellDetail.IsNeighborCell = _board.Neighbours.ContainsKey(new Position(i, j).PositionString());
 					Lbl.CellDetail.CellValue = cellValue;
 					Lbl.Invalidate();
 
@@ -339,42 +340,39 @@ namespace SharpMoku.UI
 
 		}
 
-		private Dictionary<string, GoBoardPosition> _DicBoardPositionEnum = null;
-		private Dictionary<string, GoBoardPosition> DicBoardPositionEnum {
+		private Dictionary<string, GoBoardPosition> _boardPositions;
+		private Dictionary<string, GoBoardPosition> BoardPositions {
 			get {
-				if (_DicBoardPositionEnum == null)
+				if (_boardPositions == null)
 				{
-					_DicBoardPositionEnum = new Dictionary<string, GoBoardPosition> {
-																						{ "0,0", GoBoardPosition.TopLeftCorner },
-																						{ "0," + LastIndex, GoBoardPosition.TopRightCorner },
-																						{ LastIndex + ",0", GoBoardPosition.BottomLeftCorner },
-																						{ LastIndex + "," + LastIndex, GoBoardPosition.BottomRightCorner }
-																					};
-					int i;
-					for (i = 1; i < LastIndex; i++)
+					_boardPositions = new() {
+						{ "0,0", GoBoardPosition.TopLeftCorner },
+						{ "0," + LastIndex, GoBoardPosition.TopRightCorner },
+						{ LastIndex + ",0", GoBoardPosition.BottomLeftCorner },
+						{ LastIndex + "," + LastIndex, GoBoardPosition.BottomRightCorner }
+					};
+					for (int i = 1; i < LastIndex; i++)
 					{
-						_DicBoardPositionEnum.Add("0," + i, GoBoardPosition.TopBorder);
-						_DicBoardPositionEnum.Add(LastIndex + "," + i, GoBoardPosition.BottomBorder);
-						_DicBoardPositionEnum.Add(i + ",0", GoBoardPosition.LeftBorder);
-						_DicBoardPositionEnum.Add(i + "," + LastIndex, GoBoardPosition.RightBorder);
+						_boardPositions.Add("0," + i, GoBoardPosition.TopBorder);
+						_boardPositions.Add(LastIndex + "," + i, GoBoardPosition.BottomBorder);
+						_boardPositions.Add(i + ",0", GoBoardPosition.LeftBorder);
+						_boardPositions.Add(i + "," + LastIndex, GoBoardPosition.RightBorder);
 					}
 				}
-				return _DicBoardPositionEnum;
+				return _boardPositions;
 			}
 		}
-		public GoBoardPosition GetBoardPosition(int Row, int Col)
+		public GoBoardPosition GetBoardPosition(int row, int col)
 		{
 
-			if (!(Row == 0 || Col == 0 || Row == LastIndex || Col == LastIndex))
+			if (!(row == 0 || col == 0 || row == LastIndex || col == LastIndex))
 			{
 				return GoBoardPosition.Center;
 			}
-
-			Position pos = new(Row, Col);
-
-			return !DicBoardPositionEnum.ContainsKey(pos.PositionString())
+			Position pos = new(row, col);
+			return !BoardPositions.ContainsKey(pos.PositionString())
 				? throw new InvalidOperationException("DicBoard does not contain " + pos.PositionString())
-				: DicBoardPositionEnum[pos.PositionString()];
+				: BoardPositions[pos.PositionString()];
 		}
 	}
 }

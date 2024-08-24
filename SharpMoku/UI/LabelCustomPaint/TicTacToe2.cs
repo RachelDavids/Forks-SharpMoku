@@ -1,5 +1,7 @@
 using System.Drawing;
 
+using SharpMoku.Board;
+
 namespace SharpMoku.UI.LabelCustomPaint
 {
 	public class TicTacToe2
@@ -24,13 +26,13 @@ namespace SharpMoku.UI.LabelCustomPaint
 
 				int offset = 12;
 				float lineWidth = 3f;
-				graphics.DrawLine(ShareGraphicObject.Pen(pLabel.theme.XColor, lineWidth),
+				graphics.DrawLine(ShareGraphicObject.Pen(pLabel.Theme.XColor, lineWidth),
 								  offset,
 								  offset,
 								  pLabel.Width - offset,
 								  pLabel.Height - offset);
 
-				graphics.DrawLine(ShareGraphicObject.Pen(pLabel.theme.XColor, lineWidth),
+				graphics.DrawLine(ShareGraphicObject.Pen(pLabel.Theme.XColor, lineWidth),
 								  offset,
 								  pLabel.Width - offset,
 								  pLabel.Height - offset,
@@ -44,7 +46,7 @@ namespace SharpMoku.UI.LabelCustomPaint
 
 					RectangleF recCircle = new(12, 12, pLabel.Width - 24, pLabel.Height - 24);
 
-					graphics.DrawEllipse(ShareGraphicObject.Pen(pLabel.theme.OColor, characterWidth / 2), recCircle);
+					graphics.DrawEllipse(ShareGraphicObject.Pen(pLabel.Theme.OColor, characterWidth / 2), recCircle);
 
 				}
 			}

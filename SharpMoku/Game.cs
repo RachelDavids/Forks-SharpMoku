@@ -1,32 +1,21 @@
 using System;
 
 using SharpMoku.AI;
+using SharpMoku.Board;
 using SharpMoku.Logging;
+using SharpMoku.UI;
 
 namespace SharpMoku
 {
-	public class Game
+	public sealed class Game
 	{
-		public Board Board { get; private set; }
-		private UI.IUI _ui;
-		public enum GameStateEnum
-		{
-			NotBegin,
-			Playing,
-			End
-		}
-		public enum GameModeEnum
-		{
-			PlayerVsBot = 0,
-			BotVsPlayer = 1,
-			PlayerVsPlayer = 2,
-
-		}
+		public Board.Board Board { get; private set; }
+		private IUI _ui;
 		public WinStatus WinResult { get; private set; } = WinStatus.NotDecidedYet;
-		public Turn TheWinner { get; private set; }
-		public ILog log = null;
-		public GameModeEnum GameMode { get; private set; } = GameModeEnum.PlayerVsBot;
-		public GameStateEnum GameState { get; private set; } = GameStateEnum.NotBegin;
+		//public Turn TheWinner { get; private set; }
+		public ILog Logger { get; set; }
+		public GameMode GameMode { get; private set; } = GameMode.PlayerVsBot;
+		public GameState GameState { get; private set; } = GameState.NotBegin;
 		/*
          * GameFinished event to tell the UI to display the result
          * BotThinking to tell the UI to change the cursor to hourglass
@@ -41,44 +30,44 @@ namespace SharpMoku
 		// so I commented it out
 		//public int ObjectID { get; set; } = 0;
 		private void ExplicitConstructor(UI.IUI ui,
-										 Board board,
+										 Board.Board board,
 										 int boardSize,
 										 IEvaluate pbot,
 										 int botSearchDepth,
-										 GameModeEnum gameMode)
+										 GameMode gameMode)
 		{
 			_ui = ui;
 			GameMode = gameMode;
 			BotSearchDepth = botSearchDepth;
 			if (pbot != null)
 			{
-				bot = pbot;
+				_bot = pbot;
 			}
 			WinResult = WinStatus.NotDecidedYet;
 
 			_ui.CellClicked -= UI_CellClicked;
 			_ui.HasFinishedMoveCursor -= UI_HasFinishedMoveCursor;
-			GameFinished -= _ui.Game_GameFinished;
-			BotThinking -= _ui.Game_BotThinking;
-			BotFinishedThinking -= _ui.Game_BotFinishedThinking;
+			GameFinished -= _ui.OnGameFinished;
+			BotThinking -= _ui.OnBotThinking;
+			BotFinishedThinking -= _ui.OnBotFinishedThinking;
 
 			_ui.CellClicked += UI_CellClicked;
 			_ui.HasFinishedMoveCursor += UI_HasFinishedMoveCursor;
 
-			Board = board ?? new Board(boardSize);
+			Board = board ?? new Board.Board(boardSize);
 
 			//Cannnot use this event (Game_GameFinished)
 			//Has the problem with threading
-			GameFinished += _ui.Game_GameFinished;
-			BotThinking += _ui.Game_BotThinking;
-			BotFinishedThinking += _ui.Game_BotFinishedThinking;
+			GameFinished += _ui.OnGameFinished;
+			BotThinking += _ui.OnBotThinking;
+			BotFinishedThinking += _ui.OnBotFinishedThinking;
 
 		}
 		public Game(UI.IUI ui,
-					Board board,
+					Board.Board board,
 					IEvaluate pbot,
 					int botSearchDepth,
-					GameModeEnum gameMode)
+					GameMode gameMode)
 		{
 
 			ExplicitConstructor(ui, board, 0, pbot, botSearchDepth, gameMode);
@@ -100,7 +89,7 @@ namespace SharpMoku
 					int boardSize,
 					IEvaluate pbot,
 					int botSearchDepth,
-					GameModeEnum gameMode
+					GameMode gameMode
 			)
 		{
 			ExplicitConstructor(ui, null, boardSize, pbot, botSearchDepth, gameMode);
@@ -111,10 +100,10 @@ namespace SharpMoku
 		public void Undo()
 		{
 
-			if (GameMode == GameModeEnum.PlayerVsPlayer)
+			if (GameMode == GameMode.PlayerVsPlayer)
 			{
 				Board.Undo();
-				if (GameState == GameStateEnum.End)
+				if (GameState == GameState.End)
 				{
 					Board.SwitchTurn();
 				}
@@ -124,10 +113,10 @@ namespace SharpMoku
 				//If the gameMode is BotVsPlayer or PlayerVsBOT
 				//We need to Undo 2 times
 				//1 for bot another for player
-				if (GameState == GameStateEnum.End)
+				if (GameState == GameState.End)
 				{
 					bool isneedToDoubleUndo = false;
-					if (GameMode == GameModeEnum.BotVsPlayer)
+					if (GameMode == GameMode.BotVsPlayer)
 					{
 						if (WinResult == WinStatus.BlackWon)
 						{
@@ -162,14 +151,14 @@ namespace SharpMoku
 				}
 			}
 			WinResult = WinStatus.NotDecidedYet;
-			GameState = GameStateEnum.Playing;
+			GameState = GameState.Playing;
 			_ui.RenderUI();
 
 		}
 		private void UI_HasFinishedMoveCursor(object sender, EventArgs e)
 		{
 
-			PutStone(botMoveToPostion, (CellValue)Board.CurrentTurn);
+			PutStone(_botMoveToPosition, (CellValue)Board.CurrentTurn);
 
 		}
 		public void PutStone(Position position)
@@ -190,8 +179,8 @@ namespace SharpMoku
 			{
 				//[DEBUG:]
 				Board.SwitchTurn();
-				bool IsBotTurn = (GameMode == GameModeEnum.PlayerVsBot && !IsPlayer1Turn) ||
-								(GameMode == GameModeEnum.BotVsPlayer && IsPlayer1Turn);
+				bool IsBotTurn = (GameMode == GameMode.PlayerVsBot && !IsPlayer1Turn) ||
+								(GameMode == GameMode.BotVsPlayer && IsPlayer1Turn);
 				if (IsBotTurn)
 				{
 					BotThinking?.Invoke(this, null);
@@ -200,7 +189,7 @@ namespace SharpMoku
 				return;
 			}
 
-			GameState = GameStateEnum.End;
+			GameState = GameState.End;
 			WinStatusEventArgs statusEvent = new(WinResult);
 			GameFinished?.Invoke(this, statusEvent);
 
@@ -210,9 +199,9 @@ namespace SharpMoku
 
 		public void NewGame()
 		{
-			GameState = GameStateEnum.Playing;
+			GameState = GameState.Playing;
 
-			if (GameMode == GameModeEnum.BotVsPlayer)
+			if (GameMode == GameMode.BotVsPlayer)
 			{
 				// botTimer.Start();
 				System.Threading.Thread.Sleep(20);
@@ -226,13 +215,13 @@ namespace SharpMoku
 		// This method being used by human only.
 		private void UI_CellClicked(object o, PositionEventArgs positionClick)
 		{
-			bool isPlayerClickDespiteItisBotTurn = (GameMode == GameModeEnum.PlayerVsBot && Board.CurrentTurn != Turn.Black) ||
-													  (GameMode == GameModeEnum.BotVsPlayer && Board.CurrentTurn != Turn.White);
+			bool isPlayerClickDespiteItisBotTurn = (GameMode == GameMode.PlayerVsBot && Board.CurrentTurn != Turn.Black) ||
+													  (GameMode == GameMode.BotVsPlayer && Board.CurrentTurn != Turn.White);
 
 			bool isClickedOnNonEmptyCell = Board.Matrix[positionClick.Value.Row, positionClick.Value.Col] != (int)CellValue.Empty;
 			bool isClickedOInValidPosition = !Board.IsValidPosition(positionClick.Value);
 
-			if (GameState != GameStateEnum.Playing
+			if (GameState != GameState.Playing
 				|| isClickedOInValidPosition
 				|| isPlayerClickDespiteItisBotTurn
 				|| isClickedOnNonEmptyCell)
@@ -266,25 +255,22 @@ namespace SharpMoku
 			{
 				_ui.CellClicked -= UI_CellClicked;
 				_ui.HasFinishedMoveCursor -= UI_HasFinishedMoveCursor;
-				GameFinished -= _ui.Game_GameFinished;
-				BotThinking -= _ui.Game_BotThinking;
-				BotFinishedThinking -= _ui.Game_BotFinishedThinking;
+				GameFinished -= _ui.OnGameFinished;
+				BotThinking -= _ui.OnBotThinking;
+				BotFinishedThinking -= _ui.OnBotFinishedThinking;
 			}
 			_ui = null;
 		}
 		public int BotSearchDepth { get; private set; } = 2;
-		private Position botMoveToPostion;
-		private IEvaluate bot = new EvaluateV3();
+		private Position _botMoveToPosition;
+		private IEvaluate _bot = new EvaluateV3();
 		private void BotMove()
 		{
-
-			SharpMoku.Board cloneBoard = new(Board);
-
-			Minimax miniMax = new(cloneBoard, bot, log);
-
-			botMoveToPostion = miniMax.calculateNextMove(BotSearchDepth);
-			BotFinishedThinking?.Invoke(this, null);
-			_ui.MoveCursorTo(botMoveToPostion);
+			Board.Board cloneBoard = new(Board);
+			Minimax miniMax = new(cloneBoard, _bot, Logger);
+			_botMoveToPosition = miniMax.CalculateNextMove(BotSearchDepth);
+			BotFinishedThinking?.Invoke(this, EventArgs.Empty);
+			_ui.MoveCursorTo(_botMoveToPosition);
 
 		}
 	}

@@ -1,10 +1,12 @@
 using System;
 
+using SharpMoku.Board;
+
 namespace SharpMoku
 {
 	public class WinStatusEventArgs(WinStatus winStatus)
 		: EventArgs
 	{
-		public WinStatus Winstatus { get; set; } = winStatus;
+		public WinStatus WinStatus { get; set; } = winStatus;
 	}
 }

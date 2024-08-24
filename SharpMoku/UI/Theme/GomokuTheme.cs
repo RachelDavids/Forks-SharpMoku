@@ -16,8 +16,8 @@ namespace SharpMoku.UI.Theme
 		private Color _whiteStoneBackColor = Color.White;
 		private Color _blackStoneBackColor = Color.Black;
 		private Color _notationForeColor = Color.Black;
-		private Pen _penTable = null;
-		private Pen _penBorder = null;
+		private Pen _penTable;
+		private Pen _penBorder;
 
 		public GomokuThemeBuilder WhiteStoneImagePath(string path)
 		{

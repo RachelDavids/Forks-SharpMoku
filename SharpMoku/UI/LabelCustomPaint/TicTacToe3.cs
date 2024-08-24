@@ -1,12 +1,13 @@
 using System.Drawing;
 
+using SharpMoku.Board;
 using SharpMoku.Utility;
 
 using PositionEnum = SharpMoku.UI.GoBoardPosition;
 
 namespace SharpMoku.UI.LabelCustomPaint
 {
-	internal class TicTacToe3
+	internal sealed class TicTacToe3
 		: IExtendLabelCustomPaint
 	{
 
@@ -17,78 +18,81 @@ namespace SharpMoku.UI.LabelCustomPaint
 			Color labelBackColor = Color.White; // pLabel.BackColor;
 
 			Rectangle rec = pLabel.ClientRectangle;
-			RectangleF BorderRec = new(rec.X + 0.5f, rec.Y + 0.5f, rec.Width - 1, rec.Height - 1);
+			RectangleF borderRec = new(rec.X + 0.5f, rec.Y + 0.5f, rec.Width - 1, rec.Height - 1);
 
-			graphics.DrawRectangle(ShareGraphicObject.Pen(Color.Black, 1), BorderRec.X, BorderRec.Y, BorderRec.Width, BorderRec.Height);
+			graphics.DrawRectangle(ShareGraphicObject.Pen(Color.Black, 1),
+								   borderRec.X,
+								   borderRec.Y,
+								   borderRec.Width,
+								   borderRec.Height);
 
 			PositionEnum boardPosition = pLabel.CellDetail.GoBoardPosition;
 			bool isNeedToRemoveTopBorder = boardPosition.In(PositionEnum.TopLeftCorner,
-				PositionEnum.TopBorder,
-				PositionEnum.TopRightCorner);
+															PositionEnum.TopBorder,
+															PositionEnum.TopRightCorner);
 
 			bool isNeedToRemoveLeftBorder = boardPosition.In(PositionEnum.TopLeftCorner,
-				PositionEnum.LeftBorder,
-				PositionEnum.BottomLeftCorner);
+															 PositionEnum.LeftBorder,
+															 PositionEnum.BottomLeftCorner);
 
 			bool isNeedToRemoveRightBorder = boardPosition.In(PositionEnum.TopRightCorner,
-				PositionEnum.RightBorder,
-				PositionEnum.BottomRightCorner);
+															  PositionEnum.RightBorder,
+															  PositionEnum.BottomRightCorner);
 
 			bool isNeedToRemoveBottomBorder = boardPosition.In(PositionEnum.BottomLeftCorner,
-				PositionEnum.BottomBorder,
-				PositionEnum.BottomRightCorner);
+															   PositionEnum.BottomBorder,
+															   PositionEnum.BottomRightCorner);
 
 			if (isNeedToRemoveTopBorder)
 			{
 				graphics.DrawLine(ShareGraphicObject.Pen(labelBackColor, 2),
-					new PointF(BorderRec.X, BorderRec.Y),
-					new PointF(BorderRec.X + BorderRec.Width, BorderRec.Y));
+								  new(borderRec.X, borderRec.Y),
+								  new PointF(borderRec.X + borderRec.Width, borderRec.Y));
 			}
 
 			if (isNeedToRemoveLeftBorder)
 			{
 				graphics.DrawLine(ShareGraphicObject.Pen(labelBackColor, 2),
-					new PointF(BorderRec.X, BorderRec.Y),
-					new PointF(BorderRec.X, BorderRec.Y + BorderRec.Height));
+								  new(borderRec.X, borderRec.Y),
+								  new PointF(borderRec.X, borderRec.Y + borderRec.Height));
 			}
 			if (isNeedToRemoveRightBorder)
 			{
 				graphics.DrawLine(ShareGraphicObject.Pen(labelBackColor, 2),
-					new PointF(BorderRec.X + BorderRec.Width, BorderRec.Y),
-					new PointF(BorderRec.X + BorderRec.Width, BorderRec.Y + BorderRec.Height));
+								  new(borderRec.X + borderRec.Width, borderRec.Y),
+								  new PointF(borderRec.X + borderRec.Width, borderRec.Y + borderRec.Height));
 			}
 			if (isNeedToRemoveBottomBorder)
 			{
 				graphics.DrawLine(ShareGraphicObject.Pen(labelBackColor, 2),
-					new PointF(BorderRec.X, BorderRec.Y + BorderRec.Height),
-					new PointF(BorderRec.X + BorderRec.Width, BorderRec.Y + BorderRec.Height));
+								  new(borderRec.X, borderRec.Y + borderRec.Height),
+								  new PointF(borderRec.X + borderRec.Width, borderRec.Y + borderRec.Height));
 			}
 
 			if (pLabel.CellDetail.CellValue == CellValue.White)
 			{
-
 				int offset = 8;
 				float lineWidth = 3.3f;
-				graphics.DrawLine(ShareGraphicObject.Pen(pLabel.theme.XColor, lineWidth),
-									 offset,
-									 offset,
-									 pLabel.Width - offset,
-									 pLabel.Height - offset);
+				graphics.DrawLine(ShareGraphicObject.Pen(pLabel.Theme.XColor, lineWidth),
+								  offset,
+								  offset,
+								  pLabel.Width - offset,
+								  pLabel.Height - offset);
 
-				graphics.DrawLine(ShareGraphicObject.Pen(pLabel.theme.XColor, lineWidth),
-									 offset,
-									 pLabel.Width - offset,
-									 pLabel.Height - offset,
-									 offset);
+				graphics.DrawLine(ShareGraphicObject.Pen(pLabel.Theme.XColor, lineWidth),
+								  offset,
+								  pLabel.Width - offset,
+								  pLabel.Height - offset,
+								  offset);
 			}
 			else
 			{
 				if (pLabel.CellDetail.CellValue == CellValue.Black)
 				{
 
-					RectangleF RecCircle = new(8, 8, pLabel.Width - 16, pLabel.Height - 16);
-
-					graphics.DrawEllipse(ShareGraphicObject.Pen(pLabel.theme.OColor, 3), RecCircle);
+					RectangleF recCircle = new(8, 8, pLabel.Width - 16, pLabel.Height - 16);
+					graphics.DrawEllipse(ShareGraphicObject.Pen(pLabel.Theme.OColor, 3),
+										 recCircle);
 
 				}
 			}

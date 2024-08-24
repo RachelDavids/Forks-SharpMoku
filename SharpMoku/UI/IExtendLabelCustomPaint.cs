@@ -1,5 +1,6 @@
 using System.Drawing;
 
+using SharpMoku.Board;
 using SharpMoku.UI.LabelCustomPaint;
 
 namespace SharpMoku.UI
@@ -20,10 +21,10 @@ namespace SharpMoku.UI
 			switch (pLabel.CellDetail.CellValue)
 			{
 				case CellValue.Black:
-					c = pLabel.theme.XColor;
+					c = pLabel.Theme.XColor;
 					break;
 				case CellValue.White:
-					c = pLabel.theme.OColor;
+					c = pLabel.Theme.OColor;
 					break;
 				case CellValue.Empty:
 					break;

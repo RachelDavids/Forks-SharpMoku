@@ -1,0 +1,35 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<!-- by default MSBuild stops at the first Directory.Build.* found -->
+	<!-- so we need to continue the search -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', $(MSBuildThisFileDirectory)..))"
+		Condition=" Exists($([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', $(MSBuildThisFileDirectory)..)))"/>
+
+	<!--All other props have now been included !! -->
+	<PropertyGroup>
+		<!-- Missing XML comment for publicly visible type or member 'Type_or_Member' -->
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+		<!-- various MSTest Attributes fail compliance -->
+		<!-- Since these are Test Projects we don't have to be comliant either-->
+		<MarkCLSCompliant>AlwaysFalse</MarkCLSCompliant>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="FakeItEasy" Version="$(FakeItEasyPackageRequiredVersion)" />
+		<PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="$(FakeItEasyPackageRequiredVersion)">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MSTestSdkPackageRequiredVersion)" />
+		<PackageReference Include="MSTest.TestAdapter" Version="$(MSTestPackageRequiredVersion)" />
+		<PackageReference Include="MSTest.TestFramework" Version="$(MSTestPackageRequiredVersion)" />
+	</ItemGroup>
+</Project>

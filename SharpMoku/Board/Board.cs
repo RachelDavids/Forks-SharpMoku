@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace SharpMoku
+namespace SharpMoku.Board
 {
 	[Serializable]
 	public class Board
 	{
-		public int[,] Matrix;
+		public int[,] Matrix { get; set; }
 
 		/*
          * dicWhiteStone stores WhiteStone position
@@ -14,40 +14,36 @@ namespace SharpMoku
          * dicNieghbor stores position of the stone next to both white and black stone
          * These 3 dictionaries are used by Minimax evaluate function.
          */
-		public Dictionary<string, Position> dicWhiteStone { get; private set; } = [];
-		public Dictionary<string, Position> dicBlackStone { get; private set; } = [];
-		public Dictionary<string, Position> dicNeighbour { get; private set; } = [];
+		public Dictionary<string, Position> WhiteStones { get; private set; } = [];
+		public Dictionary<string, Position> BlackStones { get; private set; } = [];
+		public Dictionary<string, Position> Neighbours { get; private set; } = [];
 
 		public int BoardSize { get; private set; }
-
-		// Represent the value of the cell in the board
 
 		public Turn CurrentTurn { get; private set; } = Turn.Black;
 		public CellValue CurrentTurnCellValue => CurrentTurn == Turn.Black ? CellValue.Black : CellValue.White;
 		public Board(int boardSize)
 		{
-			if (boardSize is not 9 and
-				not 15)
+			if (boardSize is not 9 and not 15)
 			{
 				throw new ArgumentException($"Board size is invalid {boardSize}, program only accept 9 and 15 as valid value");
 			}
 			BoardSize = boardSize;
 			Matrix = new int[BoardSize, BoardSize];
-
 		}
 
 		public Board(Board board)
 		{
 
 			Matrix = new int[board.Matrix.GetLength(0), board.Matrix.GetLength(1)];
-			dicWhiteStone = [];
-			dicBlackStone = [];
-			dicNeighbour = [];
+			WhiteStones = [];
+			BlackStones = [];
+			Neighbours = [];
 
 			Matrix = board.Matrix.Clone() as int[,];
-			dicWhiteStone = new Dictionary<string, Position>(board.dicWhiteStone);
-			dicBlackStone = new Dictionary<string, Position>(board.dicBlackStone);
-			dicNeighbour = new Dictionary<string, Position>(board.dicNeighbour);
+			WhiteStones = new Dictionary<string, Position>(board.WhiteStones);
+			BlackStones = new Dictionary<string, Position>(board.BlackStones);
+			Neighbours = new Dictionary<string, Position>(board.Neighbours);
 			ListHistory = new List<Position>(board.ListHistory);
 			BoardSize = board.BoardSize;
 			CurrentTurn = board.CurrentTurn;
@@ -55,15 +51,9 @@ namespace SharpMoku
 		}
 		public Board Clone() => new(this);
 
-		public bool IsValidValue(int value)
-		{
-			return value is ((int)CellValue.Black) or
-				((int)CellValue.White) or
-				((int)CellValue.Empty);
-		}
 		private Dictionary<string, Position> GetHshByCellValue(CellValue cellValue)
 		{
-			return cellValue == CellValue.White ? dicWhiteStone : dicBlackStone;
+			return cellValue == CellValue.White ? WhiteStones : BlackStones;
 		}
 		public bool IsThereAnyOneWon()
 		{
@@ -109,16 +99,16 @@ namespace SharpMoku
 		private void AddEmptyNeighborOf(Position position)
 		{
 
-			if (dicNeighbour.ContainsKey(position.PositionString()))
+			if (Neighbours.ContainsKey(position.PositionString()))
 			{
-				dicNeighbour.Remove(position.PositionString());
+				Neighbours.Remove(position.PositionString());
 			}
 
 			List<Position> listNieghbor = GetListNeighborPosition(position);
 			foreach (Position neighborPosition in listNieghbor)
 			{
 
-				if (dicNeighbour.ContainsKey(neighborPosition.PositionString()))
+				if (Neighbours.ContainsKey(neighborPosition.PositionString()))
 				{
 					continue;
 				}
@@ -127,7 +117,7 @@ namespace SharpMoku
 				{
 					continue;
 				}
-				dicNeighbour.Add(neighborPosition.PositionString(), neighborPosition);
+				Neighbours.Add(neighborPosition.PositionString(), neighborPosition);
 
 			}
 		}
@@ -179,11 +169,11 @@ namespace SharpMoku
 				{
 					continue;
 				}
-				dicNeighbour.Remove(neighborPosition.PositionString());
+				Neighbours.Remove(neighborPosition.PositionString());
 			}
 			if (isNeedtoAddNeighborForPostion)
 			{
-				dicNeighbour.Add(position.PositionString(), position);
+				Neighbours.Add(position.PositionString(), position);
 
 			}
 		}
@@ -208,22 +198,23 @@ namespace SharpMoku
 
 		public bool IsValidPosition(int pRow, int pCol)
 		{
-			return pRow >= 0 && pRow < BoardSize &&
-				pCol >= 0 && pCol < BoardSize;
+			return pRow >= 0
+				   && pRow < BoardSize
+				   && pCol >= 0
+				   && pCol < BoardSize;
 		}
 
-		public void PutStone(int pRow, int pCol, int Value)
+		public void PutStone(int pRow, int pCol, int value)
 		{
-
 			if (!IsValidPosition(pRow, pCol))
 			{
 				throw new ArgumentException($"Position is not valid {pRow},{pCol} ");
 			}
-			if (!IsValidValue(Value))
+			if (!Enum.IsDefined(typeof(CellValue), value))
 			{
-				throw new ArgumentException($"Value is not valid {Value}");
+				throw new ArgumentException($"Value is not valid {value}");
 			}
-			PutStone(pRow, pCol, (CellValue)Value);
+			PutStone(pRow, pCol, (CellValue)value);
 		}
 
 		public void PutStoneAndSwitchTurn(Position pos)
@@ -294,11 +285,11 @@ namespace SharpMoku
 			}
 			return false;
 		}
-		public bool IsEmpty => dicBlackStone.Count + dicWhiteStone.Count == 0;
-		public bool IsFull => dicBlackStone.Count + dicWhiteStone.Count == BoardSize * BoardSize;
+		public bool IsEmpty => BlackStones.Count + WhiteStones.Count == 0;
+		public bool IsFull => BlackStones.Count + WhiteStones.Count == BoardSize * BoardSize;
 		public WinStatus CheckWinStatus()
 		{
-			foreach (Position pos in dicWhiteStone.Values)
+			foreach (Position pos in WhiteStones.Values)
 			{
 
 				if (IsThere5InRow(pos))
@@ -306,7 +297,7 @@ namespace SharpMoku
 					return WinStatus.WhiteWon;
 				}
 			}
-			foreach (Position pos in dicBlackStone.Values)
+			foreach (Position pos in BlackStones.Values)
 			{
 				if (IsThere5InRow(pos))
 				{
@@ -334,25 +325,25 @@ namespace SharpMoku
 
 			if (IsUsedicNeighbor)
 			{
-				return [.. dicNeighbour.Values];
+				return [.. Neighbours.Values];
 			}
 
 			HashSet<string> hsh = [];
 			List<Position> listResult = [];
-			foreach (string key in dicBlackStone.Keys)
+			foreach (string key in BlackStones.Keys)
 			{
-				List<Position> list = GetListNeighborPosition(dicBlackStone[key], radius);
+				List<Position> list = GetListNeighborPosition(BlackStones[key], radius);
 				foreach (Position pos in list)
 				{
 					if (hsh.Contains(pos.PositionString()))
 					{
 						continue;
 					}
-					if (dicBlackStone.ContainsKey(pos.PositionString()))
+					if (BlackStones.ContainsKey(pos.PositionString()))
 					{
 						continue;
 					}
-					if (dicWhiteStone.ContainsKey(pos.PositionString()))
+					if (WhiteStones.ContainsKey(pos.PositionString()))
 					{
 						continue;
 					}
@@ -361,20 +352,20 @@ namespace SharpMoku
 				}
 			}
 
-			foreach (string key in dicWhiteStone.Keys)
+			foreach (string key in WhiteStones.Keys)
 			{
-				List<Position> list = GetListNeighborPosition(dicWhiteStone[key], radius);
+				List<Position> list = GetListNeighborPosition(WhiteStones[key], radius);
 				foreach (Position pos in list)
 				{
 					if (hsh.Contains(pos.PositionString()))
 					{
 						continue;
 					}
-					if (dicBlackStone.ContainsKey(pos.PositionString()))
+					if (BlackStones.ContainsKey(pos.PositionString()))
 					{
 						continue;
 					}
-					if (dicWhiteStone.ContainsKey(pos.PositionString()))
+					if (WhiteStones.ContainsKey(pos.PositionString()))
 					{
 						continue;
 					}
@@ -468,15 +459,15 @@ namespace SharpMoku
 		public void RemoveStone(Position position)
 		{
 
-			if (dicBlackStone.ContainsKey(position.PositionString()))
+			if (BlackStones.ContainsKey(position.PositionString()))
 			{
-				dicBlackStone.Remove(position.PositionString());
+				BlackStones.Remove(position.PositionString());
 			}
 			else
 			{
-				if (dicWhiteStone.ContainsKey(position.PositionString()))
+				if (WhiteStones.ContainsKey(position.PositionString()))
 				{
-					dicWhiteStone.Remove(position.PositionString());
+					WhiteStones.Remove(position.PositionString());
 				}
 				else
 				{

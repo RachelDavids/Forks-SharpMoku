@@ -1,8 +1,8 @@
-namespace SharpMoku
+namespace SharpMoku.Board
 {
 	public enum Turn
 	{
 		Black = -1,
-		White = 1
+		White = 1,
 	}
 }

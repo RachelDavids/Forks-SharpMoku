@@ -7,19 +7,18 @@ namespace SharpMoku.UI.Theme
 {
 	public abstract class Theme
 	{
-
 		public Color NotationForeColor { get; set; } = Color.Black;
-		public int CellHeight;
-		public int CellWidth;
-		public int CellCornerRadius;
-		public IExtendLabelCustomPaint CustomPaint;
-		public int SpaceBetweenBorderSize = -1;
-		public Color CellBackColor;
-		public BorderStyle CellBorderStyle;
-		public GomokuCellDetail CellDetail = new();
+		public int CellHeight { get; set; }
+		public int CellWidth { get; set; }
+		public int CellCornerRadius { get; set; }
+		public IExtendLabelCustomPaint CustomPaint { get; set; }
+		public int SpaceBetweenBorderSize { get; set; } = -1;
+		public Color CellBackColor { get; set; }
+		public BorderStyle CellBorderStyle { get; set; }
+		//public GomokuCellDetail CellDetail { get; set; } = new();
 		public Color XColor { get; set; }
 		public Color OColor { get; set; }
-		public Color BoardColor;
+		public Color BoardColor { get; set; }
 		//public int BoardSize;
 		public Bitmap BoardImage {
 			get {
@@ -38,11 +37,11 @@ namespace SharpMoku.UI.Theme
 			label.CornerRadius = CellCornerRadius;
 			label.CustomPaint = CustomPaint;
 			label.BorderStyle = CellBorderStyle;
-			label.theme = this;
-			label._BackColor = CellBackColor;
+			label.Theme = this;
+			label.BackColor = CellBackColor;
 
 		}
-		public string BoardImageFile = "";
+		public string BoardImageFile { get; set; } = "";
 		public bool HasImage => BoardImageFile.Trim() != "";
 		private void LoadBoardImage()
 		{
@@ -58,11 +57,11 @@ namespace SharpMoku.UI.Theme
 			_boardImage = B;
 		}
 
-		private Bitmap _boardImage = null;
-		public void ApplyThemeToBoard(Panel p)
-		{
-			p.Paint += Panel1_Paint;
-		}
+		private Bitmap _boardImage;
+		//public void ApplyThemeToBoard(Panel p)
+		//{
+		//	p.Paint += Panel1_Paint;
+		//}
 		public void ApplyThemeToBoard(PictureBox p)
 		{
 			p.BackColor = BoardColor;

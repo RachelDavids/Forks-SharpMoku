@@ -17,17 +17,3 @@
 #   # = Comment line
 #
 
-# begin extra entries generated from defects
-# added on 24/08/2024 12:31:36 by RACHEL-240818/rache
-
-R: Gendarme.Rules.Design.Generic.AvoidMethodWithUnusedGenericTypeRule
-M: T SharpMoku.Utility.SerializeUtility::Deserialize(System.String)
-
-R: Gendarme.Rules.Maintainability.ExtensionModulesShouldBeMarkedWithAttributeRule
-T: SharpMoku.Utility.Extensions
-
-R: Gendarme.Rules.Smells.AvoidUnnecessaryDelegationRule
-T: SharpMoku.Utility.FileUtility
-
-# end extra entries generated from defects
-

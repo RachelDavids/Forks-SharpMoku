@@ -1,0 +1,55 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+
+# begin extra entries generated from defects
+# added on 24/08/2024 12:31:36 by RACHEL-240818/rache
+
+R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
+M: System.Boolean Testing.SharpMoku.AI.EvaluateTestingV3::IsListValueEqual(System.Collections.Generic.List`1<System.Int32>,System.Collections.Generic.List`1<System.Int32>)
+
+R: Gendarme.Rules.Correctness.MethodCanBeMadeStaticRule
+M: System.Boolean Testing.SharpMoku.AI.EvaluateTestingV3::IsListValueEqual(System.Collections.Generic.List`1<System.Int32>,System.Collections.Generic.List`1<System.Int32>)
+
+R: Gendarme.Rules.Design.Generic.DoNotExposeGenericListsRule
+T: Testing.SharpMoku.AI.EvaluateTestingV3
+
+R: Gendarme.Rules.Design.MarkAssemblyWithAssemblyCompanyRule
+A: Testing.SharpMoku.AI
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+M: System.Void Testing.SharpMoku.AI.EvaluateTestingV2::calculateConsecutiveStoneSequenceScore()
+M: System.Void Testing.SharpMoku.AI.EvaluateTestingV2::searchBotLosingPosition()
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: System.Void Testing.SharpMoku.AI.EvaluateTestingV3::ValuePosition()
+
+R: Gendarme.Rules.Smells.AvoidCodeDuplicatedInSameClassRule
+T: Testing.SharpMoku.AI.EvaluateTestingV2
+T: Testing.SharpMoku.AI.EvaluateTestingV3
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: System.Void Testing.SharpMoku.AI.EvaluateTestingV2::EvaluatVertical()
+M: System.Void Testing.SharpMoku.AI.EvaluateTestingV2::GetStonePatternForDiagonal()
+M: System.Void Testing.SharpMoku.AI.EvaluateTestingV2::GetStonePatternForHorizontal()
+M: System.Void Testing.SharpMoku.AI.EvaluateTestingV2::GetStonePatternForVertical()
+M: System.Void Testing.SharpMoku.AI.EvaluateTestingV3::GetCellValueInDirection()
+M: System.Void Testing.SharpMoku.AI.EvaluateTestingV3::ValuePosition()
+
+# end extra entries generated from defects
+

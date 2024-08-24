@@ -1,3 +1,5 @@
+using SharpMoku.Board;
+
 namespace SharpMoku.AI
 {
 	// Contains move position and calculated score from Minimax

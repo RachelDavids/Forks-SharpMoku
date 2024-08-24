@@ -1,143 +1,162 @@
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading;
+
+using Windows.Win32;
 
 namespace SharpMoku
 {
 	public static class MouseAction
 	{
-		private const int MOUSE_LEFTDOWN = 0x00000002;
-		private const int MOUSE_LEFTUP = 0x00000004;
+		//private const int MOUSE_LEFTDOWN = 0x00000002;
+		//private const int MOUSE_LEFTUP = 0x00000004;
 
-		[DllImport("user32.dll")]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		private static extern bool GetCursorPos(out Point lpPoint);
+		//[LibraryImport("user32.dll", EntryPoint = "GetCursorPosA")]
+		//[return: MarshalAs(UnmanagedType.Bool)]
+		//private static partial bool GetCursorPos(out Point lpPoint);
 
-		[DllImport("user32.dll")]
-		private static extern bool SetCursorPos(int X, int Y);
+		//[LibraryImport("user32.dll")]
+		//[return: MarshalAs(UnmanagedType.Bool)]
+		//private static partial bool SetCursorPos(int x, int y);
 
-		[DllImport("user32.dll")]
-		private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+		//[DllImport("user32.dll")]
+		//private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
 
 		public static Point GetCursorPosition()
 		{
-			GetCursorPos(out Point mousePoint);
+			if (PInvoke.GetCursorPos(out Point mousePoint) == 0)
+			{
+				CheckWin32Error();
+			}
 			return mousePoint;
 		}
-		public static bool SetCursorPosition(int X, int Y)
+		private static void CheckWin32Error()
 		{
-			return SetCursorPos(X, Y);
+			int error = Marshal.GetLastWin32Error();
+			if (error != 0)
+			{
+				throw new Win32Exception(error);
+			}
+		}
+		public static bool SetCursorPosition(int x, int y)
+		{
+			if (PInvoke.SetCursorPos(x, y) == 0)
+			{
+				CheckWin32Error();
+				return false;
+			}
+			return true;
 
 		}
 		public static bool SetCursorPosition(Point p)
 		{
 			return SetCursorPosition(p.X, p.Y);
 		}
-		public static void Click()
-		{
-			GetCursorPos(out Point currentPosition);
-			mouse_event(MOUSE_LEFTDOWN, currentPosition.X, currentPosition.Y, 0, 0);
-			mouse_event(MOUSE_LEFTUP, currentPosition.X, currentPosition.Y, 0, 0);
+		//public static void Click()
+		//{
+		//	GetCursorPos(out Point currentPosition);
+		//	mouse_event(MOUSE_LEFTDOWN, currentPosition.X, currentPosition.Y, 0, 0);
+		//	mouse_event(MOUSE_LEFTUP, currentPosition.X, currentPosition.Y, 0, 0);
+		//}
 
-		}
-
-		private static readonly Random s_random = new();
-		private static readonly int s_mouseSpeed = 15;
+		//private static readonly Random s_random = new();
+		//private static readonly int s_mouseSpeed = 15;
 		/*
-         Credit::https://stackoverflow.com/questions/913646/c-sharp-moving-the-mouse-around-realistically
-         */
-		public static void MoveMouse(int x, int y, int rx, int ry)
-		{
-			_ = new Point();
-			Point c;
-			GetCursorPos(out c);
+		 Credit::https://stackoverflow.com/questions/913646/c-sharp-moving-the-mouse-around-realistically
+		 */
+		//public static void MoveMouse(int x, int y, int rx, int ry)
+		//{
+		//	_ = new Point();
+		//	Point c;
+		//	GetCursorPos(out c);
 
-			x += s_random.Next(rx);
-			y += s_random.Next(ry);
+		//	x += s_random.Next(rx);
+		//	y += s_random.Next(ry);
 
-			double randomSpeed = Math.Max(((s_random.Next(s_mouseSpeed) / 2.0) + s_mouseSpeed) / 10.0, 0.1);
+		//	double randomSpeed = Math.Max(((s_random.Next(s_mouseSpeed) / 2.0) + s_mouseSpeed) / 10.0, 0.1);
 
-			WindMouse(c.X, c.Y, x, y, 9.0, 3.0, 10.0 / randomSpeed,
-				15.0 / randomSpeed, 10.0 * randomSpeed, 10.0 * randomSpeed);
-		}
-		private static double Hypot(double side1, double side2)
-		{
-			return Math.Sqrt(Math.Pow(side1, 2) + Math.Pow(side2, 2));
-		}
-		public static void WindMouse(double xs, double ys, double xe, double ye,
-			double gravity, double wind, double minWait, double maxWait,
-			double maxStep, double targetArea)
-		{
+		//	WindMouse(c.X, c.Y, x, y, 9.0, 3.0, 10.0 / randomSpeed,
+		//		15.0 / randomSpeed, 10.0 * randomSpeed, 10.0 * randomSpeed);
+		//}
+		//private static double Hypot(double side1, double side2)
+		//{
+		//	return Math.Sqrt(Math.Pow(side1, 2) + Math.Pow(side2, 2));
+		//}
+		//public static void WindMouse(double xs, double ys, double xe, double ye,
+		//	double gravity, double wind, double minWait, double maxWait,
+		//	double maxStep, double targetArea)
+		//{
 
-			double dist, windX = 0, windY = 0, veloX = 0, veloY = 0, randomDist, veloMag, step;
-			int oldX, oldY;
-			_ = (int)Math.Round(xs);
-			_ = (int)Math.Round(ys);
+		//	double dist, windX = 0, windY = 0, veloX = 0, veloY = 0, randomDist, veloMag, step;
+		//	int oldX, oldY;
+		//	_ = (int)Math.Round(xs);
+		//	_ = (int)Math.Round(ys);
 
-			double waitDiff = maxWait - minWait;
-			double sqrt2 = Math.Sqrt(2.0);
-			double sqrt3 = Math.Sqrt(3.0);
-			double sqrt5 = Math.Sqrt(5.0);
+		//	double waitDiff = maxWait - minWait;
+		//	double sqrt2 = Math.Sqrt(2.0);
+		//	double sqrt3 = Math.Sqrt(3.0);
+		//	double sqrt5 = Math.Sqrt(5.0);
 
-			dist = Hypot(xe - xs, ye - ys);
+		//	dist = Hypot(xe - xs, ye - ys);
 
-			while (dist > 1.0)
-			{
+		//	while (dist > 1.0)
+		//	{
 
-				wind = Math.Min(wind, dist);
+		//		wind = Math.Min(wind, dist);
 
-				if (dist >= targetArea)
-				{
-					int w = s_random.Next(((int)Math.Round(wind) * 2) + 1);
-					windX = (windX / sqrt3) + ((w - wind) / sqrt5);
-					windY = (windY / sqrt3) + ((w - wind) / sqrt5);
-				}
-				else
-				{
-					windX /= sqrt2;
-					windY /= sqrt2;
-					if (maxStep < 3)
-					{
-						maxStep = s_random.Next(3) + 3.0;
-					}
-					else
-					{
-						maxStep /= sqrt5;
-					}
-				}
+		//		if (dist >= targetArea)
+		//		{
+		//			int w = s_random.Next(((int)Math.Round(wind) * 2) + 1);
+		//			windX = (windX / sqrt3) + ((w - wind) / sqrt5);
+		//			windY = (windY / sqrt3) + ((w - wind) / sqrt5);
+		//		}
+		//		else
+		//		{
+		//			windX /= sqrt2;
+		//			windY /= sqrt2;
+		//			if (maxStep < 3)
+		//			{
+		//				maxStep = s_random.Next(3) + 3.0;
+		//			}
+		//			else
+		//			{
+		//				maxStep /= sqrt5;
+		//			}
+		//		}
 
-				veloX += windX;
-				veloY += windY;
-				veloX += gravity * (xe - xs) / dist;
-				veloY += gravity * (ye - ys) / dist;
+		//		veloX += windX;
+		//		veloY += windY;
+		//		veloX += gravity * (xe - xs) / dist;
+		//		veloY += gravity * (ye - ys) / dist;
 
-				if (Hypot(veloX, veloY) > maxStep)
-				{
-					randomDist = (maxStep / 2.0) + s_random.Next((int)Math.Round(maxStep) / 2);
-					veloMag = Hypot(veloX, veloY);
-					veloX = veloX / veloMag * randomDist;
-					veloY = veloY / veloMag * randomDist;
-				}
+		//		if (Hypot(veloX, veloY) > maxStep)
+		//		{
+		//			randomDist = (maxStep / 2.0) + s_random.Next((int)Math.Round(maxStep) / 2);
+		//			veloMag = Hypot(veloX, veloY);
+		//			veloX = veloX / veloMag * randomDist;
+		//			veloY = veloY / veloMag * randomDist;
+		//		}
 
-				oldX = (int)Math.Round(xs);
-				oldY = (int)Math.Round(ys);
-				xs += veloX;
-				ys += veloY;
-				dist = Hypot(xe - xs, ye - ys);
-				int newX = (int)Math.Round(xs);
-				int newY = (int)Math.Round(ys);
+		//		oldX = (int)Math.Round(xs);
+		//		oldY = (int)Math.Round(ys);
+		//		xs += veloX;
+		//		ys += veloY;
+		//		dist = Hypot(xe - xs, ye - ys);
+		//		int newX = (int)Math.Round(xs);
+		//		int newY = (int)Math.Round(ys);
 
-				if (oldX != newX || oldY != newY)
-				{
-					SetCursorPos(newX, newY);
-				}
+		//		if (oldX != newX || oldY != newY)
+		//		{
+		//			SetCursorPos(newX, newY);
+		//		}
 
-				step = Hypot(xs - oldX, ys - oldY);
-				int wait = (int)Math.Round((waitDiff * (step / maxStep)) + minWait);
-				Thread.Sleep(wait);
-			}
-		}
+		//		step = Hypot(xs - oldX, ys - oldY);
+		//		int wait = (int)Math.Round((waitDiff * (step / maxStep)) + minWait);
+		//		Thread.Sleep(wait);
+		//	}
+		//}
 
 		public static Point Round(PointF poi)
 		{
@@ -147,10 +166,10 @@ namespace SharpMoku
 			return new Point((int)Math.Round(x), (int)Math.Round(y));
 		}
 		/*
-         *
-         Credit::https://stackoverflow.com/questions/913646/c-sharp-moving-the-mouse-around-realistically
-         Author::https://stackoverflow.com/users/16942/erik-forbes
-         */
+		 *
+		 Credit::https://stackoverflow.com/questions/913646/c-sharp-moving-the-mouse-around-realistically
+		 Author::https://stackoverflow.com/users/16942/erik-forbes
+		 */
 		public static event EventHandler HasFinishedMoved;
 		public static void LinearSmoothMove(Point newPosition, int steps)
 		{
@@ -176,24 +195,24 @@ namespace SharpMoku
 
 			// Move the mouse to the final destination.
 			SetCursorPosition(newPosition);
-			HasFinishedMoved?.Invoke(null, null);
+			HasFinishedMoved?.Invoke(null, EventArgs.Empty);
 		}
 		/*
-        This below link explain the reason you cannot use System.Drawing.Point
-        https://www.pinvoke.net/default.aspx/user32.getcursorpos
+		This below link explain the reason you cannot use System.Drawing.Point
+		https://www.pinvoke.net/default.aspx/user32.getcursorpos
 
-        */
-		[StructLayout(LayoutKind.Sequential)]
-		public struct Point(int x, int y)
-		{
-			public int X = x;
-			public int Y = y;
-		}
+		*/
+		//[StructLayout(LayoutKind.Sequential)]
+		//public struct Point(int x, int y)
+		//{
+		//	public int X = x;
+		//	public int Y = y;
+		//}
 
-		public static Point convertDrawingPointToStructPoint(System.Drawing.Point poi)
-		{
-			Point poiResult = new(poi.X, poi.Y);
-			return poiResult;
-		}
+		//public static Point ConvertDrawingPointToStructPoint(System.Drawing.Point poi)
+		//{
+		//	Point poiResult = new(poi.X, poi.Y);
+		//	return poiResult;
+		//}
 	}
 }

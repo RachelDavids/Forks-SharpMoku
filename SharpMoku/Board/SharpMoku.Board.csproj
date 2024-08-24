@@ -3,8 +3,5 @@
 	<PropertyGroup>
 		<TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
 	</PropertyGroup>
-	<PropertyGroup>
-		<RootNamespace>SharpMoku</RootNamespace>
-	</PropertyGroup>
 
 </Project>

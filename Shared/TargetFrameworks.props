@@ -4,9 +4,9 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<EnableNet48>true</EnableNet48>
-		<EnableNet6>true</EnableNet6>
-		<EnableNet7>false</EnableNet7>
+		<EnableNet48>false</EnableNet48>
+		<EnableNet6>false</EnableNet6>
 		<EnableNet8>true</EnableNet8>
+		<EnableNet9>true</EnableNet9>
 	</PropertyGroup>
 </Project>

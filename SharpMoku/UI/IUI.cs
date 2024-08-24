@@ -1,5 +1,7 @@
 using System;
 
+using SharpMoku.Board;
+
 namespace SharpMoku.UI
 {
 	public interface IUI
@@ -16,12 +18,12 @@ namespace SharpMoku.UI
 
 		/*
          These 3 Method will be trigged from Game Object.
-         Game_GameFinished : UI wil display the result.
-         Game_BotThinking : UI will change the cursor to an hourglass.
-         Game_BotFinishedThinking : Ui will change the cursor back to default cursor and allow user to input
+         OnGameFinished : UI wil display the result.
+         OnBotThinking : UI will change the cursor to an hourglass.
+         OnBotFinishedThinking : Ui will change the cursor back to default cursor and allow user to input
         */
-		void Game_GameFinished(object sender, EventArgs e);
-		void Game_BotThinking(object sender, EventArgs e);
-		void Game_BotFinishedThinking(object sender, EventArgs e);
+		void OnGameFinished(object sender, EventArgs e);
+		void OnBotThinking(object sender, EventArgs e);
+		void OnBotFinishedThinking(object sender, EventArgs e);
 	}
 }

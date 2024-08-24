@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\SharpMoku\AI\SharpMoku.AI.csproj" />
+		<ProjectReference Include="..\..\..\SharpMoku\Board\SharpMoku.Board.csproj" />
+		<ProjectReference Include="..\Board\Testing.SharpMoku.Board.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Chaucer.FeatureSupport" Version="*" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
+</Project>

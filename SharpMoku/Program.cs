@@ -1,8 +1,5 @@
 using System;
-using System.Runtime.Versioning;
 using System.Windows.Forms;
-
-[assembly: SupportedOSPlatform("windows")]
 
 namespace SharpMoku
 {
@@ -15,9 +12,7 @@ namespace SharpMoku
 		private static void Main()
 		{
 			ApplicationConfiguration.Initialize();
-			//    Global.CurrentSettings.BoardSize = 15;
-			//   Global.SaveSettings();
-			using (FormSharpMoku formSharpMoku = new())
+			using (Form formSharpMoku = new())
 			{
 				Application.Run(formSharpMoku);
 			}

@@ -6,7 +6,7 @@ namespace SharpMoku.Utility
 {
 	public static class FileUtility
 	{
-		private static string? s_appInfoPath = null;
+		private static string? s_appInfoPath;
 		private static string AppInfoPath {
 			get {
 				if (s_appInfoPath == null)

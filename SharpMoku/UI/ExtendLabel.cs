@@ -15,17 +15,16 @@ namespace SharpMoku.UI
 	public class ExtendLabel
 		: Label
 	{
-		public GomokuCellDetail CellDetail = new();
-		public Theme.Theme theme;
+		public GomokuCellDetail CellDetail { get; } = new();
+		public Theme.Theme Theme { get; set; }
 		[Browsable(true)]
-		public Color _BackColor {
-			get => _backColor;
+		public override Color BackColor {
+			get => base.BackColor;
 			set {
-				_backColor = value;
+				base.BackColor = value;
 				Invalidate();
 			}
 		}
-		private Color _backColor;
 
 		public ExtendLabel()
 		{
@@ -33,14 +32,14 @@ namespace SharpMoku.UI
 			base.BackColor = Color.Transparent;
 
 		}
-		public void MakeRound()
-		{
-			_ = new GraphicsPath();
-			GraphicsPath path = _getRoundRectangle(ClientRectangle);
-			Region = new Region(path);
-		}
+		//public void MakeRound()
+		//{
+		//	_ = new GraphicsPath();
+		//	GraphicsPath path = _getRoundRectangle(ClientRectangle);
+		//	Region = new Region(path);
+		//}
 
-		public IExtendLabelCustomPaint CustomPaint { get; set; } = null;
+		public IExtendLabelCustomPaint CustomPaint { get; set; }
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
@@ -48,11 +47,11 @@ namespace SharpMoku.UI
 
 			if (CornerRadius > 0)
 			{
-				using (GraphicsPath graphicsPath = _getRoundRectangle(ClientRectangle))
+				using (GraphicsPath graphicsPath = GetRoundRectangle(ClientRectangle))
 				{
 
 					e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-					using (SolidBrush brush = new(_BackColor))
+					using (SolidBrush brush = new(BackColor))
 					{
 						e.Graphics.FillPath(brush, graphicsPath);
 					}
@@ -66,7 +65,7 @@ namespace SharpMoku.UI
 
 		public int CornerRadius { get; set; } = 7;
 
-		public GraphicsPath _getRoundRectangle(Rectangle rectangle)
+		public GraphicsPath GetRoundRectangle(Rectangle rectangle)
 		{
 			int diminisher = 1;
 			GraphicsPath path = new();

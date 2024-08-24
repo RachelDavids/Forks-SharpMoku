@@ -1,4 +1,4 @@
-namespace SharpMoku
+namespace SharpMoku.Board
 {
 	public enum WinStatus
 	{

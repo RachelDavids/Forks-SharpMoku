@@ -1,11 +1,10 @@
 <gendarme>
   <ruleset name="allrules">
 	<exclusions>
-	  <exclusion Type="type">System.Range</exclusion>
-	  <exclusion Type="type">System.Index</exclusion>
+	  <exclusion Type="namespace">Windows.Win32</exclusion>
+	  <exclusion Type="namespace">Windows.Win32.Foundation</exclusion>
 	</exclusions>
-	<rules include="*"
-		   from="Gendarme.Rules.BadPractice.dll">
+	<rules include="*" from="Gendarme.Rules.BadPractice.dll">
 	  <parameter rule="EqualsShouldHandleNullArgRule" property="ExcludeGeneratedCode" value="false" />
 	</rules>
 	<rules include="*" from="Gendarme.Rules.Concurrency.dll" />

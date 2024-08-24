@@ -21,7 +21,7 @@ namespace SharpMoku
 			set => txtMessage.Text = value;
 		}
 
-		private bool _ShowCancel = false;
+		private bool _ShowCancel;
 		public bool ShowCancel {
 			get => _ShowCancel;
 			set {
@@ -47,7 +47,7 @@ namespace SharpMoku
 
 			BackColor = backColor;
 		}
-		private void SetTheme()
+		private static void SetTheme()
 		{
 			/*
             this.txtMessage.BackColor = Global.CurrentTheme.FormBackColor;
@@ -72,11 +72,11 @@ namespace SharpMoku
 		}
 
 		private delegate void DisplayDialogCallback();
-		public Form parentForm = null;
+		//public Form ParentForm { get; set; }
 		public void ShowDialogAtCenter()
 		{
-			Left = parentForm.Left + ((parentForm.Width - Width) / 2);
-			Top = parentForm.Top + ((parentForm.Height - Height) / 2);
+			Left = ParentForm!.Left + ((ParentForm.Width - Width) / 2);
+			Top = ParentForm.Top + ((ParentForm.Height - Height) / 2);
 
 			ShowDialog();
 		}
@@ -90,10 +90,10 @@ namespace SharpMoku
 
 			if (IsHandleCreated)
 			{
-				if (parentForm != null)
+				if (ParentForm != null)
 				{
-					Left = parentForm.Left + ((parentForm.Width - Width) / 2);
-					Top = parentForm.Top + ((parentForm.Height - Height) / 2);
+					Left = ParentForm.Left + ((ParentForm.Width - Width) / 2);
+					Top = ParentForm.Top + ((ParentForm.Height - Height) / 2);
 				}
 				ShowDialog();
 

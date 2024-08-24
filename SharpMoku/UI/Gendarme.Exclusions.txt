@@ -17,156 +17,77 @@
 #   # = Comment line
 #
 # begin extra entries generated from defects
-# added on 08/01/2024 21:17:00 by DESKTOP-1O03T0G/rache
+# added on 24/08/2024 19:02:51 by RACHEL-240818/rache
 
 R: Gendarme.Rules.Correctness.AvoidConstructorsInStaticTypesRule
 T: SharpMoku.UI.Theme.ThemeFactory
 
 R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
-M: System.Drawing.Point SharpMoku.UI.PictureBoxGoMoKu::GetLowerRightPoint(SharpMoku.Position)
-M: System.Void SharpMoku.Connect5Paint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
-M: System.Void SharpMoku.UI.ClassicPaint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Drawing.Point SharpMoku.UI.PictureBoxGomoku::GetLowerRightPoint(SharpMoku.Board.Position)
+M: System.Void SharpMoku.UI.Connect5Paint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.LabelCustomPaint.ClassicPaint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
 M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
-M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::PaintNeighbour(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
 M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::PaintStone(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
+M: System.Void SharpMoku.UI.LabelCustomPaint.TicTacToe1::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
 M: System.Void SharpMoku.UI.LabelCustomPaint.TicTacToe2::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::.ctor(SharpMoku.Board,System.Int32,System.Int32)
-M: System.Void SharpMoku.UI.Theme.Theme::ApplyThemeToBoard(System.Windows.Forms.Panel)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::.ctor(SharpMoku.Board.Board,System.Int32,System.Int32)
 M: System.Void SharpMoku.UI.Theme.Theme::ApplyThemeToBoard(System.Windows.Forms.PictureBox)
 M: System.Void SharpMoku.UI.Theme.Theme::ApplyThemeToCell(SharpMoku.UI.ExtendLabel)
-M: System.Void SharpMoku.UI.TicTacToe1::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
 
 R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
-M: SharpMoku.UI.Theme.Theme SharpMoku.UI.Theme.ThemeFactory::Create(SharpMoku.UI.Theme.ThemeFactory/ThemeEnum)
-M: System.Drawing.Font SharpMoku.ShareGraphicObject::get_GoMokuBoardFont()
-M: System.Drawing.Point SharpMoku.UI.PictureBoxGoMoKu::GetLowerRightPoint(SharpMoku.Position)
-M: System.Drawing.SolidBrush SharpMoku.ShareGraphicObject::SolidBrush(System.Drawing.Color)
-M: System.Void SharpMoku.UI.ClassicPaint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
-M: System.Void SharpMoku.UI.ExtendLabel::MakeRound()
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
-
-R: Gendarme.Rules.Correctness.MethodCanBeMadeStaticRule
-M: System.Drawing.RectangleF SharpMoku.UI.LabelCustomPaint.GoMokuPaint::GetRectangleCircle(System.Int32,System.Int32)
-M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetBottomBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
-M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetLeftBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
-M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetRightBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
-M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetTopBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::CopyImage(System.Drawing.Bitmap,System.Drawing.Graphics,System.Drawing.Rectangle)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.Theme.Theme)
+M: SharpMoku.UI.Theme.Theme SharpMoku.UI.Theme.ThemeFactory::Create(SharpMoku.UI.Theme.KnownTheme)
+M: System.Drawing.Font SharpMoku.UI.ShareGraphicObject::get_GoMokuBoardFont()
+M: System.Drawing.Point SharpMoku.UI.PictureBoxGomoku::GetLowerRightPoint(SharpMoku.Board.Position)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
 
 R: Gendarme.Rules.Correctness.ReviewUselessControlFlowRule
-M: SharpMoku.UI.Theme.Theme SharpMoku.UI.Theme.ThemeFactory::Create(SharpMoku.UI.Theme.ThemeFactory/ThemeEnum)
-
-R: Gendarme.Rules.Correctness.TypesWithDisposableFieldsShouldBeDisposableRule
-T: SharpMoku.UI.LabelCustomPaint.GoMokuPaint
-
-R: Gendarme.Rules.Design.AvoidVisibleFieldsRule
-T: SharpMoku.GomokuCellAttribute
-T: SharpMoku.UI.ExtendLabel
-T: SharpMoku.UI.Theme.Theme
+M: SharpMoku.UI.Theme.Theme SharpMoku.UI.Theme.ThemeFactory::Create(SharpMoku.UI.Theme.KnownTheme)
 
 R: Gendarme.Rules.Design.AvoidVisibleNestedTypesRule
-T: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum
-T: SharpMoku.UI.PictureBoxGoMoKu/CellClickHandler
-T: SharpMoku.UI.PictureBoxGoMoKu/PositionEventArgs
-T: SharpMoku.UI.Theme.ThemeFactory/ThemeEnum
+T: SharpMoku.UI.PictureBoxGomoku/CellClickHandler
+T: SharpMoku.UI.PictureBoxGomoku/PositionEventArgs
 
 R: Gendarme.Rules.Design.ConsiderUsingStaticTypeRule
 T: SharpMoku.UI.Theme.ThemeFactory
 
 R: Gendarme.Rules.Design.DeclareEventHandlersCorrectlyRule
-E: SharpMoku.Board/CellClickHandler SharpMoku.UI.IUI::CellClicked
-E: SharpMoku.Board/CellClickHandler SharpMoku.UI.MOCKUI::CellClicked
-E: SharpMoku.UI.PictureBoxGoMoKu/CellClickHandler SharpMoku.UI.PictureBoxGoMoKu::CellClicked
+E: SharpMoku.UI.PictureBoxGomoku/CellClickHandler SharpMoku.UI.PictureBoxGomoku::CellClicked
 
 R: Gendarme.Rules.Design.Generic.AvoidDeclaringCustomDelegatesRule
-T: SharpMoku.UI.PictureBoxGoMoKu/CellClickHandler
-
-R: Gendarme.Rules.Exceptions.AvoidThrowingBasicExceptionsRule
-M: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum SharpMoku.UI.PictureBoxGoMoKu::GetBoardPosition(System.Int32,System.Int32)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::LoadPositionIntersection(System.Collections.Generic.List`1<System.Tuple`2<System.Int32,System.Int32>>&)
+T: SharpMoku.UI.PictureBoxGomoku/CellClickHandler
 
 R: Gendarme.Rules.Exceptions.UseObjectDisposedExceptionRule
-M: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum SharpMoku.UI.PictureBoxGoMoKu::GetBoardPosition(System.Int32,System.Int32)
-M: System.Drawing.Point SharpMoku.UI.PictureBoxGoMoKu::GetLowerRightPoint(SharpMoku.Position)
-M: System.Void SharpMoku.UI.ExtendLabel::set__BackColor(System.Drawing.Color)
-M: System.Void SharpMoku.UI.ExtendLabel::set_CustomPaint(SharpMoku.UI.IExtendLabelCustomPaint)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::Initial(SharpMoku.UI.Theme.Theme)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::ReleaseResource()
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::SetBoad(SharpMoku.Board)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::SetBoardValueToLabel()
+M: SharpMoku.UI.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
+M: System.Drawing.Point SharpMoku.UI.PictureBoxGomoku::GetLowerRightPoint(SharpMoku.Board.Position)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::Initial(SharpMoku.UI.Theme.Theme)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::ReleaseResource()
+M: System.Void SharpMoku.UI.PictureBoxGomoku::SetBoardValueToLabel()
 
 R: Gendarme.Rules.Maintainability.AvoidUnnecessarySpecializationRule
-M: System.Void SharpMoku.UI.Theme.Theme::ApplyThemeToBoard(System.Windows.Forms.Panel)
 M: System.Void SharpMoku.UI.Theme.Theme::ApplyThemeToBoard(System.Windows.Forms.PictureBox)
-
-R: Gendarme.Rules.Maintainability.VariableNamesShouldNotMatchFieldNamesRule
-T: SharpMoku.UI.LabelCustomPaint.GoMokuPaint
-T: SharpMoku.UI.PictureBoxGoMoKu
-
-R: Gendarme.Rules.Naming.AvoidNonAlphanumericIdentifierRule
-M: System.Drawing.Color SharpMoku.UI.ExtendLabel::get__BackColor()
-M: System.Drawing.Drawing2D.GraphicsPath SharpMoku.UI.ExtendLabel::_getRoundRectangle(System.Drawing.Rectangle)
-M: System.Void SharpMoku.UI.ExtendLabel::set__BackColor(System.Drawing.Color)
-M: System.Void SharpMoku.UI.IUI::Game_BotFinishedThinking(System.Object,System.EventArgs)
-M: System.Void SharpMoku.UI.IUI::Game_BotThinking(System.Object,System.EventArgs)
-M: System.Void SharpMoku.UI.IUI::Game_GameFinished(System.Object,System.EventArgs)
-M: System.Void SharpMoku.UI.MOCKUI::Game_BotFinishedThinking(System.Object,System.EventArgs)
-M: System.Void SharpMoku.UI.MOCKUI::Game_BotThinking(System.Object,System.EventArgs)
-M: System.Void SharpMoku.UI.MOCKUI::Game_GameFinished(System.Object,System.EventArgs)
-
-R: Gendarme.Rules.Naming.AvoidRedundancyInMethodNameRule
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.Theme.Theme)
 
 R: Gendarme.Rules.Naming.AvoidRedundancyInTypeNameRule
 T: SharpMoku.UI.Theme.ThemeFactory
 
 R: Gendarme.Rules.Naming.UseCorrectCasingRule
-M: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum SharpMoku.UI.PictureBoxGoMoKu::GetBoardPosition(System.Int32,System.Int32)
-M: System.Boolean SharpMoku.UI.PictureBoxGoMoKu::IsIntersecton(System.Int32,System.Int32)
-M: System.Drawing.Drawing2D.GraphicsPath SharpMoku.UI.ExtendLabel::_getRoundRectangle(System.Drawing.Rectangle)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
-P: System.Collections.Generic.List`1<System.Tuple`2<System.Int32,System.Int32>> SharpMoku.UI.PictureBoxGoMoKu::positionIntersectionList()
-P: System.Drawing.Color SharpMoku.UI.ExtendLabel::_BackColor()
-P: System.Int32 SharpMoku.UI.PictureBoxGoMoKu::cellHeight()
-P: System.Int32 SharpMoku.UI.PictureBoxGoMoKu::cellWidth()
-
-R: Gendarme.Rules.Naming.UseCorrectSuffixRule
-T: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum
-T: SharpMoku.UI.Theme.ThemeFactory/ThemeEnum
+M: System.Void SharpMoku.UI.PictureBoxGomoku::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
 
 R: Gendarme.Rules.Performance.AvoidEmptyMethodsRule
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.Theme.Theme)
-M: System.Void SharpMoku.UI.Theme.Theme::P_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
+M: System.Void SharpMoku.UI.Theme.Theme::Panel1_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
 
 R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
-M: SharpMoku.GomokuCellAttribute/GoBoardPositionEnum SharpMoku.UI.PictureBoxGoMoKu::GetBoardPosition(System.Int32,System.Int32)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::Initial(SharpMoku.UI.Theme.Theme)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::PictureBoxGoMoKu_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
+M: SharpMoku.UI.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::Initial(SharpMoku.UI.Theme.Theme)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::PictureBoxGoMoKu_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
 
 R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
-M: System.Void SharpMoku.UI.Theme.Theme::P_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
-
-R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
-M: System.Void SharpMoku.GomokuCellAttribute::.ctor()
-M: System.Void SharpMoku.UI.ExtendLabel::.ctor()
-M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::.ctor(System.String,System.String,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Pen,System.Drawing.Pen)
-M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaintBuilder::.ctor()
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::.ctor(SharpMoku.Board,System.Int32,System.Int32)
-M: System.Void SharpMoku.UI.Theme.GomokuThemeBuilder::.ctor()
-M: System.Void SharpMoku.UI.Theme.Theme::.ctor()
-M: System.Void SharpMoku.UI.Theme.ThemeFactory::.cctor()
-
-R: Gendarme.Rules.Performance.AvoidUnsealedUninheritedInternalTypeRule
-T: SharpMoku.UI.LabelCustomPaint.TicTacToe3
+M: System.Void SharpMoku.UI.PictureBoxGomoku::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
 
 R: Gendarme.Rules.Performance.AvoidUnusedParametersRule
 M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetBottomBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
 M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetLeftBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
 M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetRightBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
 M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::SetTopBorder(System.Int32,System.Int32,System.Int32,System.Int32,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&,System.Drawing.Point&)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::UpdateTheme(SharpMoku.UI.Theme.Theme)
 
 R: Gendarme.Rules.Performance.CompareWithEmptyStringEfficientlyRule
 M: System.Boolean SharpMoku.UI.Theme.Theme::get_HasImage()
@@ -183,145 +104,18 @@ M: System.Void SharpMoku.UI.Theme.Theme::.ctor()
 M: System.Void SharpMoku.UI.Theme.Theme::LoadBoardImage()
 
 R: Gendarme.Rules.Smells.AvoidLargeClassesRule
-T: SharpMoku.UI.LabelCustomPaint.GoMokuPaint
 T: SharpMoku.UI.LabelCustomPaint.GoMokuPaintBuilder
-T: SharpMoku.UI.PictureBoxGoMoKu
 T: SharpMoku.UI.Theme.GomokuThemeBuilder
 T: SharpMoku.UI.Theme.ThemeFactory
 
 R: Gendarme.Rules.Smells.AvoidLongMethodsRule
 M: System.Void SharpMoku.UI.LabelCustomPaint.GoMokuPaint::PaintBorder(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
 M: System.Void SharpMoku.UI.LabelCustomPaint.TicTacToe3::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
-M: System.Void SharpMoku.UI.PictureBoxGoMoKu::Initial(SharpMoku.UI.Theme.Theme)
+M: System.Void SharpMoku.UI.PictureBoxGomoku::Initial(SharpMoku.UI.Theme.Theme)
 
 R: Gendarme.Rules.Smells.AvoidLongParameterListsRule
 T: SharpMoku.UI.LabelCustomPaint.GoMokuPaint
 T: SharpMoku.UI.Theme.GomokuTheme
-
-# end extra entries generated from defects
-
-# begin extra entries generated from defects
-# added on 11/01/2024 09:34:06 by DESKTOP-1O03T0G/rache
-
-R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
-M: System.Drawing.Point SharpMoku.UI.PictureBoxGomoku::GetLowerRightPoint(SharpMoku.Position)
-M: System.Void SharpMoku.UI.PictureBoxGomoku::.ctor(SharpMoku.Board,System.Int32,System.Int32)
-
-R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
-M: System.Drawing.Point SharpMoku.UI.PictureBoxGomoku::GetLowerRightPoint(SharpMoku.Position)
-M: System.Void SharpMoku.UI.PictureBoxGomoku::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
-
-R: Gendarme.Rules.Correctness.MethodCanBeMadeStaticRule
-M: System.Void SharpMoku.UI.PictureBoxGomoku::CopyImage(System.Drawing.Bitmap,System.Drawing.Graphics,System.Drawing.Rectangle)
-M: System.Void SharpMoku.UI.PictureBoxGomoku::UpdateTheme(SharpMoku.UI.Theme.Theme)
-
-R: Gendarme.Rules.Design.AvoidVisibleNestedTypesRule
-T: SharpMoku.UI.PictureBoxGomoku/CellClickHandler
-T: SharpMoku.UI.PictureBoxGomoku/PositionEventArgs
-
-R: Gendarme.Rules.Design.DeclareEventHandlersCorrectlyRule
-E: SharpMoku.UI.PictureBoxGomoku/CellClickHandler SharpMoku.UI.PictureBoxGomoku::CellClicked
-
-R: Gendarme.Rules.Design.Generic.AvoidDeclaringCustomDelegatesRule
-T: SharpMoku.UI.PictureBoxGomoku/CellClickHandler
-
-R: Gendarme.Rules.Exceptions.AvoidThrowingBasicExceptionsRule
-M: SharpMoku.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
-M: System.Void SharpMoku.UI.PictureBoxGomoku::LoadPositionIntersection(System.Collections.Generic.List`1<System.Tuple`2<System.Int32,System.Int32>>&)
-
-R: Gendarme.Rules.Exceptions.UseObjectDisposedExceptionRule
-M: SharpMoku.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
-M: System.Drawing.Point SharpMoku.UI.PictureBoxGomoku::GetLowerRightPoint(SharpMoku.Position)
-M: System.Void SharpMoku.UI.PictureBoxGomoku::Initial(SharpMoku.UI.Theme.Theme)
-M: System.Void SharpMoku.UI.PictureBoxGomoku::ReleaseResource()
-M: System.Void SharpMoku.UI.PictureBoxGomoku::SetBoad(SharpMoku.Board)
-M: System.Void SharpMoku.UI.PictureBoxGomoku::SetBoardValueToLabel()
-
-R: Gendarme.Rules.Maintainability.VariableNamesShouldNotMatchFieldNamesRule
-T: SharpMoku.UI.PictureBoxGomoku
-
-R: Gendarme.Rules.Naming.AvoidRedundancyInMethodNameRule
-M: System.Void SharpMoku.UI.PictureBoxGomoku::UpdateTheme(SharpMoku.UI.Theme.Theme)
-
-R: Gendarme.Rules.Naming.UseCorrectCasingRule
-M: SharpMoku.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
-M: System.Boolean SharpMoku.UI.PictureBoxGomoku::IsIntersecton(System.Int32,System.Int32)
-M: System.Void SharpMoku.UI.PictureBoxGomoku::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
-P: System.Collections.Generic.List`1<System.Tuple`2<System.Int32,System.Int32>> SharpMoku.UI.PictureBoxGomoku::positionIntersectionList()
-P: System.Int32 SharpMoku.UI.PictureBoxGomoku::cellHeight()
-P: System.Int32 SharpMoku.UI.PictureBoxGomoku::cellWidth()
-
-R: Gendarme.Rules.Performance.AvoidEmptyMethodsRule
-M: System.Void SharpMoku.UI.PictureBoxGomoku::UpdateTheme(SharpMoku.UI.Theme.Theme)
-
-R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
-M: SharpMoku.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
-M: System.Void SharpMoku.UI.PictureBoxGomoku::Initial(SharpMoku.UI.Theme.Theme)
-M: System.Void SharpMoku.UI.PictureBoxGomoku::PictureBoxGoMoKu_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
-
-R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
-M: System.Void SharpMoku.UI.PictureBoxGomoku::DrawLabel(System.Windows.Forms.Label,System.Int32,System.Int32,System.Int32,System.Int32)
-
-R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
-M: System.Void SharpMoku.GomokuCellDetail::.ctor()
-M: System.Void SharpMoku.UI.PictureBoxGomoku::.ctor(SharpMoku.Board,System.Int32,System.Int32)
-
-R: Gendarme.Rules.Performance.AvoidUnusedParametersRule
-M: System.Void SharpMoku.UI.PictureBoxGomoku::UpdateTheme(SharpMoku.UI.Theme.Theme)
-
-R: Gendarme.Rules.Smells.AvoidLargeClassesRule
-T: SharpMoku.UI.PictureBoxGomoku
-
-R: Gendarme.Rules.Smells.AvoidLongMethodsRule
-M: System.Void SharpMoku.UI.PictureBoxGomoku::Initial(SharpMoku.UI.Theme.Theme)
-
-# end extra entries generated from defects
-
-# begin extra entries generated from defects
-# added on 22/08/2024 16:34:17 by RACHEL-240818/rache
-
-R: Gendarme.Rules.Exceptions.UseObjectDisposedExceptionRule
-M: System.Void SharpMoku.UI.PictureBoxGomoku::SetBoard(SharpMoku.Board)
-
-# end extra entries generated from defects
-
-# begin extra entries generated from defects
-# added on 22/08/2024 17:44:55 by RACHEL-240818/rache
-
-R: Gendarme.Rules.Performance.AvoidEmptyMethodsRule
-M: System.Void SharpMoku.UI.Theme.Theme::Panel1_Paint(System.Object,System.Windows.Forms.PaintEventArgs)
-
-R: Gendarme.Rules.Performance.AvoidRedundantCallsRule
-M: System.Void SharpMoku.UI.ExtendLabel::MakeRound()
-
-R: Gendarme.Rules.Performance.DoNotIgnoreMethodResultRule
-M: System.Void SharpMoku.UI.ExtendLabel::MakeRound()
-
-# end extra entries generated from defects
-
-# begin extra entries generated from defects
-# added on 24/08/2024 09:57:28 by RACHEL-240818/rache
-
-R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
-M: System.Void SharpMoku.UI.Connect5Paint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
-M: System.Void SharpMoku.UI.LabelCustomPaint.ClassicPaint::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
-M: System.Void SharpMoku.UI.LabelCustomPaint.TicTacToe1::Paint(System.Drawing.Graphics,SharpMoku.UI.ExtendLabel)
-
-R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
-M: System.Drawing.Font SharpMoku.UI.ShareGraphicObject::get_GoMokuBoardFont()
-M: System.Drawing.SolidBrush SharpMoku.UI.ShareGraphicObject::SolidBrush(System.Drawing.Color)
-
-R: Gendarme.Rules.Exceptions.UseObjectDisposedExceptionRule
-M: SharpMoku.UI.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
-
-R: Gendarme.Rules.Naming.UseCorrectCasingRule
-M: SharpMoku.UI.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
-
-R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
-M: SharpMoku.UI.GoBoardPosition SharpMoku.UI.PictureBoxGomoku::GetBoardPosition(System.Int32,System.Int32)
-
-R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
-M: System.Void SharpMoku.UI.GomokuCellDetail::.ctor()
 
 # end extra entries generated from defects
 

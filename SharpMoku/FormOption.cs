@@ -21,7 +21,7 @@ namespace SharpMoku
 			chkWriteLogFile.Checked = Common.CurrentSettings.IsWriteLog;
 
 			chkBotMouseMove.Checked = Common.CurrentSettings.IsUseBotMouseMove;
-			cboTheme.SelectedIndex = (int)Common.CurrentSettings.ThemeEnum;
+			cboTheme.SelectedIndex = (int)Common.CurrentSettings.KnownTheme;
 
 			cboTheme.SelectedIndexChanged += CboTheme_SelectedIndexChanged;
 			UpdateUIColor(Common.BackColor, Common.ForeColor);
@@ -39,7 +39,7 @@ namespace SharpMoku
 		private void CboTheme_SelectedIndexChanged(object sender, EventArgs e)
 		{
 
-			ThemeFactory.ThemeEnum themeEnum = (ThemeFactory.ThemeEnum)cboTheme.SelectedIndex;
+			KnownTheme themeEnum = (KnownTheme)cboTheme.SelectedIndex;
 
 			ThemeChangedEventArgs eventArgs = new(ThemeFactory.Create(themeEnum));
 			ThemeChanged?.Invoke(this, eventArgs);
@@ -65,7 +65,7 @@ namespace SharpMoku
 			Common.CurrentSettings.IsAllowUndo = chkAllowUndo.Checked;
 			Common.CurrentSettings.IsWriteLog = chkWriteLogFile.Checked;
 
-			Common.CurrentSettings.ThemeEnum = (ThemeFactory.ThemeEnum)cboTheme.SelectedIndex;
+			Common.CurrentSettings.KnownTheme = (KnownTheme)cboTheme.SelectedIndex;
 
 			Common.SaveSettings();
 			DialogResult = DialogResult.OK;

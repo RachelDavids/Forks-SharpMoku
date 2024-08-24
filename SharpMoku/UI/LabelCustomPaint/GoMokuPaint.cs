@@ -1,21 +1,25 @@
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
+using SharpMoku.Board;
+
 namespace SharpMoku.UI.LabelCustomPaint
 {
-	public class GoMokuPaint
-		: IExtendLabelCustomPaint
+	public partial class GoMokuPaint
+		: IExtendLabelCustomPaint, IDisposable
 	{
 		private readonly string _whiteStoneImagePath = "";
 		private readonly string _blackStoneImagePath = "";
 		// private String boardBackgroundImagePath = "";
-		private readonly Color _whiteStoneBackColor = Color.White;
-		private readonly Color _blackStoneBackColor = Color.Black;
-		private readonly Color _whiteStoneBorderColor = Color.White;
-		private readonly Color _blackStoneBorderColor = Color.Black;
+		private readonly Color _whiteStoneBackColor;// = Color.White;
+		private readonly Color _blackStoneBackColor;// = Color.Black;
+		private readonly Color _whiteStoneBorderColor;// = Color.White;
+		private readonly Color _blackStoneBorderColor;// = Color.Black;
+
 		// private Color boardBackColor = Color.Yellow;
 		private readonly Pen _penTable = new(Color.Black, 2f);
-		private readonly Pen _penBorder = null;// new Pen(Color.Black, 4f);
+		private readonly Pen _penBorder;// new Pen(Color.Black, 4f);
 		public GoMokuPaint(string whiteStoneImagePath,
 						   string blackStoneImagePath,
 						   Color whiteStoneBackColor,
@@ -43,63 +47,63 @@ namespace SharpMoku.UI.LabelCustomPaint
 			}
 		}
 #pragma warning disable IDE0060 // Remove unused parameter
-		private void SetLeftBorder(int beginWidth,
-								   int beginHeight,
-								   int endWidth,
-								   int endHeight,
-								   ref Point pfromPointBorderX,
-								   ref Point ptoPointBorderX,
-								   ref Point pfromPointBorderY,
-								   ref Point ptoPointBorderY)
+		private static void SetLeftBorder(int beginWidth,
+										  int beginHeight,
+										  int endWidth,
+										  int endHeight,
+										  ref Point pfromPointBorderX,
+										  ref Point ptoPointBorderX,
+										  ref Point pfromPointBorderY,
+										  ref Point ptoPointBorderY)
 		{
-			pfromPointBorderX = new Point(beginWidth + 1, beginHeight);
-			ptoPointBorderX = new Point(beginWidth + 1, beginHeight);
-			pfromPointBorderY = new Point(beginWidth + 1, beginHeight);
-			ptoPointBorderY = new Point(beginWidth + 1, endHeight);
+			pfromPointBorderX = new(beginWidth + 1, beginHeight);
+			ptoPointBorderX = new(beginWidth + 1, beginHeight);
+			pfromPointBorderY = new(beginWidth + 1, beginHeight);
+			ptoPointBorderY = new(beginWidth + 1, endHeight);
 		}
-		private void SetRightBorder(int beginWidth,
-									int beginHeight,
-									int endWidth,
-									int endHeight,
-									ref Point pfromPointBorderX,
-									ref Point ptoPointBorderX,
-									ref Point pfromPointBorderY,
-									ref Point ptoPointBorderY)
+		private static void SetRightBorder(int beginWidth,
+										   int beginHeight,
+										   int endWidth,
+										   int endHeight,
+										   ref Point pfromPointBorderX,
+										   ref Point ptoPointBorderX,
+										   ref Point pfromPointBorderY,
+										   ref Point ptoPointBorderY)
 		{
-			pfromPointBorderX = new Point(endWidth - 1, beginHeight);
-			ptoPointBorderX = new Point(endWidth - 1, beginHeight);
-			pfromPointBorderY = new Point(endWidth - 1, beginHeight);
-			ptoPointBorderY = new Point(endWidth - 1, endHeight);
+			pfromPointBorderX = new(endWidth - 1, beginHeight);
+			ptoPointBorderX = new(endWidth - 1, beginHeight);
+			pfromPointBorderY = new(endWidth - 1, beginHeight);
+			ptoPointBorderY = new(endWidth - 1, endHeight);
 		}
-		private void SetTopBorder(int beginWidth,
-								  int beginHeight,
-								  int endWidth,
-								  int endHeight,
-								  ref Point pfromPointBorderX,
-								  ref Point ptoPointBorderX,
-								  ref Point pfromPointBorderY,
-								  ref Point ptoPointBorderY)
+		private static void SetTopBorder(int beginWidth,
+										 int beginHeight,
+										 int endWidth,
+										 int endHeight,
+										 ref Point pfromPointBorderX,
+										 ref Point ptoPointBorderX,
+										 ref Point pfromPointBorderY,
+										 ref Point ptoPointBorderY)
 		{
 			int space = 0;
-			pfromPointBorderX = new Point(beginWidth + space, beginHeight);
-			ptoPointBorderX = new Point(endWidth - space, beginHeight);
-			pfromPointBorderY = new Point(beginWidth + space, beginHeight);
-			ptoPointBorderY = new Point(beginWidth + space, beginHeight);
+			pfromPointBorderX = new(beginWidth + space, beginHeight);
+			ptoPointBorderX = new(endWidth - space, beginHeight);
+			pfromPointBorderY = new(beginWidth + space, beginHeight);
+			ptoPointBorderY = new(beginWidth + space, beginHeight);
 		}
-		private void SetBottomBorder(int beginWidth,
-									 int beginHeight,
-									 int endWidth,
-									 int endHeight,
-									 ref Point pfromPointBorderX,
-									 ref Point ptoPointBorderX,
-									 ref Point pfromPointBorderY,
-									 ref Point ptoPointBorderY)
+		private static void SetBottomBorder(int beginWidth,
+											int beginHeight,
+											int endWidth,
+											int endHeight,
+											ref Point pfromPointBorderX,
+											ref Point ptoPointBorderX,
+											ref Point pfromPointBorderY,
+											ref Point ptoPointBorderY)
 		{
 			int space = 0;
-			pfromPointBorderX = new Point(beginWidth + space, endHeight);
-			ptoPointBorderX = new Point(endWidth - space, endHeight);
-			pfromPointBorderY = new Point(beginWidth + space, endHeight);
-			ptoPointBorderY = new Point(beginWidth + space, endHeight);
+			pfromPointBorderX = new(beginWidth + space, endHeight);
+			ptoPointBorderX = new(endWidth - space, endHeight);
+			pfromPointBorderY = new(beginWidth + space, endHeight);
+			ptoPointBorderY = new(beginWidth + space, endHeight);
 		}
 #pragma warning restore IDE0060 // Remove unused parameter
 
@@ -126,16 +130,16 @@ namespace SharpMoku.UI.LabelCustomPaint
 			switch (pLabel.CellDetail.GoBoardPosition)
 			{
 				case GoBoardPosition.Center:
-					fromPointX = new Point(middleWidth, beginHeight);
-					toPointX = new Point(middleWidth, endHeight);
-					fromPointY = new Point(beginWidth, middleHeight);
-					toPointY = new Point(endWidth, middleHeight);
+					fromPointX = new(middleWidth, beginHeight);
+					toPointX = new(middleWidth, endHeight);
+					fromPointY = new(beginWidth, middleHeight);
+					toPointY = new(endWidth, middleHeight);
 					break;
 				case GoBoardPosition.TopLeftCorner:
-					fromPointX = new Point(middleWidth, middleHeight);
-					toPointX = new Point(middleWidth, endHeight);
-					fromPointY = new Point(middleWidth, middleHeight);
-					toPointY = new Point(endWidth, middleHeight);
+					fromPointX = new(middleWidth, middleHeight);
+					toPointX = new(middleWidth, endHeight);
+					fromPointY = new(middleWidth, middleHeight);
+					toPointY = new(endWidth, middleHeight);
 					SetLeftBorder(beginWidth,
 								  beginHeight,
 								  endWidth,
@@ -154,10 +158,10 @@ namespace SharpMoku.UI.LabelCustomPaint
 								 ref toPointBorderY2);
 					break;
 				case GoBoardPosition.TopRightCorner:
-					fromPointX = new Point(middleWidth, middleHeight);
-					toPointX = new Point(middleWidth, endHeight);
-					fromPointY = new Point(beginWidth, middleHeight);
-					toPointY = new Point(middleWidth, middleHeight);
+					fromPointX = new(middleWidth, middleHeight);
+					toPointX = new(middleWidth, endHeight);
+					fromPointY = new(beginWidth, middleHeight);
+					toPointY = new(middleWidth, middleHeight);
 					SetRightBorder(beginWidth,
 								   beginHeight,
 								   endWidth,
@@ -176,10 +180,10 @@ namespace SharpMoku.UI.LabelCustomPaint
 								 ref toPointBorderY2);
 					break;
 				case GoBoardPosition.BottomLeftCorner:
-					fromPointX = new Point(middleWidth, beginHeight);
-					toPointX = new Point(middleWidth, middleHeight);
-					fromPointY = new Point(middleWidth, middleHeight);
-					toPointY = new Point(endWidth, middleHeight);
+					fromPointX = new(middleWidth, beginHeight);
+					toPointX = new(middleWidth, middleHeight);
+					fromPointY = new(middleWidth, middleHeight);
+					toPointY = new(endWidth, middleHeight);
 					SetLeftBorder(beginWidth,
 								  beginHeight,
 								  endWidth,
@@ -198,10 +202,10 @@ namespace SharpMoku.UI.LabelCustomPaint
 									ref toPointBorderY2);
 					break;
 				case GoBoardPosition.BottomRightCorner:
-					fromPointX = new Point(middleWidth, beginHeight);
-					toPointX = new Point(middleWidth, middleHeight);
-					fromPointY = new Point(beginWidth, middleHeight);
-					toPointY = new Point(middleWidth, middleHeight);
+					fromPointX = new(middleWidth, beginHeight);
+					toPointX = new(middleWidth, middleHeight);
+					fromPointY = new(beginWidth, middleHeight);
+					toPointY = new(middleWidth, middleHeight);
 					SetRightBorder(beginWidth,
 								   beginHeight,
 								   endWidth,
@@ -220,10 +224,10 @@ namespace SharpMoku.UI.LabelCustomPaint
 									ref toPointBorderY2);
 					break;
 				case GoBoardPosition.TopBorder:
-					fromPointX = new Point(middleWidth, middleHeight);
-					toPointX = new Point(middleWidth, endHeight);
-					fromPointY = new Point(beginWidth, middleHeight);
-					toPointY = new Point(endWidth, middleHeight);
+					fromPointX = new(middleWidth, middleHeight);
+					toPointX = new(middleWidth, endHeight);
+					fromPointY = new(beginWidth, middleHeight);
+					toPointY = new(endWidth, middleHeight);
 					SetTopBorder(beginWidth,
 								 beginHeight,
 								 endWidth,
@@ -234,10 +238,10 @@ namespace SharpMoku.UI.LabelCustomPaint
 								 ref toPointBorderY);
 					break;
 				case GoBoardPosition.BottomBorder:
-					fromPointX = new Point(middleWidth, middleHeight);
-					toPointX = new Point(middleWidth, beginHeight);
-					fromPointY = new Point(beginWidth, middleHeight);
-					toPointY = new Point(endWidth, middleHeight);
+					fromPointX = new(middleWidth, middleHeight);
+					toPointX = new(middleWidth, beginHeight);
+					fromPointY = new(beginWidth, middleHeight);
+					toPointY = new(endWidth, middleHeight);
 					SetBottomBorder(beginWidth,
 									beginHeight,
 									endWidth,
@@ -248,10 +252,10 @@ namespace SharpMoku.UI.LabelCustomPaint
 									ref toPointBorderY);
 					break;
 				case GoBoardPosition.LeftBorder:
-					fromPointX = new Point(middleWidth, beginHeight);
-					toPointX = new Point(middleWidth, endHeight);
-					fromPointY = new Point(middleWidth, middleHeight);
-					toPointY = new Point(endWidth, middleHeight);
+					fromPointX = new(middleWidth, beginHeight);
+					toPointX = new(middleWidth, endHeight);
+					fromPointY = new(middleWidth, middleHeight);
+					toPointY = new(endWidth, middleHeight);
 					SetLeftBorder(beginWidth,
 								  beginHeight,
 								  endWidth,
@@ -262,10 +266,10 @@ namespace SharpMoku.UI.LabelCustomPaint
 								  ref toPointBorderY);
 					break;
 				case GoBoardPosition.RightBorder:
-					fromPointX = new Point(middleWidth, beginHeight);
-					toPointX = new Point(middleWidth, endHeight);
-					fromPointY = new Point(beginWidth, middleHeight);
-					toPointY = new Point(middleWidth, middleHeight);
+					fromPointX = new(middleWidth, beginHeight);
+					toPointX = new(middleWidth, endHeight);
+					fromPointY = new(beginWidth, middleHeight);
+					toPointY = new(middleWidth, middleHeight);
 					SetRightBorder(beginWidth,
 								   beginHeight,
 								   endWidth,
@@ -308,7 +312,7 @@ namespace SharpMoku.UI.LabelCustomPaint
 				g.FillEllipse(ShareGraphicObject.SolidBrush(_penTable.Color), circleIntersection);
 			}
 		}
-		private RectangleF GetRectangleCircle(int labelWidth, int labelHeight)
+		private static RectangleF GetRectangleCircle(int labelWidth, int labelHeight)
 		{
 			int space = 1;
 			int doubleSpace = space * 2;
@@ -316,6 +320,7 @@ namespace SharpMoku.UI.LabelCustomPaint
 		}
 		public void PaintStone(Graphics g, ExtendLabel pLabel)
 		{
+			CheckDisposed();
 			RectangleF circle = GetRectangleCircle(pLabel.Width, pLabel.Height);
 			RectangleF circleImage = circle with {
 				Width = circle.Width - 0.5f,
@@ -346,16 +351,17 @@ namespace SharpMoku.UI.LabelCustomPaint
 				}
 			}
 		}
-		public void PaintNeighbour(Graphics g, ExtendLabel pLabel)
-		{
-			RectangleF circle = GetRectangleCircle(pLabel.Width, pLabel.Height);
-			if (pLabel.CellDetail.IsNeighborCell)
-			{
-				g.FillEllipse(ShareGraphicObject.SolidBrush(Color.Gray), circle);
-			}
-		}
+		//public static void PaintNeighbour(Graphics g, ExtendLabel pLabel)
+		//{
+		//	RectangleF circle = GetRectangleCircle(pLabel.Width, pLabel.Height);
+		//	if (pLabel.CellDetail.IsNeighborCell)
+		//	{
+		//		g.FillEllipse(ShareGraphicObject.SolidBrush(Color.Gray), circle);
+		//	}
+		//}
 		public void Paint(Graphics graphics, ExtendLabel pLabel)
 		{
+			CheckDisposed();
 			graphics.SmoothingMode = SmoothingMode.HighQuality;
 			graphics.CompositingMode = CompositingMode.SourceCopy;
 			graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -363,11 +369,33 @@ namespace SharpMoku.UI.LabelCustomPaint
 			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 			PaintBorder(graphics, pLabel);
 			PaintStone(graphics, pLabel);
-			//We Actually don't use this for actual gaming
-			//We paint NeighborCell to shows its position for explaining the postion for Tutorial and for debugging purpose only
-			//Uncomment this code if you need to see Neighbor cell
+			// We Actually don't use this for actual gaming
+			// We paint NeighborCell to shows its position for explaining the position for Tutorial
+			// and for debugging purpose only
+			// Uncomment this code if you need to see Neighbor cell
 			//[DEBUG:]
 			//PaintNeighbour(g, pLabel);
+		}
+		public bool IsDisposed { get; private set; }
+		protected virtual void Dispose(bool disposing)
+		{
+			try
+			{
+				if (!IsDisposed && disposing)
+				{
+					_penBorder?.Dispose();
+					_penTable?.Dispose();
+				}
+			}
+			finally
+			{
+				IsDisposed = true;
+			}
+		}
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

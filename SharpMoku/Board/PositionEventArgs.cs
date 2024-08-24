@@ -1,6 +1,6 @@
 using System;
 
-namespace SharpMoku
+namespace SharpMoku.Board
 {
 	public class PositionEventArgs(Position position)
 		: EventArgs

@@ -3,12 +3,17 @@
 		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
 	</PropertyGroup>
 	<PropertyGroup>
-		<Product>Chaucer Code Analysis (Gendarme)</Product>
+		<Product>SharpMoku -- a GoMoku clome in C#</Product>
+	</PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace>$(MSBuildProjectName)</RootNamespace>
+		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
 		<!--<AssemblyTitle>$(CompanyIdentifier).$(MSBuildProjectName)</AssemblyTitle>-->
 		<AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
 	</PropertyGroup>
 	<PropertyGroup>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<GenerateSupportedOSPlatformAttribute>true</GenerateSupportedOSPlatformAttribute>
 		<GenerateComVisibleAttribute>true</GenerateComVisibleAttribute>
 		<ComVisible>false</ComVisible>
 		<!-- Since Mono.Cecil is not marked ClsCompliant, we should avoid doing so :( -->

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using SharpMoku.Board;
+
 namespace SharpMoku.AI
 {
 	/*
@@ -9,13 +11,13 @@ namespace SharpMoku.AI
      *
      */
 	/* This class is not used anymore
-     * We just keep it for studying a brade and butter of a 5 in a row evaluate function.
+     * We just keep it for studying a bread and butter of a 5 in a row evaluate function.
      */
 	public sealed class EvaluateV2
 		: IEvaluate
 	{
 
-		public double EvaluateBoard(Board board, bool isMyTurn)
+		public double EvaluateBoard(Board.Board board, bool isMyTurn)
 		{
 			return CalculateBoardScoreForOpponent(board, isMyTurn);
 		}
@@ -26,12 +28,12 @@ namespace SharpMoku.AI
 			OneSideBlock = 1,
 			BothSideBlock = 2
 		}
-		public readonly struct StonePattern(int numberOfConsecutiveStone, BlockType blockType)
+		public readonly struct StonePattern(int numberOfconsecutiveStone, BlockType blockType)
 		{
-			public readonly int NumberOfConsecutiveStone = numberOfConsecutiveStone;
-			public readonly BlockType BlockType = blockType;
+			public int NumberOfConsecutiveStones { get; } = numberOfconsecutiveStone;
+			public BlockType BlockType { get; } = blockType;
 		}
-		public double CalculateBoardScoreForOpponent(Board board, bool isMyTurn)
+		public double CalculateBoardScoreForOpponent(Board.Board board, bool isMyTurn)
 		{
 
 			bool isItForMe = true;
@@ -46,7 +48,7 @@ namespace SharpMoku.AI
 
 		}
 
-		public int GetScore(Board board, bool isForBlackStone, bool isBlackTurn)
+		public int GetScore(Board.Board board, bool isForBlackStone, bool isBlackTurn)
 		{
 
 			int[,] boardMatrix = board.Matrix;
@@ -59,7 +61,7 @@ namespace SharpMoku.AI
 			return horizontalScore + verticalScore + diagonalScore;
 		}
 
-		public int GetScore(Board board)
+		public int GetScore(Board.Board board)
 		{
 			_ = board.LastPositionPut;
 
@@ -79,7 +81,7 @@ namespace SharpMoku.AI
 		public List<StonePattern> GetStonePatternForHorizontal(int[,] boardMatrix, bool isForBlackStone)
 		{
 			List<StonePattern> listPattern = [];
-			int numberOfConsecutiveStone = 0;
+			int numberOfconsecutiveStone = 0;
 
 			BlockType blockType = BlockType.BothSideBlock;
 
@@ -98,19 +100,19 @@ namespace SharpMoku.AI
 					if (currentCellValue == targetcellValue)
 					{
 
-						numberOfConsecutiveStone++;
+						numberOfconsecutiveStone++;
 						continue;
 					}
 
 					if (currentCellValue == emptyCellvalue)
 					{
 
-						if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+						if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 						{
 
 							blockType--;
-							listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
-							numberOfConsecutiveStone = 0;
+							listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
+							numberOfconsecutiveStone = 0;
 							blockType = BlockType.OneSideBlock;
 						}
 						else
@@ -120,10 +122,10 @@ namespace SharpMoku.AI
 						continue;
 					}
 					// Cell is occupied by opponent
-					if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+					if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 					{
-						listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
-						numberOfConsecutiveStone = 0;
+						listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
+						numberOfconsecutiveStone = 0;
 						blockType = BlockType.BothSideBlock;
 						continue;
 					}
@@ -133,13 +135,13 @@ namespace SharpMoku.AI
 
 				}
 				// End of row, check if there were any consecutive stones before we reached right border
-				if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+				if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 				{
-					listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
-					//score += getConsecutiveSetScore(numberOfConsecutiveStone, numberOfBlocks, isForBlackStone == isBlackTurn);
+					listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
+					//score += getConsecutiveSetScore(numberOfconsecutiveStone, numberOfBlocks, isForBlackStone == isBlackTurn);
 				}
 				// Reset consecutive stone and blocks count
-				numberOfConsecutiveStone = 0;
+				numberOfconsecutiveStone = 0;
 				blockType = BlockType.BothSideBlock;
 			}
 
@@ -148,20 +150,20 @@ namespace SharpMoku.AI
 
 		public int CalculateScoreForHorizontal(int[,] boardMatrix, bool isForBlackstone, bool isBlackTurn)
 			 => GetStonePatternForHorizontal(boardMatrix, isForBlackstone)
-				.Sum(x => calculateConsecutiveStoneSequenceScore(x, isBlackTurn));
+				.Sum(x => EvaluateV2.CalculateConsecutiveStoneSequenceScore(x, isBlackTurn));
 
 		public int CalculateScoreForVertical(int[,] boardMatrix, bool isForBlackstone, bool isBlackTurn)
 			=> GetStonePatternForVertical(boardMatrix, isForBlackstone)
-				.Sum(x => calculateConsecutiveStoneSequenceScore(x, isBlackTurn));
+				.Sum(x => EvaluateV2.CalculateConsecutiveStoneSequenceScore(x, isBlackTurn));
 
 		public int CalculateScoreForDiagonal(int[,] boardMatrix, bool isForBlackStone, bool isBlackTurn)
 			=> GetStonePatternForDiagonal(boardMatrix, isForBlackStone)
-				.Sum(x => calculateConsecutiveStoneSequenceScore(x, isBlackTurn));
+				.Sum(x => EvaluateV2.CalculateConsecutiveStoneSequenceScore(x, isBlackTurn));
 
 		public List<StonePattern> GetStonePatternForVertical(int[,] boardMatrix, bool isForBlackstone)
 		{
 
-			int numberOfConsecutiveStone = 0;
+			int numberOfconsecutiveStone = 0;
 			BlockType blockType = BlockType.BothSideBlock;
 			int targetcellValue = isForBlackstone
 	? blackStoneCellvalue
@@ -174,16 +176,16 @@ namespace SharpMoku.AI
 					int currentCellValue = boardMatrix[indexRow, indexColumn];
 					if (currentCellValue == targetcellValue)
 					{
-						numberOfConsecutiveStone++;
+						numberOfconsecutiveStone++;
 						continue;
 					}
 					if (currentCellValue == emptyCellvalue)
 					{
-						if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+						if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 						{
 							blockType--;
-							listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
-							numberOfConsecutiveStone = 0;
+							listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
+							numberOfconsecutiveStone = 0;
 							blockType = BlockType.OneSideBlock;
 						}
 						else
@@ -192,10 +194,10 @@ namespace SharpMoku.AI
 						}
 						continue;
 					}
-					if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+					if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 					{
-						listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
-						numberOfConsecutiveStone = 0;
+						listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
+						numberOfconsecutiveStone = 0;
 						blockType = BlockType.BothSideBlock;
 						continue;
 					}
@@ -203,12 +205,12 @@ namespace SharpMoku.AI
 					blockType = BlockType.BothSideBlock;
 
 				}
-				if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+				if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 				{
-					listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
+					listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
 
 				}
-				numberOfConsecutiveStone = 0;
+				numberOfconsecutiveStone = 0;
 				blockType = BlockType.BothSideBlock;
 
 			}
@@ -221,7 +223,7 @@ namespace SharpMoku.AI
 		public List<StonePattern> GetStonePatternForDiagonal(int[,] boardMatrix, bool isForBlackStone)
 		{
 			List<StonePattern> listPattern = [];
-			int numberOfConsecutiveStone = 0;
+			int numberOfconsecutiveStone = 0;
 			BlockType blockType = BlockType.BothSideBlock;
 
 			int targetcellValue = isForBlackStone
@@ -244,17 +246,17 @@ namespace SharpMoku.AI
 
 					if (boardMatrix[i, j] == targetcellValue)
 					{
-						numberOfConsecutiveStone++;
+						numberOfconsecutiveStone++;
 						continue;
 					}
 
 					if (boardMatrix[i, j] == emptyCellvalue)
 					{
-						if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+						if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 						{
 							blockType--;
-							listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
-							numberOfConsecutiveStone = 0;
+							listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
+							numberOfconsecutiveStone = 0;
 							blockType = BlockType.OneSideBlock;
 						}
 						else
@@ -268,10 +270,10 @@ namespace SharpMoku.AI
 						throw new InvalidOperationException($"The cell value in position {i},{j} is {boardMatrix[i, j]} which is invalid, the valid value must be {blackStoneCellvalue} For blackStone, {whiteStoneCellvalue} for whiteStone, {blackStoneCellvalue} for blankcell");
 					}
 
-					if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+					if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 					{
-						listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
-						numberOfConsecutiveStone = 0;
+						listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
+						numberOfconsecutiveStone = 0;
 						blockType = BlockType.BothSideBlock;
 						continue;
 					}
@@ -280,12 +282,12 @@ namespace SharpMoku.AI
 
 				}
 
-				if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+				if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 				{
-					listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
+					listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
 
 				}
-				numberOfConsecutiveStone = 0;
+				numberOfconsecutiveStone = 0;
 				blockType = BlockType.BothSideBlock;
 			}
 
@@ -302,16 +304,16 @@ namespace SharpMoku.AI
 
 					if (boardMatrix[i, j] == targetcellValue)
 					{
-						numberOfConsecutiveStone++;
+						numberOfconsecutiveStone++;
 						continue;
 					}
 					if (boardMatrix[i, j] == emptyCellvalue)
 					{
-						if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+						if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 						{
 							blockType--;
-							listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
-							numberOfConsecutiveStone = 0;
+							listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
+							numberOfconsecutiveStone = 0;
 							blockType = BlockType.OneSideBlock;
 						}
 						else
@@ -320,10 +322,10 @@ namespace SharpMoku.AI
 						}
 						continue;
 					}
-					if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+					if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 					{
-						listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
-						numberOfConsecutiveStone = 0;
+						listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
+						numberOfconsecutiveStone = 0;
 						blockType = BlockType.BothSideBlock;
 						continue;
 					}
@@ -331,12 +333,12 @@ namespace SharpMoku.AI
 					blockType = BlockType.BothSideBlock;
 
 				}
-				if (numberOfConsecutiveStone >= leastStoneForConsecutive)
+				if (numberOfconsecutiveStone >= leastStoneForConsecutive)
 				{
-					listPattern.Add(new StonePattern(numberOfConsecutiveStone, blockType));
+					listPattern.Add(new StonePattern(numberOfconsecutiveStone, blockType));
 
 				}
-				numberOfConsecutiveStone = 0;
+				numberOfconsecutiveStone = 0;
 				blockType = BlockType.BothSideBlock;
 			}
 			return listPattern;
@@ -346,74 +348,59 @@ namespace SharpMoku.AI
 
 		public static readonly int wonScore = 50000000;
 		public static readonly int confirmWinScore = 1000000;
-		public static readonly int conSecutiveStone4_Not_MyTurn_0Block = 200000;
-		public static readonly int conSecutiveStone4_Not_MyTurn_MoreThan0Block = 300;
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+		public static readonly int ConsecutiveStone4_Not_MyTurn_0Block = 200000;
+		public static readonly int ConsecutiveStone4_Not_MyTurn_MoreThan0Block = 300;
 
-		public static readonly int conSecutiveStone3_MyTurn_0Block = 50000;
-		public static readonly int conSecutiveStone3_MyTurn_MoreThan0Block = 20;
+		public static readonly int ConsecutiveStone3_MyTurn_0Block = 50000;
+		public static readonly int ConsecutiveStone3_MyTurn_MoreThan0Block = 20;
 
-		public static readonly int conSecutiveStone3_Not_MyTurn_0Block = 100;
-		public static readonly int conSecutiveStone3_Not_MyTurn_MoreThan0Block = 5;
+		public static readonly int ConsecutiveStone3_Not_MyTurn_0Block = 100;
+		public static readonly int ConsecutiveStone3_Not_MyTurn_MoreThan0Block = 5;
 
-		public static readonly int conSecutiveStone2_MyTurn_0Block = 7;
-		public static readonly int conSecutiveStone2_MoreThan0Block = 3;
-		public static readonly int conSecutiveStone2_Not_MyTurn_0Block = 5;
-		public static readonly int conSecutiveStone1 = 1;
-		public int calculateConsecutiveStoneSequenceScore(StonePattern stonePattern, bool isMyTurn)
+		public static readonly int ConsecutiveStone2_MyTurn_0Block = 7;
+		public static readonly int ConsecutiveStone2_MoreThan0Block = 3;
+		public static readonly int ConsecutiveStone2_Not_MyTurn_0Block = 5;
+		public static readonly int ConsecutiveStone1 = 1;
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+		public static int CalculateConsecutiveStoneSequenceScore(StonePattern stonePattern, bool isMyTurn)
 		{
-			return calculateConsecutiveStoneSequenceScore(stonePattern.NumberOfConsecutiveStone,
-				stonePattern.BlockType,
-				isMyTurn);
+			return CalculateConsecutiveStoneSequenceScore(stonePattern.NumberOfConsecutiveStones,
+														  stonePattern.BlockType,
+														  isMyTurn);
 		}
 
-		public int calculateConsecutiveStoneSequenceScore(int numberOfConsecutiveStone, BlockType blockType, bool isMyTurn)
+		public static int CalculateConsecutiveStoneSequenceScore(int numberOfConsecutiveStones,
+																 BlockType blockType,
+																 bool isMyTurn)
 		{
 
-			if (numberOfConsecutiveStone >= 5)
-			{
-				return wonScore;
-			}
-
-			if (blockType == BlockType.BothSideBlock
-				&& numberOfConsecutiveStone < 5)
-			{
-				return 0;
-			}
-
-			switch (numberOfConsecutiveStone)
-			{
-				case 4:
-					{
-
-						return isMyTurn
-							? confirmWinScore
-							: blockType == BlockType.ZeroBlock ? conSecutiveStone4_Not_MyTurn_0Block : conSecutiveStone4_Not_MyTurn_MoreThan0Block;
-					}
-				case 3:
-					{
-
-						return blockType == BlockType.ZeroBlock
-							? isMyTurn ? conSecutiveStone3_MyTurn_0Block : conSecutiveStone3_Not_MyTurn_0Block
-							: isMyTurn ? conSecutiveStone3_MyTurn_MoreThan0Block : conSecutiveStone3_Not_MyTurn_MoreThan0Block;
-					}
-				case 2:
-					{
-
-						return blockType > BlockType.ZeroBlock
-							? conSecutiveStone2_MoreThan0Block
-							: isMyTurn ? conSecutiveStone2_MyTurn_0Block : conSecutiveStone2_Not_MyTurn_0Block;
-					}
-				case 1:
-					{
-						return conSecutiveStone1;
-					}
-
-				default:
-					break;
-			}
-
-			return 0;
-
+			return numberOfConsecutiveStones >= 5
+				? wonScore
+				: blockType == BlockType.BothSideBlock
+				&& numberOfConsecutiveStones < 5
+				? 0
+				: numberOfConsecutiveStones switch {
+					4 => isMyTurn
+						? confirmWinScore
+						: blockType == BlockType.ZeroBlock
+							? ConsecutiveStone4_Not_MyTurn_0Block
+							: ConsecutiveStone4_Not_MyTurn_MoreThan0Block,
+					3 => blockType == BlockType.ZeroBlock
+						? isMyTurn
+							? ConsecutiveStone3_MyTurn_0Block
+							: ConsecutiveStone3_Not_MyTurn_0Block
+						: isMyTurn
+							? ConsecutiveStone3_MyTurn_MoreThan0Block
+							: ConsecutiveStone3_Not_MyTurn_MoreThan0Block,
+					2 => blockType > BlockType.ZeroBlock
+						? ConsecutiveStone2_MoreThan0Block
+						: isMyTurn
+							? ConsecutiveStone2_MyTurn_0Block
+							: ConsecutiveStone2_Not_MyTurn_0Block,
+					1 => ConsecutiveStone1,
+					_ => 0,
+				};
 		}
 	}
 }

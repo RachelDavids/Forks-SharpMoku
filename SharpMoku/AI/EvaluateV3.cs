@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 
+using SharpMoku.Board;
+
 namespace SharpMoku.AI
 {
 	//Credit:https://codepen.io/mudrenok/pen/gpMXgg
@@ -9,32 +11,23 @@ namespace SharpMoku.AI
 	public sealed class EvaluateV3
 		: IEvaluate
 	{
-		public struct NumberOfScorePattern
+		public struct NumberOfScorePattern(int winning,
+										   int stone4,
+										   int stone3,
+										   int stone2,
+										   int blockStone4,
+										   int blockStone3)
 		{
 			// TODO: These should be properties
-			public int Winning = 0;
-			public int Stone4 = 0;
-			public int Stone3 = 0;
-			public int Stone2 = 0;
-			public int BlockStone4 = 0;
-			public int BlockStone3 = 0;
+			public int Winning { get; set; } = winning;
+			public int Stone4 { get; set; } = stone4;
+			public int Stone3 { get; set; } = stone3;
+			public int Stone2 { get; set; } = stone2;
+			public int BlockStone4 { get; set; } = blockStone4;
+			public int BlockStone3 { get; set; } = blockStone3;
 			public NumberOfScorePattern()
+				: this(0, 0, 0, 0, 0, 0)
 			{
-
-			}
-			public NumberOfScorePattern(int winning,
-										int stone4,
-										int stone3,
-										int stone2,
-										int blockStone4,
-										int blockStone3)
-			{
-				Winning = winning;
-				Stone4 = stone4;
-				Stone3 = stone3;
-				Stone2 = stone2;
-				BlockStone4 = blockStone4;
-				BlockStone3 = blockStone3;
 
 			}
 			public readonly bool HasZeroValue => Winning == 0
@@ -208,7 +201,7 @@ namespace SharpMoku.AI
 			return false;
 		}
 #pragma warning disable IDE0060 // Remove unused parameter
-		public double EvaluateBoardForWhite(Board board, bool blacksTurn)
+		public double EvaluateBoardForWhite(Board.Board board, bool blacksTurn)
 #pragma warning restore IDE0060 // Remove unused parameter
 		{
 
@@ -229,7 +222,9 @@ namespace SharpMoku.AI
             return whiteScore / blackScore;
             */
 		}
-		public List<List<int>> GetListAllDirection(Board board, Position checkPosition, CellValue cellValue)
+		public static List<List<int>> GetListAllDirection(Board.Board board,
+														  Position checkPosition,
+														  CellValue cellValue)
 		{
 			Position positionDeltaNorthSouth = new(1, 0);
 			Position positionDeltaWestEast = new(0, 1);
@@ -251,48 +246,48 @@ namespace SharpMoku.AI
 				listNorthSouth ,
 				listWestEast ,
 				listNorthEast ,
-				listSouthWest
+				listSouthWest,
 			];
 
 			return listAllDirection;
 		}
 
-		//GetDifferenctScorefromLastPosition
-		public int Heuristic(Board newBoard)
+		//GetDifferentScoreFromLastPosition
+		public int Heuristic(Board.Board newBoard)
 		{
 			// GetPlayerscore from latest position
-			Position LatestPosition = newBoard.LastPositionPut;
+			Position latestPosition = newBoard.LastPositionPut;
 
-			CellValue PlayercellValue = (CellValue)newBoard.Matrix[LatestPosition.Row, LatestPosition.Col];
-			List<List<int>> listAreaCheckForPlayer = GetListAllDirection(newBoard, LatestPosition, PlayercellValue);
+			CellValue playercellValue = (CellValue)newBoard.Matrix[latestPosition.Row, latestPosition.Col];
+			List<List<int>> listAreaCheckForPlayer = GetListAllDirection(newBoard, latestPosition, playercellValue);
 
-			bool isForBlack = PlayercellValue == CellValue.Black;
+			bool isForBlack = playercellValue == CellValue.Black;
 
 			NumberOfScorePattern scorePattern = ValuePosition(listAreaCheckForPlayer, isForBlack);
-			int Player1Value = getScoreByPattern(scorePattern);
+			int player1Value = EvaluateV3.GetScoreByPattern(scorePattern);
 
 			// Put the opponenetcell value into the latest postion.
 			// Then get opponenet score
 			// to see the differnent
 			CellValue opponentCellValue = (CellValue)
-											  (-(int)PlayercellValue);
-			newBoard.Matrix[LatestPosition.Row, LatestPosition.Col] = (int)opponentCellValue;
+											  (-(int)playercellValue);
+			newBoard.Matrix[latestPosition.Row, latestPosition.Col] = (int)opponentCellValue;
 
-			List<List<int>> listAreaCheckForOpponent = GetListAllDirection(newBoard, LatestPosition, opponentCellValue);
+			List<List<int>> listAreaCheckForOpponent = GetListAllDirection(newBoard, latestPosition, opponentCellValue);
 
 			isForBlack = opponentCellValue == CellValue.Black;
 			NumberOfScorePattern enemyScorePattern = ValuePosition(listAreaCheckForOpponent, isForBlack);
-			int EnemyValue = getScoreByPattern(enemyScorePattern);
+			int enemyValue = EvaluateV3.GetScoreByPattern(enemyScorePattern);
 
 			//After get Score for opponenet
 			//Set it back to player cell value
-			newBoard.Matrix[LatestPosition.Row, LatestPosition.Col] = (int)PlayercellValue;
+			newBoard.Matrix[latestPosition.Row, latestPosition.Col] = (int)playercellValue;
 
-			return (2 * Player1Value) + EnemyValue;
+			return (2 * player1Value) + enemyValue;
 			//return 0;
 		}
 
-		public List<int> GetCellValueInDirection(int[,] matrix, CellValue cellValue, Position positionCheck, Position positionDelta)
+		public static List<int> GetCellValueInDirection(int[,] matrix, CellValue cellValue, Position positionCheck, Position positionDelta)
 		{
 			int i;
 			List<int> listCell = [];
@@ -357,13 +352,11 @@ namespace SharpMoku.AI
 			}
 			return listCell;
 		}
-		public int GetScore(Board board)
+		public int GetScore(Board.Board board)
 		{
-			int Score = Heuristic(board);
-			return Score;
-
+			return Heuristic(board);
 		}
-		public int getScoreByPattern(NumberOfScorePattern numberOfPattern)
+		public static int GetScoreByPattern(NumberOfScorePattern numberOfPattern)
 		{
 			if (numberOfPattern.Winning > 0)
 			{
@@ -450,9 +443,9 @@ namespace SharpMoku.AI
 			};
 		}
 
-		public double EvaluateBoard(Board board, bool IsMyturn)
+		public double EvaluateBoard(Board.Board board, bool isMyTurn)
 		{
-			return EvaluateBoardForWhite(board, IsMyturn);
+			return EvaluateBoardForWhite(board, isMyTurn);
 		}
 	}
 }

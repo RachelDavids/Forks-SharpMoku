@@ -15,9 +15,9 @@ namespace SharpMoku
 			cboBotLevel.SelectedIndex = 0;
 			cboBoardSize.SelectedIndex = 0;
 			cboMode.SelectedIndex = Common.CurrentSettings.GameMode switch {
-				Game.GameModeEnum.PlayerVsPlayer => 0,
-				Game.GameModeEnum.PlayerVsBot => 1,
-				Game.GameModeEnum.BotVsPlayer => 2,
+				GameMode.PlayerVsPlayer => 0,
+				GameMode.PlayerVsBot => 1,
+				GameMode.BotVsPlayer => 2,
 				_ => 0
 			};
 
@@ -50,14 +50,14 @@ namespace SharpMoku
 				Common.CurrentSettings.BoardSize = 15;
 			}
 
-			Common.CurrentSettings.GameMode = Game.GameModeEnum.PlayerVsPlayer;
+			Common.CurrentSettings.GameMode = GameMode.PlayerVsPlayer;
 			if (cboMode.SelectedIndex == 1)
 			{
-				Common.CurrentSettings.GameMode = Game.GameModeEnum.PlayerVsBot;
+				Common.CurrentSettings.GameMode = GameMode.PlayerVsBot;
 			}
 			else if (cboMode.SelectedIndex == 2)
 			{
-				Common.CurrentSettings.GameMode = Game.GameModeEnum.BotVsPlayer;
+				Common.CurrentSettings.GameMode = GameMode.BotVsPlayer;
 			}
 
 			Common.CurrentSettings.BotDepth = 2;

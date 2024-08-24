@@ -1,0 +1,30 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<!-- by default MSBuild stops at the first Directory.Build.* found -->
+	<!-- so we need to continue the search -->
+	<PropertyGroup>
+		<_parentImport>$([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', '$(MSBuildThisFileDirectory)../'))</_parentImport>
+	</PropertyGroup>
+	<Import Condition=" '$(_parentImport)' != '' AND Exists('$(_parentImport)') " Project="$(_parentImport)" />
+	<!--All other props have now been included !! -->
+
+	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+	<!--<ItemGroup Condition=" '$(RunGendarmeAnalysis)' == 'true' AND '$(UsingChaucerAnnotations)' == 'true' ">-->
+	<ItemGroup Condition=" '$(RunGendarmeAnalysis)' == 'true' ">
+		<AssemblyAttribute Include="Chaucer.Annotations.CodeAnalysis.RootNamespace">
+			<_Parameter1>Testing</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+	<ItemGroup>
+		<AssemblyAttribute Include="Chaucer.Annotations.AssemblyBuildPathAttribute">
+			<_Parameter1>$(MSBuildProjectDirectory)</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+	<Target Name="Pack">
+		<Message Importance="high" Condition=" '$(IsPackable)' != 'true' " Text="$(MSBuildProjectName) is not a package" />
+	</Target>
+</Project>

@@ -1,23 +1,26 @@
 using System;
 
-namespace SharpMoku.UI
+using SharpMoku.Board;
+using SharpMoku.UI;
+
+namespace Testing.SharpMoku
 {
-	public class MOCKUI : IUI
+	public sealed class MockUi : IUI
 	{
 		public event EventHandler<PositionEventArgs> CellClicked;
 		public event EventHandler HasFinishedMoveCursor;
 
-		public void Game_BotFinishedThinking(object sender, EventArgs e)
+		public void OnBotFinishedThinking(object sender, EventArgs e)
 		{
 			// throw new NotImplementedException();
 		}
 
-		public void Game_BotThinking(object sender, EventArgs e)
+		public void OnBotThinking(object sender, EventArgs e)
 		{
 			// throw new NotImplementedException();
 		}
 
-		public void Game_GameFinished(object sender, EventArgs e)
+		public void OnGameFinished(object sender, EventArgs e)
 		{
 			// throw new NotImplementedException();
 		}

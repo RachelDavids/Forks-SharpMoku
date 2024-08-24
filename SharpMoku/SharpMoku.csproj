@@ -2,7 +2,6 @@
 	<PropertyGroup>
 		<TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
 		<OutputType>WinExe</OutputType>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
 	<PropertyGroup>
@@ -17,8 +16,8 @@
 		<DefaultItemExcludes>Logging/**;$(DefaultItemExcludes)</DefaultItemExcludes>
 		<DefaultItemExcludes>UI/**;$(DefaultItemExcludes)</DefaultItemExcludes>
 		<DefaultItemExcludes>Utility/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
-
 	<ItemGroup>
 	  <ProjectReference Include="AI\SharpMoku.AI.csproj" />
 	  <ProjectReference Include="Board\SharpMoku.Board.csproj" />

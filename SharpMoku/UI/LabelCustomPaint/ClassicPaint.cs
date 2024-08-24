@@ -1,5 +1,7 @@
 using System.Drawing;
 
+using SharpMoku.Board;
+
 namespace SharpMoku.UI.LabelCustomPaint
 {
 	public sealed class ClassicPaint
@@ -13,10 +15,10 @@ namespace SharpMoku.UI.LabelCustomPaint
 
 			//Font font; = new(family, 24.25f, FontStyle.Bold);
 
-			Color foreColor = pLabel.theme.OColor;
+			Color foreColor = pLabel.Theme.OColor;
 			if (pLabel.CellDetail.CellValue == CellValue.Black)
 			{
-				foreColor = pLabel.theme.XColor;
+				foreColor = pLabel.Theme.XColor;
 			}
 			//StringFormat sf = new() {
 			//	LineAlignment = StringAlignment.Center,

@@ -1,23 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<RootNamespace>$(MSBuildProjectName)</RootNamespace>
-		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+		<TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
 	<PropertyGroup>
-		<TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<UseWindowsForms>true</UseWindowsForms>
-		<LangVersion>preview</LangVersion>
+		<DefaultItemExcludes>AI/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+		<DefaultItemExcludes>Board/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+		<DefaultItemExcludes>Logging/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+		<DefaultItemExcludes>UI/**;$(DefaultItemExcludes)</DefaultItemExcludes>
+		<DefaultItemExcludes>Utility/**;$(DefaultItemExcludes)</DefaultItemExcludes>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\SharpMoku\SharpMoku.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
-		<PackageReference Include="MSTest.TestAdapter" Version="*" />
-		<PackageReference Include="MSTest.TestFramework" Version="*" />
+		<PackageReference Include="Chaucer.FeatureSupport" Version="*" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Chaucer.FeatureSupport" Version="*" />
+	  <Folder Include="Properties\" />
 	</ItemGroup>
 </Project>

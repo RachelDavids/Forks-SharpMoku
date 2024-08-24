@@ -12,8 +12,8 @@ namespace SharpMoku.UI.LabelCustomPaint
 		// private Color boardBackColor = Color.Yellow;
 		private Color _whiteStoneBackColor = Color.White;
 		private Color _blackStoneBackColor = Color.Black;
-		private Pen _penTable = null;
-		private Pen _penBorder = null;
+		private Pen _penTable;
+		private Pen _penBorder;
 		public GoMokuPaintBuilder WhiteStoneImagePath(string path)
 		{
 			_whiteStoneImagePath = path;
@@ -69,15 +69,14 @@ namespace SharpMoku.UI.LabelCustomPaint
                 throw new Exception ("The configured value is not valid ")
             }
             */
-			GoMokuPaint gomokuPaint = new(
-				_whiteStoneImagePath,
-				_blackStoneImagePath,
-				_whiteStoneBackColor,
-				_whiteStoneBorderColor,
-				_blackStoneBackColor,
-				_blackStoneBorderColor,
-				_penTable,
-				_penBorder);
+			GoMokuPaint gomokuPaint = new(_whiteStoneImagePath,
+										  _blackStoneImagePath,
+										  _whiteStoneBackColor,
+										  _whiteStoneBorderColor,
+										  _blackStoneBackColor,
+										  _blackStoneBorderColor,
+										  _penTable,
+										  _penBorder);
 			return gomokuPaint;
 		}
 	}

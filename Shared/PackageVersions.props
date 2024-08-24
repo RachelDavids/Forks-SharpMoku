@@ -8,7 +8,6 @@
 	</PropertyGroup>
 	<PropertyGroup Label="Main">
 		<BuildPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</BuildPackageRequiredVersion>
-		<BuildTasksPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</BuildTasksPackageRequiredVersion>
 		<CorePackageRequiredVersion>$(LatestStablePackageRequiredVersion)</CorePackageRequiredVersion>
 		<GendarmePackageRequiredVersion>$(LatestStablePackageRequiredVersion)</GendarmePackageRequiredVersion>
 		<NDeskOptionsPackageVersion>$(CorePackageRequiredVersion)</NDeskOptionsPackageVersion>
@@ -25,6 +24,7 @@
 		<SystemMemoryPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</SystemMemoryPackageRequiredVersion>
 	</PropertyGroup>
 	<PropertyGroup Label="Test">
+		<FakeItEasyPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</FakeItEasyPackageRequiredVersion>
 		<MSTestPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</MSTestPackageRequiredVersion>
 		<MSTestSdkPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</MSTestSdkPackageRequiredVersion>
 		<NUnitPackageRequiredVersion>$(LatestStablePackageRequiredVersion)</NUnitPackageRequiredVersion>

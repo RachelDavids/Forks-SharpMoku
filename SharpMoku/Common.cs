@@ -7,27 +7,27 @@ namespace SharpMoku
 {
 	public static class Common
 	{
-		private static SharpMokuSettings _currentSettings = null;
+		private static SharpMokuSettings s_currentSettings;
 		public static SharpMokuSettings CurrentSettings {
 			get {
-				if (_currentSettings == null)
+				if (s_currentSettings == null)
 				{
 					if (!File.Exists(FileUtility.SettingPath))
 					{
 						CreateNewSettings(FileUtility.SettingPath);
 					}
-					_currentSettings = SerializeUtility.Deserialize<SharpMokuSettings>(FileUtility.SettingPath);
+					s_currentSettings = SerializeUtility.Deserialize<SharpMokuSettings>(FileUtility.SettingPath);
 				}
-				return _currentSettings;
+				return s_currentSettings;
 			}
 		}
 		public static void SaveSettings()
 		{
-			SerializeUtility.Serialize(_currentSettings, FileUtility.SettingPath);
-			_currentSettings = null;
+			SerializeUtility.Serialize(s_currentSettings, FileUtility.SettingPath);
+			s_currentSettings = null;
 		}
-		public static Color BackColor => ThemeFactory.BackColor(CurrentSettings.ThemeEnum);
-		public static Color ForeColor => ThemeFactory.ForeColor(CurrentSettings.ThemeEnum);
+		public static Color BackColor => ThemeFactory.BackColor(CurrentSettings.KnownTheme);
+		public static Color ForeColor => ThemeFactory.ForeColor(CurrentSettings.KnownTheme);
 		public static void CreateNewSettings(string filename)
 		{
 			SerializeUtility.Serialize(new SharpMokuSettings(), filename);

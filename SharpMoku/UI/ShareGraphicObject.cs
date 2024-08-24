@@ -13,56 +13,58 @@ namespace SharpMoku.UI
 
 		}
 
-		private static Dictionary<Color, SolidBrush> Brushes = null;
-		private static Dictionary<string, Bitmap> Bitmaps = null;
-		private static Font _GoMokuBoardFont = null;
+		private static Dictionary<Color, SolidBrush> s_brushes;
+		private static Dictionary<string, Bitmap> s_bitmaps;
+		private static Font s_goMokuBoardFont;
 		public static Font GoMokuBoardFont {
 			get {
-				if (_GoMokuBoardFont == null)
+				if (s_goMokuBoardFont == null)
 				{
 					FontFamily fontFamily = new("Segoe UI");
-					_GoMokuBoardFont = new Font(fontFamily,
-												20,
-												FontStyle.Bold,
-												GraphicsUnit.Pixel);
+					s_goMokuBoardFont = new(fontFamily,
+											20,
+											FontStyle.Bold,
+											GraphicsUnit.Pixel);
 				}
-				return _GoMokuBoardFont;
+				return s_goMokuBoardFont;
 			}
-			set => _GoMokuBoardFont = value;
+			set => s_goMokuBoardFont = value;
 		}
 		public static Bitmap BitmapFilePath(string filePath)
 		{
-			Bitmaps ??= [];
-			if (!Bitmaps.ContainsKey(filePath))
+			s_bitmaps ??= [];
+			if (!s_bitmaps.TryGetValue(filePath, out Bitmap value))
 			{
 				Bitmap bitmap = new(filePath);
-				Bitmaps.Add(filePath, bitmap);
+				value = bitmap;
+				s_bitmaps.Add(filePath, value);
 			}
-			return Bitmaps[filePath];
+			return value;
 		}
 		public static SolidBrush SolidBrush(Color color)
 		{
-			Brushes ??= [];
-			if (!Brushes.ContainsKey(color))
+			s_brushes ??= [];
+			if (!s_brushes.TryGetValue(color, out SolidBrush value))
 			{
-				Brushes.Add(color, new SolidBrush(color));
+				value = new(color);
+				s_brushes.Add(color, value);
 			}
 
-			return Brushes[color];
+			return value;
 		}
 
-		private static Dictionary<string, Pen> Pens = null;
+		private static Dictionary<string, Pen> s_pens;
 		public static Pen Pen(Color color, float width)
 		{
-			Pens ??= [];
+			s_pens ??= [];
 			string key = HexFromColor(color) + "_" + width;
-			if (!Pens.ContainsKey(key))
+			if (!s_pens.TryGetValue(key, out Pen value))
 			{
 				Pen pen = new(color, width);
-				Pens.Add(key, pen);
-
+				value = pen;
+				s_pens.Add(key, value);
 			}
-			return Pens[key];
+			return value;
 
 		}
 	}

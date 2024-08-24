@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using SharpMoku.Board;
 using SharpMoku.Logging;
 
 namespace SharpMoku.AI
 {
-	public class Minimax(Board board, IEvaluate evaluator, ILog logger)
+	public class Minimax(Board.Board board, IEvaluate evaluator, ILog logger)
 	{
 		private void Log(string message)
 		{
@@ -14,11 +15,11 @@ namespace SharpMoku.AI
 
 		}
 
-		public int NumberOfNodes = 0;
-		private int evaluationCount = 0;
+		public int NumberOfNodes { get; private set; }
+		private int _evaluationCount;
 
 		private const int CONST_winScore = 10000000;
-		public Position calculateNextMove(int depth)
+		public Position CalculateNextMove(int depth)
 		{
 			int minAcceptDepth = 1;
 			int maxAcceptDepth = 6;
@@ -35,7 +36,7 @@ namespace SharpMoku.AI
 				botMoveScore.Row = Utility.Randomizer.GetRandomNumber(0, board.Matrix.GetUpperBound(0));
 				botMoveScore.Col = Utility.Randomizer.GetRandomNumber(0, board.Matrix.GetUpperBound(1));
 				//bestMove.Row =
-				evaluationCount = 0;
+				_evaluationCount = 0;
 				return botMoveScore.GetPosition();
 			}
 
@@ -43,7 +44,7 @@ namespace SharpMoku.AI
 
 			if (botWinningPosition.Row != -1)
 			{
-				evaluationCount = 0;
+				_evaluationCount = 0;
 				return botWinningPosition.GetPosition();
 			}
 
@@ -51,7 +52,7 @@ namespace SharpMoku.AI
 
 			if (OpponentWinningPosition.Row != -1)
 			{
-				evaluationCount = 0;
+				_evaluationCount = 0;
 				return OpponentWinningPosition.GetPosition();
 
 			}
@@ -107,10 +108,10 @@ namespace SharpMoku.AI
 		private sealed class MiniMaxParameter
 		{
 			public int Depth { get; set; }
-			public Board Board { get; set; }
+			public Board.Board Board { get; set; }
 			public bool IsMax { get; set; }
-			public double Alpha = 0;
-			public double Beta = 0;
+			public double Alpha;
+			public double Beta;
 			//public MiniMaxParameter Clone()
 			//{
 			//	return new() {
@@ -124,7 +125,7 @@ namespace SharpMoku.AI
 		}
 
 		private readonly IEvaluate _evaluator = evaluator ?? new EvaluateV3();
-		private List<int> _numberOfNodeInEachLevel = null;
+		private List<int> _numberOfNodeInEachLevel;
 		private static string GetTab(int moveDepth)
 		{
 			int maxDepth = 5;
@@ -133,11 +134,11 @@ namespace SharpMoku.AI
 			int i;
 			for (i = 0; i < numberOfTab; i++)
 			{
-				strB.Append("\t");
+				strB.Append('\t');
 			}
 			return strB.ToString();
 		}
-		private MoveScore minimaxSearchAlphaBeta(int depth, Board board, bool IsMax, double AlphaValue, double BetaValue)
+		private MoveScore minimaxSearchAlphaBeta(int depth, Board.Board board, bool IsMax, double AlphaValue, double BetaValue)
 		{
 			NumberOfNodes++;
 			_numberOfNodeInEachLevel[depth]++;
@@ -246,7 +247,7 @@ namespace SharpMoku.AI
 
 		}
 
-		public MoveScore searchBotWinningPosition(Board board, IEvaluate bot)
+		public MoveScore searchBotWinningPosition(Board.Board board, IEvaluate bot)
 		{
 
 			List<Position> allPossibleMoves = board.generateNeighbourMoves();
@@ -260,8 +261,8 @@ namespace SharpMoku.AI
 
 			foreach (Position move in allPossibleMoves)
 			{
-				evaluationCount++;
-				Board tempBoard = new(board);
+				_evaluationCount++;
+				Board.Board tempBoard = new(board);
 
 				tempBoard.PutStone(move);
 				int Score = bot.GetScore(tempBoard);
@@ -276,7 +277,7 @@ namespace SharpMoku.AI
 			return maxMoveScore.Score >= CONST_winScore ? maxMoveScore : winningPosition;
 		}
 
-		public MoveScore searchOpponentWinningPosition(Board board, IEvaluate bot)
+		public MoveScore searchOpponentWinningPosition(Board.Board board, IEvaluate bot)
 		{
 
 			List<Position> allPossibleMoves = board.generateNeighbourMoves();
@@ -290,9 +291,9 @@ namespace SharpMoku.AI
 
 			foreach (Position move in allPossibleMoves)
 			{
-				evaluationCount++;
+				_evaluationCount++;
 
-				Board tempBoard = new(board);
+				Board.Board tempBoard = new(board);
 
 				tempBoard.SwitchTurn();
 				tempBoard.PutStone(move);
@@ -303,7 +304,7 @@ namespace SharpMoku.AI
 					maxMoveScore = new MoveScore(Score, move.Row, move.Col);
 				}
 			}
-			if (evaluationCount > Int16.MaxValue)
+			if (_evaluationCount > Int16.MaxValue)
 			{
 				// TODO: this is just a placeholder to see what we need to  (if anything)
 			}
